@@ -29,6 +29,7 @@ public class FlyWheel extends SubsystemBase {
   public void periodic() {
     wheelLeft.set(ControlMode.Velocity, 1.1);
     wheelRight.set(ControlMode.Velocity, 1.1);
+    // 1.1 is a placeholder
     // This method will be called once per scheduler run
   }
 }
