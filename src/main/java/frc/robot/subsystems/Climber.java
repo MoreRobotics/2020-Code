@@ -7,28 +7,18 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class FlyWheel extends SubsystemBase {
-  TalonSRX wheelLeft;
-  TalonSRX wheelRight;
-    
-  
+public class Climber extends SubsystemBase {
   /**
-   * Creates a new FlyWheel.
+   * Creates a new Climber.
    */
-  public FlyWheel(int left, int right) {
-      wheelLeft = new TalonSRX(left);
-      wheelRight = new TalonSRX(right);
+  public Climber() {
+
   }
 
   @Override
   public void periodic() {
-
-    // 1.1 is a placeholder
     // This method will be called once per scheduler run
   }
 }

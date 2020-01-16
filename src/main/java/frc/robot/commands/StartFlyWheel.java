@@ -7,13 +7,18 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.FlyWheel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Start extends CommandBase {
+public class StartFlyWheel extends CommandBase {
+  
+  private final FlyWheel flyWheel;
   /**
-   * Creates a new Start.
-   */
-  public Start() {
+   * Creates a new StartFlyWheel.
+   */ 
+  
+  public StartFlyWheel(FlyWheel flyWheel) {
+    this.flyWheel = flyWheel;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
