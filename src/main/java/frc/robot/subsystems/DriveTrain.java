@@ -16,12 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class DriveTrain extends SubsystemBase {
-  WPI_TalonSRX falconFrontRight;
-  WPI_TalonSRX falconRearRight;
-  WPI_TalonSRX falconFrontLeft;
-  WPI_TalonSRX falconRearLeft;
-  SpeedControllerGroup rightDrive;
-  SpeedControllerGroup leftDrive;
+  WPI_TalonSRX falconFrontRight, falconRearRight, falconFrontLeft, falconRearLeft;
+  SpeedControllerGroup rightDrive, leftDrive;
   DifferentialDrive drive;
   XboxController operatorController;
   /**
@@ -39,13 +35,13 @@ public class DriveTrain extends SubsystemBase {
   }
   public void Drive(/*double speed1, double speed2, double speed3, double speed4*/) {
     /*falconFrontRight.set(ControlMode.Velocity, speed1);
-    falconRearRight.set(ControlMode.Velocity, speed2);
+    falconRearRight.set(Con trolMode.Velocity, speed2);
     falconFrontLeft.set(ControlMode.Velocity, speed3);
     falconRearLeft.set(ControlMode.Velocity, speed4);*/
   }
   @Override
   public void periodic() {
-    drive.arcadeDrive(operatorController.getY(), operatorController.getX());
+    drive.arcadeDrive(operatorController.getX(), operatorController.getY());
     // This method will be called once per scheduler run
   }
 }
