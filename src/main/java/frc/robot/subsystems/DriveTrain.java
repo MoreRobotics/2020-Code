@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -20,6 +22,9 @@ public class DriveTrain extends SubsystemBase {
   SpeedControllerGroup rightDrive, leftDrive;
   DifferentialDrive drive;
   XboxController operatorController;
+  Joystick rightStick;
+  Joystick leftStick;
+  
   /**
    * Creates a new DriveTrain.
    */
@@ -35,13 +40,14 @@ public class DriveTrain extends SubsystemBase {
   }
   public void Drive(/*double speed1, double speed2, double speed3, double speed4*/) {
     /*falconFrontRight.set(ControlMode.Velocity, speed1);
-    falconRearRight.set(Con trolMode.Velocity, speed2);
+    falconRearRight.set(ControlMode.Velocity, speed2);
     falconFrontLeft.set(ControlMode.Velocity, speed3);
     falconRearLeft.set(ControlMode.Velocity, speed4);*/
   }
   @Override
   public void periodic() {
-    drive.arcadeDrive(operatorController.getX(), operatorController.getY());
+    //drive.arcadeDrive(operatorController.getX(), operatorController.getY());
+    drive.tankDrive(rightStick.getY(), leftStick.getY());
     // This method will be called once per scheduler run
   }
 }
