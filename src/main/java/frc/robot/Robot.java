@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.;
 import frc.robot.Constants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -23,17 +24,18 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  //Creates the robot objects
+  //Declares the robot objects
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
 
-  //Creates the controllers and its associated buttons
+  //Instantiates the controllers and its associated buttons
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
   //TODO: Create button/axis for operator RT
-  JoystickButton driverLeftStick = new JoystickButton(driverController, XboxController.Axis.kLeftY.value);
   JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
+  JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
+  JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
 
   //Instantiates subsystems
   Shooter shooter = new Shooter();
@@ -116,6 +118,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     operatorAButton.whenHeld(new StartFlyWheel(shooter));
+    shooterHoodHandler();
   }
 
   @Override
@@ -130,4 +133,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
+  //Encapsulates the shooter hood commands
+  public void shooterHoodHandler() {
+    operatorBButton.whenPressed(new HoodAngleUp(shooter));
+    operatorXButton.whenPressed(new HoodAngleDown(shooter));
+  }
+
 }
