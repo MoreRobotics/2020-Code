@@ -32,7 +32,7 @@ public class DriveTrain extends SubsystemBase {
    rightDrive = new SpeedControllerGroup(falconFrontRight, falconRearRight);
    falconFrontLeft = new WPI_TalonSRX(Constants.DRIVE_TRAIN_FRONT_LEFT_ID);
    falconRearLeft = new WPI_TalonSRX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
-   leftDrive = new SpeedControllerGroup(falconFrontLeft, falconFrontRight);
+   leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
    drive = new DifferentialDrive(rightDrive, leftDrive);
    
    falconRearLeft.follow(falconFrontLeft);
@@ -43,8 +43,11 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
     // falconFrontLeft.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) - (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
     // falconFrontRight.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) + (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
+  }
+
+  public void drive() {
+    drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), true);
   }
 }
