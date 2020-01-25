@@ -8,8 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants;
+import frc.robot.commands.StartFlyWheel;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,9 +23,19 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  //Creates the robot objects
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  //Creates the controllers and its associated buttons
+  XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+  XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+  //TODO: Create button/axis for operator RT
+  JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
+
+  //Instantiates Shooter object
+  Shooter shooter = new Shooter();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -96,6 +111,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    operatorAButton.whenHeld(new StartFlyWheel(shooter));
   }
 
   @Override
