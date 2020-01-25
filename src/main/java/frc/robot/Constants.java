@@ -17,7 +17,12 @@ package frc.robot;
  */
 public final class Constants {
     //Constant that defines the speed the shooter wheels will be ran at from -1.0 to 1.0
-    public static final double SHOOTER_SPEED = 1.0; 
+    public static final double SHOOTER_SPEED = 1.0;
+    //Constants that define the IDs of the motor controllers on the drive train
+    public static final int DRIVE_TRAIN_FRONT_LEFT_ID = 3;
+    public static final int DRIVE_TRAIN_FRONT_RIGHT_ID = 4;
+    public static final int DRIVE_TRAIN_REAR_LEFT_ID = 2;
+    public static final int DRIVE_TRAIN_REAR_RIGHT_ID = 5;
     //Constants that define the IDs of the motor controllers on the shooter
     public static final int SHOOTER_LEFT_MASTER_ID = 0;
     public static final int SHOOTER_LEFT_SLAVE_ID = 1;
@@ -27,9 +32,9 @@ public final class Constants {
     //Constant that defines the conversion factor of encoder units / 100 ms to rev/min
     public static final double ENCODER_UNITS_PER_100_MS_TO_REV_PER_MIN = 60/(0.1*4096);
     //Constant that defines the port of the driver's Xbox controller
-    public static final int DRIVER_CONTROLLER_PORT = 1;
+    public static final int DRIVER_CONTROLLER_PORT = 0;
     //Constant that defines the port of the operator's Xbox controller
-    public static final int OPERATOR_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
     //Constats that define the PID loop coefficients
     public static final double P = 1.0;
     public static final double I = 0.0;

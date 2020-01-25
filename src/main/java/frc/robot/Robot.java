@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
-import frc.robot.commands.StartFlyWheel;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,10 +32,12 @@ public class Robot extends TimedRobot {
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
   //TODO: Create button/axis for operator RT
+  JoystickButton driverLeftStick = new JoystickButton(driverController, XboxController.Axis.kLeftY.value);
   JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
 
-  //Instantiates Shooter object
+  //Instantiates subsystems
   Shooter shooter = new Shooter();
+  DriveTrain driveTrain = new DriveTrain();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -104,9 +106,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    driveTrain.setDefaultCommand(new TankDrive(driveTrain));
   }
 
-  /**
+  /*
    * This function is called periodically during operator control.
    */
   @Override

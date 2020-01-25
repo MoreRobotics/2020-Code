@@ -12,24 +12,26 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class DriveTrain extends SubsystemBase {
-  //Initializes the various variables within the drive train
+  //Initializes the variables within the drive train
   WPI_TalonSRX falconFrontRight, falconRearRight, falconFrontLeft, falconRearLeft;
   SpeedControllerGroup leftDrive, rightDrive;
   DifferentialDrive drive;
-  XboxController operatorController;
+  XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   /**
    * Creates a new DriveTrain.
    */
-  public DriveTrain(int falconFrontRightID, int falconRearRightID, int falconFrontLeftID, int falconRearLeftID) {
-   falconFrontRight = new WPI_TalonSRX(falconFrontRightID);
-   falconRearRight = new WPI_TalonSRX(falconRearRightID);
+  public DriveTrain() {
+   falconFrontRight = new WPI_TalonSRX(Constants.DRIVE_TRAIN_FRONT_RIGHT_ID);
+   falconRearRight = new WPI_TalonSRX(Constants.DRIVE_TRAIN_REAR_RIGHT_ID);
    rightDrive = new SpeedControllerGroup(falconFrontRight, falconRearRight);
-   falconFrontLeft = new WPI_TalonSRX(falconFrontLeftID);
-   falconRearLeft = new WPI_TalonSRX(falconRearLeftID);
+   falconFrontLeft = new WPI_TalonSRX(Constants.DRIVE_TRAIN_FRONT_LEFT_ID);
+   falconRearLeft = new WPI_TalonSRX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconFrontRight);
    drive = new DifferentialDrive(rightDrive, leftDrive);
    
@@ -41,8 +43,8 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    drive.curvatureDrive(operatorController.getY(Hand.kLeft), operatorController.getX(Hand.kRight), false);
-    falconFrontLeft.set(ControlMode.PercentOutput, (Math.abs(operatorController.getX(Hand.kRight)) < 0.1 ? 0 : operatorController.getX(Hand.kRight)) - (Math.abs(operatorController.getY(Hand.kLeft)) < 0.1 ? 0 : operatorController.getY(Hand.kLeft)));
-    falconFrontRight.set(ControlMode.PercentOutput, (Math.abs(operatorController.getX(Hand.kRight)) < 0.1 ? 0 : operatorController.getX(Hand.kRight)) + (Math.abs(operatorController.getY(Hand.kLeft)) < 0.1 ? 0 : operatorController.getY(Hand.kLeft)));
+    drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
+    // falconFrontLeft.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) - (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
+    // falconFrontRight.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) + (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
   }
 }
