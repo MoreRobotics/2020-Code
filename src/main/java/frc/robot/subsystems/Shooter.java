@@ -8,12 +8,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants;
 
 //TODO: Display velocity (RPM) on Dashboard
@@ -21,9 +21,9 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase { 
   //Declares the motor controllers for the wheels in the shooter
-  TalonSRX wheelLeftMaster, wheelLeftSlave, wheelRight, extraMotorController;
+  WPI_TalonSRX wheelLeftMaster, wheelLeftSlave, wheelRight, extraMotorController;
 
-  //Declares the pneumatic solenoids
+  //Declares the shooter pneumatic double solenoid
   DoubleSolenoid shooterSolenoid;
 
   //Declares and/or initializes the variables for the shooter PID loop
@@ -41,19 +41,16 @@ public class Shooter extends SubsystemBase {
   
   public Shooter() {
     //Instantiates the shooter wheels
-    wheelLeftMaster = new TalonSRX(Constants.SHOOTER_LEFT_MOTOR_MASTER_ID);
-    wheelLeftSlave = new TalonSRX(Constants.SHOOTER_LEFT_MOTOR_SLAVE_ID);
-    wheelRight = new TalonSRX(Constants.SHOOTER_RIGHT_MOTOR_ID);
+    wheelLeftMaster = new WPI_TalonSRX(Constants.SHOOTER_LEFT_MOTOR_MASTER_ID);
+    wheelLeftSlave = new WPI_TalonSRX(Constants.SHOOTER_LEFT_MOTOR_SLAVE_ID);
+    wheelRight = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_MOTOR_ID);
     //Extra added by Andrew's request
-    extraMotorController = new TalonSRX(Constants.SHOOTER_EXTRA_MOTOR_ID);
+    extraMotorController = new WPI_TalonSRX(Constants.SHOOTER_EXTRA_MOTOR_ID);
 
     shooterSolenoid = new DoubleSolenoid(Constants.SHOOTER_SOLENOID_FORWARD_CHANNEL, Constants.SHOOTER_SOLENOID_REVERSE_CHANNEL);
 
     //Sets the master motor controller to percent output, makes the other motors slaves to it
-    //Ask if necessary to set wheelRight since it isn't a follower - Jon P.
-    wheelLeftMaster.set(ControlMode.PercentOutput, 0);
     wheelLeftSlave.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MOTOR_MASTER_ID);
-    wheelRight.set(ControlMode.PercentOutput, 0);
     extraMotorController.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MOTOR_MASTER_ID);
   }
 

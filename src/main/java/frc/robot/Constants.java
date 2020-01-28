@@ -35,6 +35,11 @@ public final class Constants {
     public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 0;
     public static final int SHOOTER_SOLENOID_REVERSE_CHANNEL = 1;
 
+    //Constants that define the IDs of the motor controllers on the hopper
+    public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 0;
+    public static final int HOPPER_BACK_SLAVE_MOTOR_ID = 1;
+    public static final int HOPPER_FEEDER_MOTOR_ID = 2;
+
     //Constant that defines the conversion factor of encoder units to degrees
     public static final double ENCODER_UNITS_TO_DEGREES = 4096/360;
 

@@ -9,11 +9,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
-  WPI_TalonSRX intakeMotor;
-  
+  //Declares the motor controller for the wheel in the intake
+  WPI_TalonSRX intakeWheel;
+  //Declares the intake double solenoid
+  DoubleSolenoid intakeSolenoid;
 
   /**
    * Creates a new Intake.

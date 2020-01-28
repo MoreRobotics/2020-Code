@@ -7,12 +7,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.;
 import frc.robot.Constants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -36,10 +36,14 @@ public class Robot extends TimedRobot {
   JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
   JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
   JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
+  JoystickButton operatorYButton = new JoystickButton(operatorController, XboxController.Button.kY.value);
+  JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
 
-  //Instantiates subsystems
+  
+  //Instantiates the subsystems
   Shooter shooter = new Shooter();
   DriveTrain driveTrain = new DriveTrain();
+  Hopper hopper = new Hopper();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -119,7 +123,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     operatorAButton.whenHeld(new StartFlyWheel(shooter));
     shooterHoodHandler();
-  }
+    hopperHandler();
+    }
 
   @Override
   public void testInit() {
@@ -138,6 +143,11 @@ public class Robot extends TimedRobot {
   public void shooterHoodHandler() {
     operatorBButton.whenPressed(new HoodAngleUp(shooter));
     operatorXButton.whenPressed(new HoodAngleDown(shooter));
+  }
+
+  public void hopperHandler() {
+    operatorRBumper.whenHeld(new StagePowerCells(hopper));
+    operatorYButton.whenHeld(new FeedPowerCells(hopper));
   }
 
 }
