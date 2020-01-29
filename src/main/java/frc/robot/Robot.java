@@ -37,13 +37,15 @@ public class Robot extends TimedRobot {
   JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
   JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
   JoystickButton operatorYButton = new JoystickButton(operatorController, XboxController.Button.kY.value);
+  JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
   JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
-
+  JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
   
   //Instantiates the subsystems
   Shooter shooter = new Shooter();
   DriveTrain driveTrain = new DriveTrain();
   Hopper hopper = new Hopper();
+  Intake intake = new Intake(); 
 
   /**
    * This function is run when the robot is first started up and should be used for any

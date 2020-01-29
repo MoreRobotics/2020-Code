@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.function.DoubleBinaryOperator;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -16,8 +18,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    //Constant that defines the speed the shooter wheels will be ran at from -1.0 to 1.0
-    public static final double SHOOTER_SPEED = 1.0;
 
     //Constants that define the IDs of the motor controllers on the drive train
     public static final int DRIVE_TRAIN_FRONT_LEFT_ID = 3;
@@ -35,11 +35,24 @@ public final class Constants {
     public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 0;
     public static final int SHOOTER_SOLENOID_REVERSE_CHANNEL = 1;
 
+    //Constant that defines the speed the shooter wheels will be run ([-1.0, 1.0])
+    public static final double SHOOTER_SPEED = 1.0;
+
     //Constants that define the IDs of the motor controllers on the hopper
     public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 0;
     public static final int HOPPER_BACK_SLAVE_MOTOR_ID = 1;
     public static final int HOPPER_FEEDER_MOTOR_ID = 2;
 
+    //Constants that define the IDs of the motor controllers on the intake
+    public static final int INTAKE_MOTOR_ID = 0;
+
+    //Constants that define the channels of the solenoids on the intake
+    public static final int INTAKE_SOLENOID_FORWARD_CHANNEL = 0;
+    public static final int INTAKE_SOLENOID_REVERSE_CHANNEL = 1;
+
+    //Constant that defines the speed the intake wheels will be run ([-1.0, 1.0])
+    public static final double INTAKE_SPEED = 1.0;
+    
     //Constant that defines the conversion factor of encoder units to degrees
     public static final double ENCODER_UNITS_TO_DEGREES = 4096/360;
 
