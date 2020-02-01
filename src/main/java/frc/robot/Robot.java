@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -30,8 +31,10 @@ public class Robot extends TimedRobot {
 
   //Instantiates the controllers and its associated buttons
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+  JoystickButton driverLBumper = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
+  JoystickButton driverRBumper = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
+
   XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
-  //TODO: Create button/axis for operator RT
   JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
   JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
   JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
@@ -46,6 +49,8 @@ public class Robot extends TimedRobot {
   Hopper hopper = new Hopper();
   Intake intake = new Intake();
   Turret turret = new Turret();
+  ControlPanel controlPanel = new ControlPanel();
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -56,6 +61,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    //Puts the target shooter RPM on the shuffleboard
+    SmartDashboard.putNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM);
   }
 
   /**
@@ -116,7 +124,6 @@ public class Robot extends TimedRobot {
     }
 
     driveTrain.setDefaultCommand(new TankDrive(driveTrain));
-    shooter.setDefaultCommand(new StartFlyWheelMotionMagic(shooter));
     turret.setDefaultCommand(new TurnTurret(turret));
   }
 
@@ -125,9 +132,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    operatorAButton.whenHeld(new StartFlyWheel(shooter));
+    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
     shooterHoodHandler();
     hopperHandler();
+    controlPanelHandler();
     }
 
   @Override
@@ -153,5 +161,11 @@ public class Robot extends TimedRobot {
     operatorRBumper.whenHeld(new StagePowerCells(hopper));
     operatorYButton.whenHeld(new FeedPowerCells(hopper));
   }
+
+  public void controlPanelHandler() {
+    driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
+    driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
+  }
+  
 
 }
