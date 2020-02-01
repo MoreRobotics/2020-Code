@@ -56,6 +56,10 @@ public final class Constants {
     //Defines the ID of the motor controller on the turret
     public static final int TURRET_MOTOR_ID = 0;
 
+    //Defines the ID of the motor controllers on the climber
+    public static final int CLIMBER_LEFT_MOTOR_ID = 0;
+    public static final int CLIMBER_RIGHT_MOTOR_ID = 1;
+    
     //Defines the ID of the control panel motor
     public static final int CONTROL_PANEL_MOTOR_ID = 0;
 
@@ -74,8 +78,5 @@ public final class Constants {
     //Defines the port of the operator's Xbox controller
     public static final int OPERATOR_CONTROLLER_PORT = 1;
     
-    //Defines the PID loop coefficients
-    public static final double P = 1.0;
-    public static final double I = 0.0;
-    public static final double D = 0.0;
+    
 }
