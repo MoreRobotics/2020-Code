@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -25,6 +27,9 @@ public class Shooter extends SubsystemBase {
 
   //Declares the shooter pneumatic double solenoid
   DoubleSolenoid shooterSolenoid;
+
+  //Declares the operator controller
+  XboxController operatorController;
 
   //Declares and/or initializes the variables for the shooter PID loop
   double P = Constants.P;
@@ -40,25 +45,28 @@ public class Shooter extends SubsystemBase {
   //TODO: Make right motor spin at -1, the others at 1
   
   public Shooter() {
-    //Instantiates the shooter wheels
+    //Instantiates the shooter objects
     wheelLeftMaster = new WPI_TalonSRX(Constants.SHOOTER_LEFT_MOTOR_MASTER_ID);
     wheelLeftSlave = new WPI_TalonSRX(Constants.SHOOTER_LEFT_MOTOR_SLAVE_ID);
     wheelRight = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_MOTOR_ID);
-    //Extra added by Andrew's request
+    //Extra motor added by Andrew's request
     extraMotorController = new WPI_TalonSRX(Constants.SHOOTER_EXTRA_MOTOR_ID);
-
     shooterSolenoid = new DoubleSolenoid(Constants.SHOOTER_SOLENOID_FORWARD_CHANNEL, Constants.SHOOTER_SOLENOID_REVERSE_CHANNEL);
+    operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
     //Sets the master motor controller to percent output, makes the other motors slaves to it
     wheelLeftSlave.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MOTOR_MASTER_ID);
     extraMotorController.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MOTOR_MASTER_ID);
+
+    wheelRight.configFactoryDefault();
+    wheelRight.setInverted(false);
+    wheelRight.setSensorPhase(true);
   }
 
   //Turns the shooter on
   public void startShooter() {
     wheelLeftMaster.set(ControlMode.PercentOutput, -Constants.SHOOTER_SPEED);
     wheelRight.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
-
   }
 
   //Turns the shooter on, using a PID loop to reach targetVelocity
@@ -77,6 +85,18 @@ public class Shooter extends SubsystemBase {
 
     wheelLeftMaster.set(ControlMode.PercentOutput, power);
   }
+
+  //Runs the shooter off of the analog stick, used for testing PID
+    public void startShooterMotionMagic() {
+      //Determines the targetPosition from the y-value of the left stick * 4096 units/revolution * 10 rotations
+      double targetPosition = operatorController.getY(Hand.kLeft) * 4096 * 10;
+      //Deadband check
+      if(Math.abs(targetPosition) <= 0.05) {
+        targetPosition = 0;
+      }
+      wheelLeftMaster.set(ControlMode.MotionMagic, targetPosition);
+      wheelRight.set(ControlMode.MotionMagic, targetPosition);
+    }
 
   //Turns the shooter off
   public void stopShooter() {

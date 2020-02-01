@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,7 +44,8 @@ public class Robot extends TimedRobot {
   Shooter shooter = new Shooter();
   DriveTrain driveTrain = new DriveTrain();
   Hopper hopper = new Hopper();
-  Intake intake = new Intake(); 
+  Intake intake = new Intake();
+  Turret turret = new Turret();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -116,6 +116,8 @@ public class Robot extends TimedRobot {
     }
 
     driveTrain.setDefaultCommand(new TankDrive(driveTrain));
+    shooter.setDefaultCommand(new StartFlyWheelMotionMagic(shooter));
+    turret.setDefaultCommand(new TurnTurret(turret));
   }
 
   /*
