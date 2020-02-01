@@ -63,7 +63,7 @@ public class Shooter extends SubsystemBase {
       double targetVelocityRPM = SmartDashboard.getNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM);
       double targetVelocityEncoderUnitsPer100ms = targetVelocityRPM * Constants.RPM_TO_ENCODER_UNITS_PER_100_MS;
       
-      //TODO: Figure out why the set lines won't set the motor velocities
+      //TODO: Figure out why the set lines won't cause the motors to spin
       wheelLeftMaster.set(ControlMode.Velocity, -targetVelocityEncoderUnitsPer100ms);
       wheelRightMaster.set(ControlMode.Velocity, targetVelocityEncoderUnitsPer100ms);
     }
