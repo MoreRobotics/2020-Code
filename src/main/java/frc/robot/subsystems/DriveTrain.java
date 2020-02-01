@@ -7,19 +7,10 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class DriveTrain extends SubsystemBase {
-  WPI_TalonSRX falconFrontRight, falconRearRight, falconFrontLeft, falconRearLeft;
-  SpeedControllerGroup rightDrive, leftDrive;
-  DifferentialDrive drive;
-  XboxController operatorController;
   /**
    * Creates a new DriveTrain.
    */
@@ -32,16 +23,32 @@ public class DriveTrain extends SubsystemBase {
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconFrontRight);
    drive = new DifferentialDrive(rightDrive, leftDrive);
    
+
+   falconRearLeft.follow(falconFrontLeft);
+   falconRearRight.follow(falconFrontRight);
+   
   }
   public void Drive(/*double speed1, double speed2, double speed3, double speed4*/) {
     /*falconFrontRight.set(ControlMode.Velocity, speed1);
-    falconRearRight.set(Con trolMode.Velocity, speed2);
+    falconRearRight.set(ControlMode.Velocity, speed2);
     falconFrontLeft.set(ControlMode.Velocity, speed3);
     falconRearLeft.set(ControlMode.Velocity, speed4);*/
   }
   @Override
   public void periodic() {
-    drive.arcadeDrive(operatorController.getX(), operatorController.getY());
+    drive.curvatureDrive(operatorController.getY(Hand.kLeft), operatorController.getX(Hand.kRight), false);
+    //drive.tankDrive(operatorController.getY(Hand.kRight), operatorController.getY(Hand.kLeft));
     // This method will be called once per scheduler run
+    falconFrontLeft.set(ControlMode.PercentOutput, (Math.abs(operatorController.getX(Hand.kRight)) < 0.1 ? 0 : operatorController.getX(Hand.kRight)) - (Math.abs(operatorController.getY(Hand.kLeft)) < 0.1 ? 0 : operatorController.getY(Hand.kLeft)));
+    falconFrontRight.set(ControlMode.PercentOutput, (Math.abs(operatorController.getX(Hand.kRight)) < 0.1 ? 0 : operatorController.getX(Hand.kRight)) + (Math.abs(operatorController.getY(Hand.kLeft)) < 0.1 ? 0 : operatorController.getY(Hand.kLeft)));
+  }
+
+  public void setLeftMotors(double speed) {
+    motorLeft1.set(ControlMode.PercentOutput, -speed); 
+    motorLeft2.set(ControlMode.PercentOutput, -speed);
+  }
+  public void setRightMotors(double speed) {
+    motorRight1.set(ControlMode.PercentOutput, speed); 
+    motorRight2.set(ControlMode.PercentOutput, speed);
   }
 }

@@ -5,21 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase {
-  WPI_TalonSRX intakeMotor;
-  
-
+public class Controls extends SubsystemBase {
   /**
-   * Creates a new Intake.
+   * Creates a new Controls.
    */
-  public Intake() {
-      
+  public Controls() {
+    
   }
 
   @Override

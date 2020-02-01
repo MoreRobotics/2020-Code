@@ -7,19 +7,14 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase {
-  WPI_TalonSRX intakeMotor;
-  
-
+public class Hopper extends SubsystemBase {
   /**
-   * Creates a new Intake.
+   * Creates a new Hopper.
    */
-  public Intake() {
-      
+  public Hopper() {
+
   }
 
   @Override

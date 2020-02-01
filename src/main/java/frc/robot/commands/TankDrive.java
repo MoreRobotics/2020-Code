@@ -7,27 +7,19 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class StartFlyWheel extends CommandBase {
-  
-  private final Shooter flyWheel;
+public class TankDrive extends CommandBase {
   /**
-   * Creates a new StartFlyWheel.
-   */ 
-  
-  public StartFlyWheel(Shooter flyWheel) {
-    this.flyWheel = flyWheel;
+   * Creates a new TankDrive.
+   */
+  public TankDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //Starts the shooter
-    //flyWheel.startShooterPID(6000);
-    flyWheel.startShooter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,8 +30,6 @@ public class StartFlyWheel extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //Stops the shooter
-    flyWheel.stopShooter();
   }
 
   // Returns true when the command should end.
