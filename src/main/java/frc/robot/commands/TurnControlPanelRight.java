@@ -7,38 +7,37 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ControlPanel;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class StartFlyWheelMotionMagic extends CommandBase {
-  private final Shooter flyWheel;
+public class TurnControlPanelRight extends CommandBase {
+  private final ControlPanel controlPanel;
   
   /**
-   * Creates a new StartFlyWheelAnalog.
+   * Creates a new TurnControlPanelRight.
    */ 
-  public StartFlyWheelMotionMagic(Shooter flyWheel) {
-    this.flyWheel = flyWheel;
+  public TurnControlPanelRight(ControlPanel controlPanel) {
+    this.controlPanel = controlPanel;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(flyWheel);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    flyWheel.startShooterMotionMagic();
+    controlPanel.turnControlPanelRight();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    flyWheel.startShooterMotionMagic();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //Stops the shooter
-    flyWheel.stopShooter();
+    controlPanel.stopControlPanel();
   }
 
   // Returns true when the command should end.
