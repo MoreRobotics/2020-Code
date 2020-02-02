@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveTrain extends SubsystemBase {
-  WPI_TalonSRX falconFrontRight, falconRearRight, falconFrontLeft, falconRearLeft;
+  WPI_TalonFX falconFrontRight, falconRearRight, falconFrontLeft, falconRearLeft;
   SpeedControllerGroup rightDrive, leftDrive;
   DifferentialDrive drive;
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
@@ -27,11 +28,11 @@ public class DriveTrain extends SubsystemBase {
    */
   public DriveTrain() {
    //Instantiates the drive motors
-   falconFrontRight = new WPI_TalonSRX(Constants.DRIVE_TRAIN_FRONT_RIGHT_ID);
-   falconRearRight = new WPI_TalonSRX(Constants.DRIVE_TRAIN_REAR_RIGHT_ID);
+   falconFrontRight = new WPI_TalonFX(Constants.DRIVE_TRAIN_FRONT_RIGHT_ID);
+   falconRearRight = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_RIGHT_ID);
    rightDrive = new SpeedControllerGroup(falconFrontRight, falconRearRight);
-   falconFrontLeft = new WPI_TalonSRX(Constants.DRIVE_TRAIN_FRONT_LEFT_ID);
-   falconRearLeft = new WPI_TalonSRX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
+   falconFrontLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_FRONT_LEFT_ID);
+   falconRearLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
    drive = new DifferentialDrive(rightDrive, leftDrive);
   

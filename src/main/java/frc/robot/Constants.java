@@ -24,10 +24,11 @@ public final class Constants {
     public static final int DRIVE_TRAIN_REAR_RIGHT_ID = 5;
 
     //Defines the IDs of the motor controllers on the shooter
-    public static final int SHOOTER_LEFT_MASTER_MOTOR_ID = 0;
-    public static final int SHOOTER_LEFT_SLAVE_MOTOR_ID = 1;
-    public static final int SHOOTER_RIGHT_MASTER_MOTOR_ID = 11;
-    public static final int SHOOTER_RIGHT_SLAVE_MOTOR_ID = 10;
+    public static final int SHOOTER_LEFT_MASTER_MOTOR_ID = 22;
+    public static final int SHOOTER_LEFT_SLAVE_MOTOR_ID = 23;
+    public static final int SHOOTER_RIGHT_MASTER_MOTOR_ID = 20;
+    public static final int SHOOTER_RIGHT_SLAVE_MOTOR_ID = 21;
+    //TODO: Add shooter feeder with ID = 24
 
     //Defines the channels of the solenoids on the shooter
     public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 0;
@@ -42,10 +43,10 @@ public final class Constants {
     //Defines the IDs of the motor controllers on the hopper
     public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 6;
     public static final int HOPPER_BACK_SLAVE_MOTOR_ID = 7;
-    public static final int HOPPER_FEEDER_MOTOR_ID = 8;
+    public static final int HOPPER_FEEDER_MOTOR_ID = 53;
 
     //Defines the IDs of the motor controllers on the intake
-    public static final int INTAKE_MOTOR_ID = 9;
+    public static final int INTAKE_MOTOR_ID = 60;
 
     //Defines the channels of the solenoids on the intake
     public static final int INTAKE_SOLENOID_FORWARD_CHANNEL = 2;
@@ -55,11 +56,11 @@ public final class Constants {
     public static final double INTAKE_SPEED = 1.0;
 
     //Defines the ID of the motor controller on the turret
-    public static final int TURRET_MOTOR_ID = 12;
+    public static final int TURRET_MOTOR_ID = 40;
 
     //Defines the ID of the motor controllers on the climber
-    public static final int CLIMBER_LEFT_MOTOR_ID = 0;
-    public static final int CLIMBER_RIGHT_MOTOR_ID = 1;
+    public static final int CLIMBER_LEFT_MOTOR_ID = 31;
+    public static final int CLIMBER_RIGHT_MOTOR_ID = 30;
     
     //Defines the ID of the control panel motor
     public static final int CONTROL_PANEL_MOTOR_ID = 13;
