@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,7 +23,7 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase { 
   //Declares the motor controllers for the wheels in the shooter
-  WPI_TalonSRX wheelLeftMaster, wheelLeftSlave, wheelRightMaster, wheelRightSlave;
+  TalonSRX wheelLeftMaster, wheelLeftSlave, wheelRightMaster, wheelRightSlave;
 
   //Declares the shooter pneumatic double solenoid
   DoubleSolenoid shooterSolenoid;
@@ -37,10 +37,10 @@ public class Shooter extends SubsystemBase {
   
   public Shooter() {
     //Instantiates the shooter objects
-    wheelLeftMaster = new WPI_TalonSRX(Constants.SHOOTER_LEFT_MASTER_MOTOR_ID);
-    wheelLeftSlave = new WPI_TalonSRX(Constants.SHOOTER_LEFT_SLAVE_MOTOR_ID);
-    wheelRightMaster = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_MASTER_MOTOR_ID);
-    wheelRightSlave = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_SLAVE_MOTOR_ID);
+    wheelLeftMaster = new TalonSRX(Constants.SHOOTER_LEFT_MASTER_MOTOR_ID);
+    wheelLeftSlave = new TalonSRX(Constants.SHOOTER_LEFT_SLAVE_MOTOR_ID);
+    wheelRightMaster = new TalonSRX(Constants.SHOOTER_RIGHT_MASTER_MOTOR_ID);
+    wheelRightSlave = new TalonSRX(Constants.SHOOTER_RIGHT_SLAVE_MOTOR_ID);
     shooterSolenoid = new DoubleSolenoid(Constants.SHOOTER_SOLENOID_FORWARD_CHANNEL, Constants.SHOOTER_SOLENOID_REVERSE_CHANNEL);
     operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 

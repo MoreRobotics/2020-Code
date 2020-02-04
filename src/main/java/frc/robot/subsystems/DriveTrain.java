@@ -36,8 +36,8 @@ public class DriveTrain extends SubsystemBase {
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
    drive = new DifferentialDrive(rightDrive, leftDrive);
   
-   falconRearLeft.follow(falconFrontLeft);
-   falconRearRight.follow(falconFrontRight);
+   //falconRearLeft.follow(falconFrontLeft);
+   //falconRearRight.follow(falconFrontRight);
    
   }
 
