@@ -42,8 +42,8 @@ public final class Constants {
     public static final double SHOOTER_DEFAULT_TARGET_RPM = 5000;
 
     //Defines the IDs of the motor controllers on the hopper
-    public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 6;
-    public static final int HOPPER_BACK_SLAVE_MOTOR_ID = 7;
+    public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 51;
+    public static final int HOPPER_BACK_SLAVE_MOTOR_ID = 52;
     public static final int HOPPER_FEEDER_MOTOR_ID = 53;
 
     //Defines the IDs of the motor controllers on the intake
