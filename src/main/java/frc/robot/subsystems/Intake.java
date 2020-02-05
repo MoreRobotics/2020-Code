@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -17,7 +17,7 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   //Declares the motor controller for the wheel in the intake
-  WPI_TalonSRX intakeWheel;
+  TalonSRX intakeWheel;
   //Declares the intake double solenoid
   DoubleSolenoid intakeSolenoid;
 
@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
    */
   public Intake() {
     //Instantiates the intake wheel
-    intakeWheel = new WPI_TalonSRX(Constants.INTAKE_MOTOR_ID);
+    intakeWheel = new TalonSRX(Constants.INTAKE_MOTOR_ID);
     
     intakeSolenoid = new DoubleSolenoid(Constants.INTAKE_SOLENOID_FORWARD_CHANNEL, Constants.INTAKE_SOLENOID_REVERSE_CHANNEL); 
   }

@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -18,7 +18,7 @@ import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
   //Declares the motor controller for the turret motor
-  WPI_TalonSRX turretMotor;
+  TalonSRX turretMotor;
 
   //Declares the operator controller
   XboxController operatorController;
@@ -27,7 +27,7 @@ public class Turret extends SubsystemBase {
    * Creates a new Turret.
    */
   public Turret() {
-    turretMotor = new WPI_TalonSRX(Constants.TURRET_MOTOR_ID);
+    turretMotor = new TalonSRX(Constants.TURRET_MOTOR_ID);
     operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
   }
   
