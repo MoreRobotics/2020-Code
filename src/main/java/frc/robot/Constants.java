@@ -81,5 +81,9 @@ public final class Constants {
     //Defines the port of the operator's Xbox controller
     public static final int OPERATOR_CONTROLLER_PORT = 1;
     
+    //Turret ratio to find the angle of the turret
+    public static final double TURRET_GEAR_RATIO = 10;
+
     
+
 }

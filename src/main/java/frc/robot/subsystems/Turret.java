@@ -39,11 +39,13 @@ public class Turret extends SubsystemBase {
       power = 0;
     }
     turretMotor.set(ControlMode.PercentOutput, power);
+    //?double amountRotatedPer100PercentOutput = Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
   }
 
   //Stops the turret
   public void stopTurret() {
     turretMotor.set(ControlMode.PercentOutput, 0);
+ 
   }
   @Override
   public void periodic() {
