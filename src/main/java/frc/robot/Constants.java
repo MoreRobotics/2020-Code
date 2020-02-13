@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -84,6 +86,15 @@ public final class Constants {
     //Turret ratio to find the angle of the turret
     public static final double TURRET_GEAR_RATIO = 10;
 
+    //Turret Gains
+    public static final int TURRET_TIMEOUT = 30;
     
+    //PID GAINS
+    public static Gains TURRET_GAINS = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
 
+    //Gains Index
+    public static final int GAINS_INDEX = 0;
+
+    //PID Loop Index
+    public static final int PIDLOOP_INDEX = 0;
 }

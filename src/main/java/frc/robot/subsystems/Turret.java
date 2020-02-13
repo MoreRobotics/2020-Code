@@ -34,18 +34,26 @@ public class Turret extends SubsystemBase {
   //Turns the turret
   public void turnTurret() {
     double power = operatorController.getX(Hand.kLeft);
+    turretMotor.selectProfileSlot(Constants.GAINS_INDEX, Constants.PIDLOOP_INDEX);
+    turretMotor.config_kF(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kF, Constants.TURRET_TIMEOUT);
+		turretMotor.config_kP(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kP, Constants.TURRET_TIMEOUT);
+		turretMotor.config_kI(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kI, Constants.TURRET_TIMEOUT);
+		turretMotor.config_kD(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kD, Constants.TURRET_TIMEOUT);
     //Deadband check
     if(Math.abs(power) <= 0.05) {
       power = 0;
+      
     }
-    turretMotor.set(ControlMode.PercentOutput, power);
+    double degreesPerMotorRotation = 360/10;
+    double targetPosition = power * 4096 * Constants.TURRET_GEAR_RATIO;
+    turretMotor.set(ControlMode.MotionMagic, targetPosition);
     //?double amountRotatedPer100PercentOutput = Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
   }
 
   //Stops the turret
   public void stopTurret() {
     turretMotor.set(ControlMode.PercentOutput, 0);
- 
+
   }
   @Override
   public void periodic() {
