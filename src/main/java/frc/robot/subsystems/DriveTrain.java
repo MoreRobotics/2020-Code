@@ -10,10 +10,16 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -23,8 +29,10 @@ public class DriveTrain extends SubsystemBase {
   SpeedControllerGroup rightDrive, leftDrive;
   DifferentialDrive drive;
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
-  
-   /**
+  PigeonIMU gyro;
+  DifferentialDriveOdometry odometry;
+
+  /**
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
@@ -36,10 +44,20 @@ public class DriveTrain extends SubsystemBase {
    falconRearLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
    drive = new DifferentialDrive(rightDrive, leftDrive);
-   
+   gyro = new PigeonIMU(Constants.SHOTTER_FEEDER_MOTOR_ID);
+   odometry = new DifferentialDriveOdometry(Rotation2d(0), Pose2d(0));
+
    //falconRearLeft.follow(falconFrontLeft);
    //falconRearRight.follow(falconFrontRight);
    
+  }
+
+  private Pose2d Pose2d(int i) {
+    return null;
+  }
+
+  private Rotation2d Rotation2d(int i) {
+    return null;
   }
 
   @Override

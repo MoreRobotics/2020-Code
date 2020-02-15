@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -90,11 +90,28 @@ public final class Constants {
     public static final int TURRET_TIMEOUT = 30;
     
     //PID GAINS
-    public static Gains TURRET_GAINS = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
+    public static Gains TURRET_GAINS = new Gains(0.0, 0.0, 0.0, 0.2, 0, 1.0);
 
     //Gains Index
     public static final int GAINS_INDEX = 0;
 
     //PID Loop Index
     public static final int PIDLOOP_INDEX = 0;
-}
+
+    //Trajectory PID
+    public static final double ksVolts = 0.161;
+    public static final double kvVoltSecondsPerInch = 0.0612;
+    public static final double kaVoltSecondsSquaredPerInch = 0.00495;
+    public static final double kPDriveVel = 0.465;
+   
+    public static final double kTrackwidthInches = 28.45;
+    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthInches);
+
+    public static final double kMaxSpeedInchesPerSecond = 144;
+    public static final double kMaxAccelerationInchesPerSecondSquared = 144;
+
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
+    
+
+}  
