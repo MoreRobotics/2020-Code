@@ -23,6 +23,8 @@ public final class Constants {
     public static final int DRIVE_TRAIN_FRONT_RIGHT_ID = 4;
     public static final int DRIVE_TRAIN_REAR_LEFT_ID = 2;
     public static final int DRIVE_TRAIN_REAR_RIGHT_ID = 5;
+    public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     //Defines the IDs of the motor controllers on the shooter
     public static final int SHOOTER_LEFT_MASTER_MOTOR_ID = 22;
@@ -41,6 +43,7 @@ public final class Constants {
 
     //Defines the default target shooter RPM
     public static final double SHOOTER_DEFAULT_TARGET_RPM = 5000;
+    public static final double RPM_TO_ENCODER_UNITS_PER_100_MS = 50 * 2048;
 
     //Defines the IDs of the motor controllers on the hopper
     public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 51;
@@ -69,10 +72,6 @@ public final class Constants {
 
     //Defimes the speed the control panel motor will be run at
     public static final int CONTROL_PANEL_SPEED = 1;
-
-    //Constant that defines the speed the shooter wheels will be ran at from -1.0 to 1.0
-    public static double SHOOTER_SPEED = .85;
-    public static double SHOOTER_SPEEDY = .5;
     
     //Defines the conversion factor of encoder units to degrees
     public static final double ENCODER_UNITS_TO_DEGREES = 4096/360;
