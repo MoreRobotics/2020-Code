@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
     //Defines the IDs of the motor controllers on the drive train
     public static final int DRIVE_TRAIN_FRONT_LEFT_ID = 3;
     public static final int DRIVE_TRAIN_FRONT_RIGHT_ID = 4;
@@ -70,19 +69,13 @@ public final class Constants {
 
     //Defimes the speed the control panel motor will be run at
     public static final int CONTROL_PANEL_SPEED = 1;
+
+    //Constant that defines the speed the shooter wheels will be ran at from -1.0 to 1.0
+    public static double SHOOTER_SPEED = .85;
+    public static double SHOOTER_SPEEDY = .5;
     
     //Defines the conversion factor of encoder units to degrees
     public static final double ENCODER_UNITS_TO_DEGREES = 4096/360;
-
-    //Defines the conversion factor for rpm to encoder units / 100 ms 
-    public static final double RPM_TO_ENCODER_UNITS_PER_100_MS = 4096/600;
-
-    //Defines the port of the driver's Xbox controller
-    public static final int DRIVER_CONTROLLER_PORT = 0;
-
-    //Defines the port of the operator's Xbox controller
-    public static final int OPERATOR_CONTROLLER_PORT = 1;
-    
     //Turret ratio to find the angle of the turret
     public static final double TURRET_GEAR_RATIO = 10;
 

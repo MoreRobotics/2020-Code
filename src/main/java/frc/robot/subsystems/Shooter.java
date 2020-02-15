@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 //TODO: Display velocity (RPM) on Dashboard
 //TODO: Document PID Tuning
@@ -51,11 +52,20 @@ public class Shooter extends SubsystemBase {
     wheelRightMaster.configFactoryDefault();
     wheelRightMaster.setInverted(false);
     wheelRightMaster.setSensorPhase(true);
+    wheelLeftMaster.setInverted(true);
+    wheelLeftSlave.setInverted(true);
+
+    wheelLeftMaster.setNeutralMode(NeutralMode.Coast);
+    wheelRightMaster.setNeutralMode(NeutralMode.Coast);
+    wheelLeftSlave.setNeutralMode(NeutralMode.Coast);
+    wheelRightSlave.setNeutralMode(NeutralMode.Coast);
   }
 
   //Turns the shooter on
   public void startShooter() {
-    
+    wheelLeftMaster.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
+    wheelRightMaster.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
+
   }
 
   //Runs the shooter up to the target velocity using PID
@@ -99,6 +109,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+
 
     // This method will be called once per scheduler run
   }
