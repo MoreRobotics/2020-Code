@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 import frc.robot.commands.StartFlyWheel;
 import frc.robot.subsystems.Shooter;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
   XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
   //TODO: Create button/axis for operator RT
   JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
+  JoystickButton operatorYButton = new JoystickButton(operatorController, XboxController.Button.kY.value);
 
   //Instantiates Shooter object
   Shooter shooter = new Shooter();
@@ -112,6 +114,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     operatorAButton.whenHeld(new StartFlyWheel(shooter));
+    operatorYButton.whenHeld(new StartFlyWheel(shooter));
   }
 
   @Override

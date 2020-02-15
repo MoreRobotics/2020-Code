@@ -17,12 +17,13 @@ package frc.robot;
  */
 public final class Constants {
     //Constant that defines the speed the shooter wheels will be ran at from -1.0 to 1.0
-    public static final double SHOOTER_SPEED = 1.0; 
+    public static double SHOOTER_SPEED = .85;
+    public static double SHOOTER_SPEEDY = .5;     
     //Constants that define the IDs of the motor controllers on the shooter
-    public static final int SHOOTER_LEFT_MASTER_ID = 0;
-    public static final int SHOOTER_LEFT_SLAVE_ID = 1;
+    public static final int SHOOTER_LEFT_MASTER_ID = 10;
+    public static final int SHOOTER_LEFT_SLAVE_ID = 3;
     public static final int SHOOTER_RIGHT_ID = 11;
-    public static final int SHOOTER_EXTRA_ID = 10;
+    public static final int SHOOTER_EXTRA_ID = 0;
     public static final double ENCODER_UNITS_TO_DEGREES = 4096/360;
     //Constant that defines the conversion factor of encoder units / 100 ms to rev/min
     public static final double ENCODER_UNITS_PER_100_MS_TO_REV_PER_MIN = 60/(0.1*4096);

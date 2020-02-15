@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 //TODO: Display velocity (RPM) on Dashboard
 //TODO: Document PID Tuning
@@ -25,7 +26,6 @@ public class Shooter extends SubsystemBase {
   double D = Constants.D;
   double integral, derivative, previousError = 0.0;
   double error;
-
   
   /**
    * Creates a new Shooter.
@@ -44,12 +44,19 @@ public class Shooter extends SubsystemBase {
       wheelLeftMaster.set(ControlMode.PercentOutput, 0);
       wheelLeftSlave.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MASTER_ID);
       wheelRight.set(ControlMode.PercentOutput, 0);
-      extraMotorController.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MASTER_ID);
+      extraMotorController.set(ControlMode.Follower, Constants.SHOOTER_RIGHT_ID);
+      wheelLeftMaster.setInverted(true);
+      wheelLeftSlave.setInverted(true);
+
+      wheelLeftMaster.setNeutralMode(NeutralMode.Coast);
+      wheelRight.setNeutralMode(NeutralMode.Coast);
+      wheelLeftSlave.setNeutralMode(NeutralMode.Coast);
+      extraMotorController.setNeutralMode(NeutralMode.Coast);
   }
 
   //Turns the shooter on
   public void startShooter() {
-    wheelLeftMaster.set(ControlMode.PercentOutput, -Constants.SHOOTER_SPEED);
+    wheelLeftMaster.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
     wheelRight.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
 
   }
@@ -74,7 +81,7 @@ public class Shooter extends SubsystemBase {
   //Turns the shooter off
   public void stopShooter() {
     wheelLeftMaster.set(ControlMode.PercentOutput, 0);
-    wheelRight.set(ControlMode.PercentOutput, 0);
+    wheelRight.set(ControlMode.PercentOutput, 0); 
   }
 
   //Gets the current position of the left wheel
@@ -92,6 +99,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+
 
     // This method will be called once per scheduler run
   }
