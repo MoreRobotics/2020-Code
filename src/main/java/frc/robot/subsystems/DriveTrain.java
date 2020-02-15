@@ -46,19 +46,11 @@ public class DriveTrain extends SubsystemBase {
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
    drive = new DifferentialDrive(rightDrive, leftDrive);
    gyro = new PigeonIMU(Constants.SHOTTER_FEEDER_MOTOR_ID);
-   odometry = new DifferentialDriveOdometry(Rotation2d(0), Pose2d(0));
+   odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
    //falconRearLeft.follow(falconFrontLeft);
    //falconRearRight.follow(falconFrontRight);
    
-  }
-
-  private Pose2d Pose2d(final int i) {
-    return null;
-  }
-
-  private Rotation2d Rotation2d(final int i) {
-    return null;
   }
 
   private double getHeading() {
@@ -74,6 +66,9 @@ public class DriveTrain extends SubsystemBase {
     // falconFrontLeft.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) - (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
     // falconFrontRight.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) + (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
     odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftDistance(), getRightDistance());
+    System.out.println(odometry.getPoseMeters().getTranslation().getX());
+    System.out.println(odometry.getPoseMeters().getTranslation().getY());
+
   }
 
   public double getLeftDistance() {
