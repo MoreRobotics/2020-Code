@@ -104,6 +104,10 @@ public final class Constants {
 
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
-    
+
+    public static final double kEncoderDistancePerPulse = 5362.0224;
+
+    public static final double EDGES_PER_REVOLUTION = 21446.0896;
+    public static final double WHEEL_DIAMETER = 6;
 
 }  
