@@ -8,16 +8,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
@@ -61,13 +58,10 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    drive();
+    //drive();
     // This method will be called once per scheduler run
-    // falconFrontLeft.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) - (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
-    // falconFrontRight.set(ControlMode.PercentOutput, (Math.abs(driverController.getX(Hand.kRight)) < 0.1 ? 0 : driverController.getX(Hand.kRight)) + (Math.abs(driverController.getY(Hand.kLeft)) < 0.1 ? 0 : driverController.getY(Hand.kLeft)));
     odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftDistance(), getRightDistance());
-    System.out.println(odometry.getPoseMeters().getTranslation().getX());
-    System.out.println(odometry.getPoseMeters().getTranslation().getY());
+
 
   }
 
@@ -92,6 +86,6 @@ public class DriveTrain extends SubsystemBase {
 
   //Drives the robot depending on the thumbstick inputs
   public void drive() {
-    drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), true);
+    drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
   }
 }

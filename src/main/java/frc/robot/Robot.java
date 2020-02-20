@@ -16,8 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import frc.robot.subsystems.*;;
 
 
 /**
@@ -123,6 +122,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
+    operatorLBumper.whenHeld(new IntakePowerCells(intake));
+    shooterHoodHandler();
+    hopperHandler();
+    controlPanelHandler();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -136,10 +140,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
-    shooterHoodHandler();
-    hopperHandler();
-    controlPanelHandler();
+
     }
 
   @Override
