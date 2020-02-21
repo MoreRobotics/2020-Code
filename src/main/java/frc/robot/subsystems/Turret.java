@@ -62,6 +62,7 @@ public class Turret extends SubsystemBase {
     }
     double targetPosition = power * 4096 * Constants.TURRET_GEAR_RATIO;
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
+    System.out.println(targetPosition);
   }
 
   //Stops the turret
