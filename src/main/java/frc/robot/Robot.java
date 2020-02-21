@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 import frc.robot.commands.*;
-import frc.robot.subsystems.*;;
+import frc.robot.subsystems.*;
 
 
 /**
@@ -32,18 +32,18 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   //Instantiates the controllers and its associated buttons
-  XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
-  JoystickButton driverLBumper = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
-  JoystickButton driverRBumper = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
+  // XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+  // JoystickButton driverLBumper = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
+  // JoystickButton driverRBumper = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
 
-  XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
-  JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
-  JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
-  JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
-  JoystickButton operatorYButton = new JoystickButton(operatorController, XboxController.Button.kY.value);
-  JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
-  JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
-  JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
+  // XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+  // JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
+  // JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
+  // JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
+  // JoystickButton operatorYButton = new JoystickButton(operatorController, XboxController.Button.kY.value);
+  // JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
+  // JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
+  // JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
   
   //Instantiates the subsystems
   Shooter shooter = new Shooter();
@@ -122,11 +122,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
-    operatorLBumper.whenHeld(new IntakePowerCells(intake));
-    shooterHoodHandler();
-    hopperHandler();
-    controlPanelHandler();
+    // operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
+    // operatorLBumper.whenHeld(new IntakePowerCells(intake));
+    // shooterHoodHandler();
+    // hopperHandler();
+    // controlPanelHandler();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -156,21 +156,21 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-  //Encapsulates the shooter hood commands
-  public void shooterHoodHandler() {
-    operatorBButton.whenPressed(new HoodAngleUp(shooter));
-    operatorXButton.whenPressed(new HoodAngleDown(shooter));
-  }
+  // //Encapsulates the shooter hood commands
+  // public void shooterHoodHandler() {
+  //   operatorBButton.whenPressed(new HoodAngleUp(shooter));
+  //   operatorXButton.whenPressed(new HoodAngleDown(shooter));
+  // }
 
-  public void hopperHandler() {
-    operatorRBumper.whenHeld(new StagePowerCells(hopper));
-    operatorYButton.whenHeld(new FeedPowerCells(hopper));
-  }
+  // public void hopperHandler() {
+  //   operatorRBumper.whenHeld(new StagePowerCells(hopper));
+  //   operatorYButton.whenHeld(new FeedPowerCells(hopper));
+  // }
 
-  public void controlPanelHandler() {
-    driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
-    driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
-  }
+  // public void controlPanelHandler() {
+  //   driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
+  //   driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
+  // }
   
 
 }

@@ -47,7 +47,7 @@ public final class Constants {
 
     //Defines the IDs of the motor controllers on the hopper
     public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 51;
-    public static final int HOPPER_BACK_SLAVE_MOTOR_ID = 52;
+    
     public static final int HOPPER_FEEDER_MOTOR_ID = 53;
 
     //Defines the IDs of the motor controllers on the intake
@@ -59,6 +59,9 @@ public final class Constants {
 
     //Defines the speed the intake wheels will be run at ([-1.0, 1.0])
     public static final double INTAKE_SPEED = 1.0;
+
+    //Defines the speed the hopper wheels will be run at ([-1.0, 1.0])
+    public static final double HOPPER_SPEED = 1.0;
 
     //Defines the ID of the motor controller on the turret
     public static final int TURRET_MOTOR_ID = 40;
