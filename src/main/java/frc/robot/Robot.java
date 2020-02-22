@@ -8,15 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+
 
 
 /**
@@ -30,29 +27,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
-  //Instantiates the controllers and its associated buttons
-  // XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
-  // JoystickButton driverLBumper = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
-  // JoystickButton driverRBumper = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
-
-  // XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
-  // JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
-  // JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
-  // JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
-  // JoystickButton operatorYButton = new JoystickButton(operatorController, XboxController.Button.kY.value);
-  // JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
-  // JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
-  // JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
-  
-  //Instantiates the subsystems
-  Shooter shooter = new Shooter();
-  DriveTrain driveTrain = new DriveTrain();
-  Hopper hopper = new Hopper();
-  Intake intake = new Intake();
-  Turret turret = new Turret();
-  ControlPanel controlPanel = new ControlPanel();
-
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -122,17 +96,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    // operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
-    // operatorLBumper.whenHeld(new IntakePowerCells(intake));
-    // shooterHoodHandler();
-    // hopperHandler();
-    // controlPanelHandler();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
-    driveTrain.setDefaultCommand(new TankDrive(driveTrain));
-    turret.setDefaultCommand(new TurnTurret(turret));
   }
 
   /*

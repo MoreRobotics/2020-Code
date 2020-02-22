@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.commands.TankDrive;
 
 public class DriveTrain extends SubsystemBase {
   WPI_TalonFX falconFrontRight, falconRearRight, falconFrontLeft, falconRearLeft;
@@ -43,16 +44,26 @@ public class DriveTrain extends SubsystemBase {
    falconRearLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
    drive = new DifferentialDrive(rightDrive, leftDrive);
-   gyro = new PigeonIMU(Constants.SHOTTER_FEEDER_MOTOR_ID);
+   gyro = new PigeonIMU(Constants.SHOOTER_FEEDER_MOTOR_ID);
    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+   this.setDefaultCommand(new TankDrive(this));
+
+   falconFrontLeft.setSensorPhase(true);
+   falconFrontRight.setSensorPhase(true);
 
    //falconRearLeft.follow(falconFrontLeft);
    //falconRearRight.follow(falconFrontRight);
    
   }
 
-  private double getHeading() {
-    final double [] ypr = new double[3];
+  public void zeroHeading() {
+    gyro.setCompassAngle(0.0);
+  }
+
+
+
+  public double getHeading() {
+    double [] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);
     return Math.IEEEremainder(ypr[0], 360);
   }
@@ -62,8 +73,6 @@ public class DriveTrain extends SubsystemBase {
     //drive();
     // This method will be called once per scheduler run
     odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftDistance(), getRightDistance());
-
-
   }
 
   public double getLeftDistance() {
@@ -83,6 +92,10 @@ public class DriveTrain extends SubsystemBase {
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(falconRearLeft.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER ,
     falconFrontRight.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER );
+  }
+
+  public void resetOdometry(Pose2d pose2d) {
+    odometry.resetPosition(pose2d, Rotation2d.fromDegrees(getHeading()));
   }
 
   //Drives the robot depending on the thumbstick inputs

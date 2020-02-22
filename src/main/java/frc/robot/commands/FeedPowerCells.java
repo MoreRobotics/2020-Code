@@ -37,7 +37,7 @@ public class FeedPowerCells extends CommandBase {
   @Override
   public void end(boolean interrupted) {
       //Stops the hopper feeder motor
-      hopper.stopFront();
+      hopper.stopFeeder();
   }
 
   // Returns true when the command should end.

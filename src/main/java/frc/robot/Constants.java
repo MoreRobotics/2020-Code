@@ -27,11 +27,11 @@ public final class Constants {
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     //Defines the IDs of the motor controllers on the shooter
-    public static final int SHOOTER_LEFT_MASTER_MOTOR_ID = 22;
-    public static final int SHOOTER_LEFT_SLAVE_MOTOR_ID = 23;
-    public static final int SHOOTER_RIGHT_MASTER_MOTOR_ID = 20;
-    public static final int SHOOTER_RIGHT_SLAVE_MOTOR_ID = 21;
-    public static final int SHOTTER_FEEDER_MOTOR_ID = 24;
+    public static final int SHOOTER_LEFT_MASTER_MOTOR_ID = 20;
+    public static final int SHOOTER_LEFT_SLAVE_MOTOR_ID = 21;
+    public static final int SHOOTER_RIGHT_MASTER_MOTOR_ID = 22;
+    public static final int SHOOTER_RIGHT_SLAVE_MOTOR_ID = 23;
+    public static final int SHOOTER_FEEDER_MOTOR_ID = 24;
     //TODO: Add shooter feeder with ID = 24
 
     //Defines the channels of the solenoids on the shooter
@@ -39,7 +39,7 @@ public final class Constants {
     public static final int SHOOTER_SOLENOID_REVERSE_CHANNEL = 1;
 
     //Defines the speed the shooter wheels will be run ([-1.0, 1.0])
-    public static final double SHOOTER_SPEED = 1.0;
+    public static final double SHOOTER_SPEED = 1;
 
     //Defines the default target shooter RPM
     public static final double SHOOTER_DEFAULT_TARGET_RPM = 5000;
@@ -61,7 +61,7 @@ public final class Constants {
     public static final double INTAKE_SPEED = 1.0;
 
     //Defines the speed the hopper wheels will be run at ([-1.0, 1.0])
-    public static final double HOPPER_SPEED = 1.0;
+    public static final double HOPPER_SPEED = 0.5;
 
     //Defines the ID of the motor controller on the turret
     public static final int TURRET_MOTOR_ID = 40;
@@ -94,16 +94,28 @@ public final class Constants {
     public static final int PIDLOOP_INDEX = 0;
 
     //Trajectory PID
-    public static final double ksVolts = 0.161;
-    public static final double kvVoltSecondsPerInch = 0.0612;
-    public static final double kaVoltSecondsSquaredPerInch = 0.00495;
-    public static final double kPDriveVel = 0.465;
-   
-    public static final double kTrackwidthInches = 28.45;
-    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthInches);
+    // public static final double ksVolts = 0.161;
+    // public static final double kvVoltSecondsPerInch = 0.0612;
+    // public static final double kaVoltSecondsSquaredPerInch = 0.00495;
+    // public static final double kPDriveVel = 0.465;
 
-    public static final double kMaxSpeedInchesPerSecond = 144;
-    public static final double kMaxAccelerationInchesPerSecondSquared = 144;
+    public static final double ksVolts = 0.161;
+    public static final double kvVoltSecondsPerMeter = 2.409;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.195;
+    public static final double kPDriveVel = .465;
+   
+    // public static final double kTrackwidthInches = 28.45;
+    // public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthInches);
+
+    public static final double kTrackwidthMeters = 0.72;
+    public static final DifferentialDriveKinematics kDriveKinematics =
+        new DifferentialDriveKinematics(kTrackwidthMeters);
+
+    // public static final double kMaxSpeedInchesPerSecond = 144;
+    // public static final double kMaxAccelerationInchesPerSecondSquared = 144;
+
+    public static final double kMaxSpeedMetersPerSecond = 3.658;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3.658;
 
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
@@ -111,6 +123,6 @@ public final class Constants {
     public static final double kEncoderDistancePerPulse = 5362.0224;
 
     public static final double EDGES_PER_REVOLUTION = 21446.0896;
-    public static final double WHEEL_DIAMETER = 6;
+    public static final double WHEEL_DIAMETER = .152;
 
 }  

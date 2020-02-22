@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.commands.TurnTurret;
 
 public class Turret extends SubsystemBase {
   //Declares the motor controller for the turret motor
@@ -33,7 +34,8 @@ public class Turret extends SubsystemBase {
     turretMotor.config_kF(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kF, Constants.TURRET_TIMEOUT);
 		turretMotor.config_kP(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kP, Constants.TURRET_TIMEOUT);
 		turretMotor.config_kI(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kI, Constants.TURRET_TIMEOUT);
-		turretMotor.config_kD(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kD, Constants.TURRET_TIMEOUT);
+    turretMotor.config_kD(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kD, Constants.TURRET_TIMEOUT);
+    this.setDefaultCommand(new TurnTurret(this));
   }
   
   //Turns the turret
@@ -62,7 +64,7 @@ public class Turret extends SubsystemBase {
     }
     double targetPosition = power * 4096 * Constants.TURRET_GEAR_RATIO;
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
-    System.out.println(targetPosition);
+    //System.out.println(targetPosition);
   }
 
   //Stops the turret

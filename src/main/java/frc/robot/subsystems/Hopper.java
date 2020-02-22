@@ -29,7 +29,7 @@ public class Hopper extends SubsystemBase {
 
   //Starts the front two hopper motors
   public void startFront() {
-    wheelFrontMaster.set(ControlMode.PercentOutput, Constants.HOPPER_SPEED);
+    wheelFrontMaster.set(ControlMode.PercentOutput, -Constants.HOPPER_SPEED);
   }
 
   //Stops the front two hopper motors

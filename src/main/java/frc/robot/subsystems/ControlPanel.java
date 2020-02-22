@@ -27,11 +27,13 @@ public class ControlPanel extends SubsystemBase {
   
   //Turns the control panel left
   public void turnControlPanelLeft() {
-    controlPanelMotor.set(ControlMode.PercentOutput, -Constants.CONTROL_PANEL_SPEED);
+    controlPanelMotor.setInverted(true);
+    controlPanelMotor.set(ControlMode.PercentOutput, Constants.CONTROL_PANEL_SPEED);
   }
 
   //Turns the control panel right
   public void turnControlPanelRight() {
+    controlPanelMotor.setInverted(false);
     controlPanelMotor.set(ControlMode.PercentOutput, Constants.CONTROL_PANEL_SPEED);
   }
 

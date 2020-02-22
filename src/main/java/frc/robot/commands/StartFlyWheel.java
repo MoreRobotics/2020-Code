@@ -32,6 +32,7 @@ public class StartFlyWheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //flyWheel.startShooter();
   }
 
   // Called once the command ends or is interrupted.

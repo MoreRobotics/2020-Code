@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -50,6 +49,7 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  //Instantiates the controllers and its associated buttons
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   JoystickButton driverLBumper = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
   JoystickButton driverRBumper = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
@@ -79,7 +79,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
+    operatorAButton.whenHeld(new StartFlyWheel(shooter));
     operatorLBumper.whenHeld(new IntakePowerCells(intake));
     shooterHoodHandler();
     hopperHandler();
@@ -110,21 +110,44 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerInch, Constants.kaVoltSecondsSquaredPerInch), Constants.kDriveKinematics, 10);
+    var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(Constants.ksVolts,
+                                       Constants.kvVoltSecondsPerMeter,
+                                       Constants.kaVoltSecondsSquaredPerMeter),
+            Constants.kDriveKinematics,
+            10);
 
-    TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedInchesPerSecond, Constants.kMaxAccelerationInchesPerSecondSquared).setKinematics(Constants.kDriveKinematics).addConstraint(autoVoltageConstraint);
-    
-    Trajectory autoOne = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)), 
-      List.of(new Translation2d(1, 1), new Translation2d(2, -1)), 
-      new Pose2d(3, 0, new Rotation2d(0)), config);
-    
+    // Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
+                             Constants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(Constants.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+    // An example trajectory to follow.  All units in meters.
+    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(
+            new Translation2d(1, 1),
+            new Translation2d(2, -1)
+        ),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(3, 0, new Rotation2d(0)),
+        // Pass config
+        config
+    );
     RamseteCommand ramseteCommand = new RamseteCommand(
-      autoOne, 
+      exampleTrajectory, 
       driveTrain::getPose, 
       new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta), 
       new SimpleMotorFeedforward(Constants.ksVolts, 
-                                 Constants.kvVoltSecondsPerInch,
-                                 Constants.kaVoltSecondsSquaredPerInch),
+                                 Constants.kvVoltSecondsPerMeter,
+                                 Constants.kaVoltSecondsSquaredPerMeter),
       Constants.kDriveKinematics,
       driveTrain::getWheelSpeeds,
       new PIDController(Constants.kPDriveVel, 0, 0),
