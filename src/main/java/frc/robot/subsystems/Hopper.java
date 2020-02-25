@@ -39,7 +39,7 @@ public class Hopper extends SubsystemBase {
 
   //Starts the hopper feeder motor
   public void startFeeder() {
-    wheelFeeder.set(ControlMode.PercentOutput, 1);
+    wheelFeeder.set(ControlMode.PercentOutput, -1);
   }
 
   //Stops the hopper feeder motor
