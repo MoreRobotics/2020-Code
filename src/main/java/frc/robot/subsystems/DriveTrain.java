@@ -19,6 +19,9 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -26,10 +29,13 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.TrajectoryManager;
 import frc.robot.commands.TankDrive;
 
 public class DriveTrain extends SubsystemBase {
@@ -40,6 +46,10 @@ public class DriveTrain extends SubsystemBase {
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   PigeonIMU gyro;
   DifferentialDriveOdometry odometry;
+  SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(Constants.ksVolts, 
+    Constants.kvVoltSecondsPerMeter,
+    Constants.kaVoltSecondsSquaredPerMeter);
+
   
 
   /**
@@ -76,6 +86,19 @@ public class DriveTrain extends SubsystemBase {
    //falconRearLeft.follow(falconFrontLeft);
    //falconRearRight.follow(falconFrontRight);
    
+  }
+  public RamseteCommand getRamseteCommand(Trajectory trajectory) {
+    return new RamseteCommand(
+      trajectory, 
+      this::getPose, 
+      new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta), 
+      simpleMotorFeedforward,
+      Constants.kDriveKinematics,
+      this::getWheelSpeeds,
+      new PIDController(Constants.kPDriveVel, 0, 0),
+      new PIDController(Constants.kPDriveVel, 0, 0),
+      this::tankDriveVolts,
+      this);
   }
 
   public void zeroHeading() {
