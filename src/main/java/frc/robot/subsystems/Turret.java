@@ -10,6 +10,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,6 +26,9 @@ public class Turret extends SubsystemBase {
 
   //Declares the operator controller
   XboxController operatorController;
+  NetworkTableEntry yaw;
+  double targetHeightFromCamera = 1;
+  double cameraAngleToTarget = 1;
 
   /**
    * Creates a new Turret.
@@ -64,6 +70,7 @@ public class Turret extends SubsystemBase {
     }
     double targetPosition = power * 4096 * Constants.TURRET_GEAR_RATIO;
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
+    turretMotor.set(ControlMode.PercentOutput, 1);
     //System.out.println(targetPosition);
   }
 
@@ -72,11 +79,16 @@ public class Turret extends SubsystemBase {
     turretMotor.set(ControlMode.MotionMagic, 0);
 
   }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
+    NetworkTableInstance table = NetworkTableInstance.getDefault();
     //Deadband check
+    NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
+    yaw = cameraTable.getEntry("targetYaw");
+    double distanceFromTarget = targetHeightFromCamera / Math.tan(cameraAngleToTarget);
     turnTurret();    
     
   }
