@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -81,9 +80,13 @@ public final class Constants {
     public static final int CONTROL_PANEL_SPEED = 1;
     
     //Defines the conversion factor of encoder units to degrees
-    public static final double ENCODER_UNITS_TO_DEGREES = 4096/360;
+    public static final double ENCODER_UNITS_TO_DEGREES = 4096.0/360.0;
     //Turret ratio to find the angle of the turret
     public static final double TURRET_GEAR_RATIO = 10;
+    public static final double TURRET_ENCODER_EDGES = 4096.0;
+    public static final double TURRET_MAX_ROTATION_DEGREES = 90.0;
+
+    public static final double TURRET_MAX_ROTATION= Constants.TURRET_MAX_ROTATION_DEGREES * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
 
     //Turret Gains
     public static final int kTimeoutMs = 30;
@@ -96,6 +99,11 @@ public final class Constants {
 
     //PID Loop Index
     public static final int PIDLOOP_INDEX = 0;
+
+    public static final double CAMERA_HEIGHT = 0.6223;
+    public static final double TARGET_HEIGHT = 2.495;
+    public static final double CAMERA_ANGLE = 20;
+
 
     //Trajectory PID
     // public static final double ksVolts = 0.161;

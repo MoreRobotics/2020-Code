@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -28,8 +29,10 @@ public class Turret extends SubsystemBase {
   //Declares the operator controller
   XboxController operatorController;
   NetworkTableEntry yaw;
-  double targetHeightFromCamera = 1;
-  double cameraAngleToTarget = 1;
+  NetworkTableEntry pitch;
+  NetworkTableEntry isDriverMode;
+  double targetHeightFromCamera = Constants.TARGET_HEIGHT - Constants.CAMERA_HEIGHT;
+  double targetPosition = 0 * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
 
   /**
    * Creates a new Turret.
@@ -56,9 +59,16 @@ public class Turret extends SubsystemBase {
     
     int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition();
     absolutePosition &= 0xFFF;
-    if (true) {absolutePosition *= -1;}
-    if (false) {absolutePosition *= -1;}
+    absolutePosition *= -1;
     turretMotor.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    
+    NetworkTableInstance table = NetworkTableInstance.getDefault();
+    NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
+    yaw = cameraTable.getEntry("targetYaw");
+    pitch = cameraTable.getEntry("targetPitch");
+    isDriverMode = cameraTable.getEntry("driver_mode");
+
+    turnTurret();
   }
   
   //Turns the turret
@@ -75,7 +85,7 @@ public class Turret extends SubsystemBase {
       
     }
     double degreesPerMotorRotation = 360/10;
-    double targetPosition = power * 4096 * Constants.TURRET_GEAR_RATIO;
+    double targetPosition = power * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
     //?double amountRotatedPer100PercentOutput = Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
     */
@@ -85,9 +95,16 @@ public class Turret extends SubsystemBase {
       power = 0;
       
     }
-    double targetPosition = power * 4096 * Constants.TURRET_GEAR_RATIO;
+    targetPosition += power * 0.1 * Constants.TURRET_MAX_ROTATION;
+    if (targetPosition > Constants.TURRET_MAX_ROTATION) {
+      targetPosition = Constants.TURRET_MAX_ROTATION;
+    }
+    else if (targetPosition < -Constants.TURRET_MAX_ROTATION) {
+      targetPosition = -Constants.TURRET_MAX_ROTATION;
+    }
+
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
-    turretMotor.set(ControlMode.PercentOutput, 1);
+    //turretMotor.set(ControlMode.PercentOutput, 1);
     //System.out.println(targetPosition);
   }
 
@@ -97,16 +114,11 @@ public class Turret extends SubsystemBase {
 
   }
 
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    NetworkTableInstance table = NetworkTableInstance.getDefault();
-    //Deadband check
-    NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
-    yaw = cameraTable.getEntry("targetYaw");
-    double distanceFromTarget = targetHeightFromCamera / Math.tan(cameraAngleToTarget);
-    turnTurret();    
-    
+    SmartDashboard.putNumber("Yaw", yaw.getDouble(0.0));
+    double distanceFromTarget = targetHeightFromCamera / Math.tan(pitch.getDouble(0.0) + Constants.CAMERA_ANGLE);
+    SmartDashboard.putNumber("Distance to Target", distanceFromTarget);
   }
 }
