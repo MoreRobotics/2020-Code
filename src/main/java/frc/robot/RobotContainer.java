@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Robot;
 import frc.robot.Constants;
 
@@ -111,9 +112,18 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
+    switch(Robot.chosenAutoPath) {
+      case 0:
+        return new TestAutonomous(driveTrain, trajectoryManager.testPath);
+      
+      case 1:
+        return new TestAutonomous(driveTrain, trajectoryManager.lineToTrench);
+      
+      case 2:
+        return new TestAutonomous(driveTrain, trajectoryManager.linetoThreeCenterBalls);
 
-    return new TestAutonomous(driveTrain, trajectoryManager); 
-    
+      default:
+        return new TestAutonomous(driveTrain, trajectoryManager.testPath);
+    }
   }
 }
