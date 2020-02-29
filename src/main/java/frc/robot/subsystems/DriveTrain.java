@@ -49,6 +49,7 @@ public class DriveTrain extends SubsystemBase {
   SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(Constants.ksVolts, 
     Constants.kvVoltSecondsPerMeter,
     Constants.kaVoltSecondsSquaredPerMeter);
+  RamseteController ramseteController = new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta);
 
   
 
@@ -91,7 +92,7 @@ public class DriveTrain extends SubsystemBase {
     return new RamseteCommand(
       trajectory, 
       this::getPose, 
-      new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta), 
+      ramseteController, 
       simpleMotorFeedforward,
       Constants.kDriveKinematics,
       this::getWheelSpeeds,
@@ -117,7 +118,7 @@ public class DriveTrain extends SubsystemBase {
   public double getHeading() {
     double [] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);
-    System.out.println("Yaw " + ypr[0]);
+    //System.out.println("Yaw " + ypr[0]);
     return Math.IEEEremainder(ypr[0], 360);
   }
 

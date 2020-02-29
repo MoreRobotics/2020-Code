@@ -7,16 +7,13 @@
 
 package frc.robot.commands;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class AutonomousOne extends CommandBase {
+public class AutoShooter extends CommandBase {
   /**
-   * Creates a new AutonomousOne.
+   * Creates a new AutoShooter.
    */
-  public AutonomousOne() {
+  public AutoShooter() {
     
     // Use addRequirements() here to declare subsystem dependencies.
   }

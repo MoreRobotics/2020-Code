@@ -44,7 +44,10 @@ public final class Constants {
 
     //Defines the default target shooter RPM
     public static final double SHOOTER_DEFAULT_TARGET_RPM = 5000;
-    public static final double RPM_TO_ENCODER_UNITS_PER_100_MS = 50 * 2048;
+    public static final double RPM_TO_ENCODER_UNITS_PER_100_MS = .1 * 4096.0 / 60.0;
+
+    //Shooter PID
+    public final static Gains kGains_Shooter_Velocity = new Gains(0, 0, 0, 1023.0/53000.0, 300, 1.0);
 
     //Defines the IDs of the motor controllers on the hopper
     public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 51;
@@ -83,13 +86,13 @@ public final class Constants {
     public static final double TURRET_GEAR_RATIO = 10;
 
     //Turret Gains
-    public static final int TURRET_TIMEOUT = 30;
+    public static final int kTimeoutMs = 30;
     
     //PID GAINS
-    public static Gains TURRET_GAINS = new Gains(0.0, 0.0, 0.0, 0.0, 0, 1.0);
+    public static Gains k_Gains_Turret_Position = new Gains(0.0, 0.0, 0.0, 0.0, 0, 1.0);
 
     //Gains Index
-    public static final int GAINS_INDEX = 0;
+    public static final int kPIDLoopIdx = 0;
 
     //PID Loop Index
     public static final int PIDLOOP_INDEX = 0;

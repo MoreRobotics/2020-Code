@@ -81,7 +81,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    operatorAButton.whenHeld(new StartFlyWheel(shooter));
+    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
     operatorLBumper.whenHeld(new IntakePowerCells(intake));
     shooterHoodHandler();
     hopperHandler();

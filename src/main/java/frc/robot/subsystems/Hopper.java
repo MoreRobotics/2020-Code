@@ -24,12 +24,13 @@ public class Hopper extends SubsystemBase {
     //Instantiates shooter motors
     wheelFrontMaster = new TalonSRX(Constants.HOPPER_FRONT_MASTER_MOTOR_ID);
     wheelFeeder = new TalonSRX(Constants.HOPPER_FEEDER_MOTOR_ID);
+    wheelFrontMaster.setInverted(true);
   
   }
 
   //Starts the front two hopper motors
   public void startFront() {
-    wheelFrontMaster.set(ControlMode.PercentOutput, -Constants.HOPPER_SPEED);
+    wheelFrontMaster.set(ControlMode.PercentOutput, Constants.HOPPER_SPEED);
   }
 
   //Stops the front two hopper motors

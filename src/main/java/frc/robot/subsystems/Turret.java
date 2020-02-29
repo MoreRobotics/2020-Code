@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -30,22 +31,38 @@ public class Turret extends SubsystemBase {
   public Turret() {
     turretMotor = new TalonSRX(Constants.TURRET_MOTOR_ID);
     operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
-    turretMotor.selectProfileSlot(Constants.GAINS_INDEX, Constants.PIDLOOP_INDEX);
-    turretMotor.config_kF(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kF, Constants.TURRET_TIMEOUT);
-		turretMotor.config_kP(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kP, Constants.TURRET_TIMEOUT);
-		turretMotor.config_kI(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kI, Constants.TURRET_TIMEOUT);
-    turretMotor.config_kD(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kD, Constants.TURRET_TIMEOUT);
+
+    turretMotor.configFactoryDefault();
+    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    turretMotor.setSensorPhase(true);
+    
+    turretMotor.configNominalOutputForward(0, Constants.kTimeoutMs);
+    turretMotor.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    turretMotor.configPeakOutputForward(1, Constants.kTimeoutMs);
+    turretMotor.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+
+    turretMotor.config_kF(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kF, Constants.kTimeoutMs);
+		turretMotor.config_kP(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kP, Constants.kTimeoutMs);
+		turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kI, Constants.kTimeoutMs);
+    turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kD, Constants.kTimeoutMs);
+
     this.setDefaultCommand(new TurnTurret(this));
+    
+    int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition();
+    absolutePosition &= 0xFFF;
+    if (true) {absolutePosition *= -1;}
+    if (false) {absolutePosition *= -1;}
+    turretMotor.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
   }
   
   //Turns the turret
   public void turnTurret() {
     /**double power = operatorController.getX(Hand.kLeft);
-    turretMotor.selectProfileSlot(Constants.GAINS_INDEX, Constants.PIDLOOP_INDEX);
-    turretMotor.config_kF(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kF, Constants.TURRET_TIMEOUT);
-		turretMotor.config_kP(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kP, Constants.TURRET_TIMEOUT);
-		turretMotor.config_kI(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kI, Constants.TURRET_TIMEOUT);
-		turretMotor.config_kD(Constants.GAINS_INDEX, Constants.TURRET_GAINS.kD, Constants.TURRET_TIMEOUT);
+    turretMotor.selectProfileSlot(Constants.kPIDLoopIdx, Constants.PIDLOOP_INDEX);
+    turretMotor.config_kF(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kF, Constants.kTimeoutMs);
+		turretMotor.config_kP(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kP, Constants.kTimeoutMs);
+		turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kI, Constants.kTimeoutMs);
+		turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kD, Constants.kTimeoutMs);
     //Deadband check
     if(Math.abs(power) <= 0.05) {
       power = 0;
