@@ -10,15 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
-
-
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,7 +25,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
+//Declares the chooser objects
+  private SendableChooser<Integer> autoPathChooser;
+  public static int chosenAutoPath;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -46,6 +42,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM);
     LiveWindow.disableAllTelemetry();
     m_robotContainer.trajectoryManager.LoadAllPaths();
+
+    //Instantiates the auto path chooser and adds its options
+    autoPathChooser = new SendableChooser<Integer>();
+    autoPathChooser.setDefaultOption("Test Path", 0);
+    autoPathChooser.addOption("Line to Trench", 1);
+    autoPathChooser.addOption("Line to Three Center Balls", 2);
   }
 
   /**
@@ -86,6 +88,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    //Gets the path selected from the auto path chooser
+    chosenAutoPath = autoPathChooser.getSelected();
   }
 
   /**
@@ -93,6 +98,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+
   }
 
   @Override
