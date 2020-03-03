@@ -55,6 +55,11 @@ public class Turret extends SubsystemBase {
 		turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kI, Constants.kTimeoutMs);
     turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kD, Constants.kTimeoutMs);
 
+    turretMotor.configMotionCruiseVelocity(800 / 4, Constants.kTimeoutMs);
+    turretMotor.configMotionAcceleration(800 / 4, Constants.kTimeoutMs);
+
+    turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+
     this.setDefaultCommand(new TurnTurret(this));
     
     int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition();
@@ -68,7 +73,6 @@ public class Turret extends SubsystemBase {
     pitch = cameraTable.getEntry("targetPitch");
     isDriverMode = cameraTable.getEntry("driver_mode");
 
-    turnTurret();
   }
   
   //Turns the turret

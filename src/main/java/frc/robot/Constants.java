@@ -35,8 +35,8 @@ public final class Constants {
     //TODO: Add shooter feeder with ID = 24
 
     //Defines the channels of the solenoids on the shooter
-    public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 0;
-    public static final int SHOOTER_SOLENOID_REVERSE_CHANNEL = 1;
+    public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 2;
+    public static final int SHOOTER_SOLENOID_REVERSE_CHANNEL = 3;
 
     //Defines the speed the shooter wheels will be run ([-1.0, 1.0])
     public static final double SHOOTER_SPEED = 1;
@@ -46,7 +46,7 @@ public final class Constants {
     public static final double RPM_TO_ENCODER_UNITS_PER_100_MS = .1 * 4096.0 / 60.0;
 
     //Shooter PID
-    public final static Gains kGains_Shooter_Velocity = new Gains(0, 0, 0, 1023.0/53000.0, 300, 1.0);
+    public final static Gains kGains_Shooter_Velocity = new Gains(0.01, 0, 0, 1023.0/53000.0, 300, 1.0);
 
     //Defines the IDs of the motor controllers on the hopper
     public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 51;
@@ -57,8 +57,8 @@ public final class Constants {
     public static final int INTAKE_MOTOR_ID = 60;
 
     //Defines the channels of the solenoids on the intake
-    public static final int INTAKE_SOLENOID_FORWARD_CHANNEL = 2;
-    public static final int INTAKE_SOLENOID_REVERSE_CHANNEL = 3;
+    public static final int INTAKE_SOLENOID_FORWARD_CHANNEL = 0;
+    public static final int INTAKE_SOLENOID_REVERSE_CHANNEL = 1;
 
     //Defines the speed the intake wheels will be run at ([-1.0, 1.0])
     public static final double INTAKE_SPEED = 1.0;
@@ -92,7 +92,7 @@ public final class Constants {
     public static final int kTimeoutMs = 30;
     
     //PID GAINS
-    public static Gains k_Gains_Turret_Position = new Gains(0.0, 0.0, 0.0, 0.0, 0, 1.0);
+    public static Gains k_Gains_Turret_Position = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
 
     //Gains Index
     public static final int kPIDLoopIdx = 0;

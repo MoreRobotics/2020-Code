@@ -97,7 +97,7 @@ public class Shooter extends SubsystemBase {
       
     //TODO: Figure out why the set lines won't cause the motors to spin
     wheelLeftMaster.set(ControlMode.Velocity, targetVelocityEncoderUnitsPer100ms);
-    }
+  }
 
   //Turns the shooter off
   public void stopShooter() {
@@ -130,7 +130,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    SmartDashboard.putNumber("Shooter RPM", wheelLeftMaster.getSelectedSensorVelocity() / Constants.RPM_TO_ENCODER_UNITS_PER_100_MS);
 
     // This method will be called once per scheduler run
   }

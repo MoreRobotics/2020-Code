@@ -41,10 +41,9 @@ public class DriveTrain extends SubsystemBase {
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   PigeonIMU gyro;
   DifferentialDriveOdometry odometry;
-  SimpleMotorFeedforward simpleMotorFeedforward = new SimpleMotorFeedforward(Constants.ksVolts, 
-    Constants.kvVoltSecondsPerMeter,
-    Constants.kaVoltSecondsSquaredPerMeter);
-  RamseteController ramseteController = new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta);
+  SimpleMotorFeedforward simpleMotorFeedforward;
+  RamseteController ramseteController;
+  PIDController leftPIDController, rightPIDController;
 
   
 
@@ -81,7 +80,14 @@ public class DriveTrain extends SubsystemBase {
 
    //falconRearLeft.follow(falconFrontLeft);
    //falconRearRight.follow(falconFrontRight);
-   
+   ramseteController = new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta);
+   simpleMotorFeedforward = new SimpleMotorFeedforward(Constants.ksVolts, 
+    Constants.kvVoltSecondsPerMeter,
+    Constants.kaVoltSecondsSquaredPerMeter);
+
+   leftPIDController = new PIDController(Constants.kPDriveVel, 0, 0);
+   rightPIDController = new PIDController(Constants.kPDriveVel, 0, 0);
+
   }
   public RamseteCommand getRamseteCommand(Trajectory trajectory) {
     return new RamseteCommand(
@@ -91,8 +97,8 @@ public class DriveTrain extends SubsystemBase {
       simpleMotorFeedforward,
       Constants.kDriveKinematics,
       this::getWheelSpeeds,
-      new PIDController(Constants.kPDriveVel, 0, 0),
-      new PIDController(Constants.kPDriveVel, 0, 0),
+      leftPIDController,
+      rightPIDController,
       this::tankDriveVolts,
       this);
   }
