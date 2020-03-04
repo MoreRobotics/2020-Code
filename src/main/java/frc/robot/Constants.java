@@ -92,7 +92,7 @@ public final class Constants {
     public static final int kTimeoutMs = 30;
     
     //PID GAINS
-    public static Gains k_Gains_Turret_Position = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
+    public static Gains k_Gains_Turret_Position = new Gains(0.2, 0.000000001, 0.0, 0.2, 0, 1.0);
 
     //Gains Index
     public static final int kPIDLoopIdx = 0;

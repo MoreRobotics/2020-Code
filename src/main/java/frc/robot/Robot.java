@@ -82,6 +82,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    chosenAutoPath = autoPathChooser.getSelected();
+    
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -90,7 +92,7 @@ public class Robot extends TimedRobot {
     }
 
     //Gets the path selected from the auto path chooser
-    chosenAutoPath = autoPathChooser.getSelected();
+    
   }
 
   /**

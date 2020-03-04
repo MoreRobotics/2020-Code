@@ -55,14 +55,14 @@ public class Turret extends SubsystemBase {
 		turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kI, Constants.kTimeoutMs);
     turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kD, Constants.kTimeoutMs);
 
-    turretMotor.configMotionCruiseVelocity(800 / 4, Constants.kTimeoutMs);
-    turretMotor.configMotionAcceleration(800 / 4, Constants.kTimeoutMs);
+    turretMotor.configMotionCruiseVelocity(800 / 3, Constants.kTimeoutMs);
+    turretMotor.configMotionAcceleration(800 / 3, Constants.kTimeoutMs);
 
-    turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    //turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
     this.setDefaultCommand(new TurnTurret(this));
     
-    int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition();
+    int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition() - 2121;
     absolutePosition &= 0xFFF;
     absolutePosition *= -1;
     turretMotor.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
@@ -77,22 +77,6 @@ public class Turret extends SubsystemBase {
   
   //Turns the turret
   public void turnTurret() {
-    /**double power = operatorController.getX(Hand.kLeft);
-    turretMotor.selectProfileSlot(Constants.kPIDLoopIdx, Constants.PIDLOOP_INDEX);
-    turretMotor.config_kF(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kF, Constants.kTimeoutMs);
-		turretMotor.config_kP(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kP, Constants.kTimeoutMs);
-		turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kI, Constants.kTimeoutMs);
-		turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.TURRET_GAINS.kD, Constants.kTimeoutMs);
-    //Deadband check
-    if(Math.abs(power) <= 0.05) {
-      power = 0;
-      
-    }
-    double degreesPerMotorRotation = 360/10;
-    double targetPosition = power * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
-    turretMotor.set(ControlMode.MotionMagic, targetPosition);
-    //?double amountRotatedPer100PercentOutput = Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
-    */
     double power = operatorController.getX(Hand.kLeft);
     //Deadband Check
     if(Math.abs(power) <= 0.05) {
@@ -106,7 +90,7 @@ public class Turret extends SubsystemBase {
     else if (targetPosition < -Constants.TURRET_MAX_ROTATION) {
       targetPosition = -Constants.TURRET_MAX_ROTATION;
     }
-
+    //System.out.println("TurretPosition" + targetPosition);
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
     //turretMotor.set(ControlMode.PercentOutput, 1);
     //System.out.println(targetPosition);
