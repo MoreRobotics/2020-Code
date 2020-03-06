@@ -31,6 +31,7 @@ public class Shooter extends SubsystemBase {
 
   //Declares the shooter pneumatic double solenoid
   DoubleSolenoid shooterSolenoid;
+  double currentShooterSpeed = Constants.SHOOTER_SPEED;
 
   //Declares the operator controller
   XboxController operatorController;
@@ -85,8 +86,19 @@ public class Shooter extends SubsystemBase {
 
   //Turns the shooter on
   public void startShooter() {
-    wheelLeftMaster.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
+
+    wheelLeftMaster.set(ControlMode.PercentOutput, currentShooterSpeed);
     //wheelRightMaster.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
+
+  }
+
+  public void slowShooter() {
+    currentShooterSpeed = Constants.LOWERED_SHOOTER_SPEED;
+
+  }
+
+  public void maxShooter() {
+    currentShooterSpeed = Constants.SHOOTER_SPEED;
 
   }
 
