@@ -96,6 +96,23 @@ public class Turret extends SubsystemBase {
     //System.out.println(targetPosition);
   }
 
+  public void turretToAngle(double turretAngle) {
+     double encoderTickValue;
+     encoderTickValue = turretAngle * Constants.ENCODER_UNITS_TO_DEGREES;
+     turretMotor.set(ControlMode.MotionMagic, encoderTickValue);
+  }
+ 
+  public void joystickToAngle() {
+    operatorController.getX(Hand.kLeft)
+  }
+
+  public void turretToAngleAbsolute() {
+    //Angle want to turn to from joystick
+    
+    //Get gyro yaw
+    //Calculate turret relative angle of joystick and gyro
+  }
+
   //Stops the turret
   public void stopTurret() {
     turretMotor.set(ControlMode.MotionMagic, 0);

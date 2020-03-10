@@ -80,13 +80,13 @@ public final class Constants {
     public static final int CONTROL_PANEL_SPEED = 1;
     
     //Defines the conversion factor of encoder units to degrees
-    public static final double ENCODER_UNITS_TO_DEGREES = 4096.0/360.0;
+    public static final double ENCODER_UNITS_TO_DEGREES = 4096.0/360.0 * 10;
     //Turret ratio to find the angle of the turret
     public static final double TURRET_GEAR_RATIO = 10;
     public static final double TURRET_ENCODER_EDGES = 4096.0;
     public static final double TURRET_MAX_ROTATION_DEGREES = 90.0;
 
-    public static final double TURRET_MAX_ROTATION= Constants.TURRET_MAX_ROTATION_DEGREES * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
+    public static final double TURRET_MAX_ROTATION= Constants.TURRET_MAX_ROTATION_DEGREES * Constants.ENCODER_UNITS_TO_DEGREES;
 
     //Turret Gains
     public static final int kTimeoutMs = 30;

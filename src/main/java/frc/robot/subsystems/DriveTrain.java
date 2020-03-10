@@ -119,7 +119,7 @@ public class DriveTrain extends SubsystemBase {
   public double getHeading() {
     double [] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);
-    //System.out.println("Yaw " + ypr[0]);
+    System.out.println("Yaw " + ypr[0]);
     return Math.IEEEremainder(ypr[0], 360);
   }
 
