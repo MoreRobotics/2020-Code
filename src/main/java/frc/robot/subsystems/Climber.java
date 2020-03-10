@@ -26,6 +26,8 @@ public class Climber extends SubsystemBase {
     climberMotorLeft = new TalonSRX(Constants.CLIMBER_LEFT_MOTOR_ID);
     climberMotorRight = new TalonSRX(Constants.CLIMBER_RIGHT_MOTOR_ID);
     operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+
+    climberMotorRight.follow(climberMotorLeft);
   }
 
   //Manually raises the climber to height

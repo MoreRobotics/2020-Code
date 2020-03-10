@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -33,6 +34,7 @@ public class Turret extends SubsystemBase {
   NetworkTableEntry isDriverMode;
   double targetHeightFromCamera = Constants.TARGET_HEIGHT - Constants.CAMERA_HEIGHT;
   double targetPosition = 0 * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
+  double degreesOffTarget;
 
   /**
    * Creates a new Turret.
@@ -62,7 +64,7 @@ public class Turret extends SubsystemBase {
 
     this.setDefaultCommand(new TurnTurret(this));
     
-    int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition() - 2121;
+    int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition() - 5000;
     absolutePosition &= 0xFFF;
     absolutePosition *= -1;
     turretMotor.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
@@ -73,8 +75,34 @@ public class Turret extends SubsystemBase {
     pitch = cameraTable.getEntry("targetPitch");
     isDriverMode = cameraTable.getEntry("driver_mode");
 
+
   }
   
+  public void rotateToTurretAngle(Rotation2d rotationAngle) {
+    rotateToTarget(rotationAngle.getDegrees() * Constants.TURRET_GEAR_RATIO * Constants.ENCODER_UNITS_TO_DEGREES);
+    System.out.println(rotationAngle);
+  }
+
+  public void rotateToTarget(double target) {
+    targetPosition = target;
+    if (targetPosition > Constants.TURRET_MAX_ROTATION) {
+      targetPosition = Constants.TURRET_MAX_ROTATION;
+    }
+    else if (targetPosition < -Constants.TURRET_MAX_ROTATION) {
+      targetPosition = -Constants.TURRET_MAX_ROTATION;
+    }
+    turretMotor.set(ControlMode.MotionMagic, targetPosition);
+    System.out.println("Target Position " + targetPosition);
+  }
+
+  public void turnTurretAuto() {
+    NetworkTableInstance table = NetworkTableInstance.getDefault();
+    NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
+    yaw = cameraTable.getEntry("targetYaw");
+    degreesOffTarget = yaw.getDouble(0.0);
+    rotateToTarget(targetPosition - degreesOffTarget * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO);
+  }
+
   //Turns the turret
   public void turnTurret() {
     double power = operatorController.getX(Hand.kLeft);
@@ -83,17 +111,8 @@ public class Turret extends SubsystemBase {
       power = 0;
       
     }
-    targetPosition += power * 0.1 * Constants.TURRET_MAX_ROTATION;
-    if (targetPosition > Constants.TURRET_MAX_ROTATION) {
-      targetPosition = Constants.TURRET_MAX_ROTATION;
-    }
-    else if (targetPosition < -Constants.TURRET_MAX_ROTATION) {
-      targetPosition = -Constants.TURRET_MAX_ROTATION;
-    }
-    //System.out.println("TurretPosition" + targetPosition);
-    turretMotor.set(ControlMode.MotionMagic, targetPosition);
-    //turretMotor.set(ControlMode.PercentOutput, 1);
-    //System.out.println(targetPosition);
+    Rotation2d turretRotationAngle = new Rotation2d(operatorController.getY(Hand.kRight), operatorController.getX(Hand.kRight));
+    rotateToTurretAngle(turretRotationAngle);
   }
 
   public void turretToAngle(double turretAngle) {

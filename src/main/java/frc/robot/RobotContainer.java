@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 //import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -62,7 +63,8 @@ public class RobotContainer {
   JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
   JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
   JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
-
+  POVButton operatorDPadDown = new POVButton(operatorController, 180);
+  POVButton operatorDPadUp = new POVButton(operatorController, 0);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -102,6 +104,12 @@ public class RobotContainer {
   public void controlPanelHandler() {
     driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
     driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
+  }
+
+  public void intakeHandler() {
+    operatorDPadDown.whenHeld(new IntakePushDown(intake));
+    operatorDPadUp.whenHeld(new IntakePullUp(intake));
+
   }
 
   /**

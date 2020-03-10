@@ -40,6 +40,7 @@ public final class Constants {
 
     //Defines the speed the shooter wheels will be run ([-1.0, 1.0])
     public static final double SHOOTER_SPEED = 1;
+    public static final double LOWERED_SHOOTER_SPEED = 0.25;
 
     //Defines the default target shooter RPM
     public static final double SHOOTER_DEFAULT_TARGET_RPM = 5000;
@@ -92,7 +93,7 @@ public final class Constants {
     public static final int kTimeoutMs = 30;
     
     //PID GAINS
-    public static Gains k_Gains_Turret_Position = new Gains(0.2, 0.000000001, 0.0, 0.2, 0, 1.0);
+    public static Gains k_Gains_Turret_Position = new Gains(0.2, 1e-9, 0.0, 0.2, 0, 1.0);
 
     //Gains Index
     public static final int kPIDLoopIdx = 0;

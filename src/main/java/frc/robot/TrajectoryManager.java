@@ -22,11 +22,13 @@ public class TrajectoryManager {
   public Trajectory testPath;
   public Trajectory lineToTrench;
   public Trajectory linetoThreeCenterBalls;
+  public Trajectory shootingSpot;
+  public static Trajectory excessPath;
   
   public Trajectory LoadTrajectory(String trajectoryFile) {
     
     try {
-      Path path = Filesystem.getDeployDirectory().toPath().resolve("paths/" + trajectoryFile + ".wpilib.json");
+      Path path = Filesystem.getDeployDirectory().toPath().resolve("output/" + trajectoryFile + ".wpilib.json");
       return TrajectoryUtil.fromPathweaverJson(path);
     } 
     catch (IOException ex) {
@@ -38,7 +40,9 @@ public class TrajectoryManager {
   public void LoadAllPaths() {
     testPath = LoadTrajectory("testPath");
     lineToTrench = LoadTrajectory("lineToTrench");
-    linetoThreeCenterBalls = LoadTrajectory("linetoThreeCenterBalls");
+    linetoThreeCenterBalls = LoadTrajectory("lineToThreeCenterBalls");
+    //still needs to be added to Pathweaver
+    shootingSpot = LoadTrajectory("shootingSpot");
     
   }
 
