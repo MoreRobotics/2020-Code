@@ -24,6 +24,7 @@ import frc.robot.Constants;
 import frc.robot.commands.TurnTurret;
 
 public class Turret extends SubsystemBase {
+  private final DriveTrain driveTrain;
   //Declares the motor controller for the turret motor
   TalonSRX turretMotor;
 
@@ -33,13 +34,14 @@ public class Turret extends SubsystemBase {
   NetworkTableEntry pitch;
   NetworkTableEntry isDriverMode;
   double targetHeightFromCamera = Constants.TARGET_HEIGHT - Constants.CAMERA_HEIGHT;
-  double targetPosition = 0 * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO;
+  double targetPosition = 0 * Constants.ENCODER_UNITS_TO_DEGREES;
   double degreesOffTarget;
 
   /**
    * Creates a new Turret.
    */
-  public Turret() {
+  public Turret(DriveTrain driveTrain) {
+    this.driveTrain = driveTrain;
     turretMotor = new TalonSRX(Constants.TURRET_MOTOR_ID);
     operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
@@ -62,12 +64,12 @@ public class Turret extends SubsystemBase {
 
     //turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
-    this.setDefaultCommand(new TurnTurret(this));
+    this.setDefaultCommand(new TurnTurret(this, driveTrain));
     
-    int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition() - 5000;
+    int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition() - 8000;
     absolutePosition &= 0xFFF;
     absolutePosition *= -1;
-    turretMotor.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    turretMotor.setSelectedSensorPosition(0);
     
     NetworkTableInstance table = NetworkTableInstance.getDefault();
     NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
@@ -100,25 +102,30 @@ public class Turret extends SubsystemBase {
     NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
     yaw = cameraTable.getEntry("targetYaw");
     degreesOffTarget = yaw.getDouble(0.0);
-    rotateToTarget(targetPosition - degreesOffTarget * Constants.ENCODER_UNITS_TO_DEGREES * Constants.TURRET_GEAR_RATIO);
+    rotateToTarget(targetPosition - degreesOffTarget * Constants.ENCODER_UNITS_TO_DEGREES);
   }
 
   //Turns the turret
   public void turnTurret(DriveTrain driveTrain) {
-    double power = operatorController.getX(Hand.kLeft);
-    //Deadband Check
-    if(Math.abs(power) <= 0.05) {
-      power = 0;
-      
-    }
-    Rotation2d turretRotationAngle = new Rotation2d(operatorController.getY(Hand.kRight), operatorController.getX(Hand.kRight));
+    double x = operatorController.getY(Hand.kRight);
+     //Deadband Check
+     if(Math.abs(x) <= 0.05) {
+       x = 0;
+     }
+     double y = operatorController.getY(Hand.kRight);
+     //Deadband Check
+     if(Math.abs(y) <= 0.05) {
+       y = 0;
+     }
+    Rotation2d turretRotationAngle = new Rotation2d(-operatorController.getY(Hand.kRight), operatorController.getX(Hand.kRight));
     rotateToTurretAngle(turretRotationAngle);
+    System.out.println("rotation angle" + turretRotationAngle);
     //Get gyro yaw
     driveTrain.getHeading();
     //Calculate turret relative angle of joystick and gyro
     
   } 
-
+  
   public void turretToAngleAbsolute() {
     //Angle want to turn to from joystick
     
@@ -137,5 +144,6 @@ public class Turret extends SubsystemBase {
     SmartDashboard.putNumber("Yaw", yaw.getDouble(0.0));
     double distanceFromTarget = targetHeightFromCamera / Math.tan(pitch.getDouble(0.0) + Constants.CAMERA_ANGLE);
     SmartDashboard.putNumber("Distance to Target", distanceFromTarget);
+    SmartDashboard.putNumber("Target Position", targetPosition);
   }
 }

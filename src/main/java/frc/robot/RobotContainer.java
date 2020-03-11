@@ -44,7 +44,7 @@ public class RobotContainer {
   DriveTrain driveTrain = new DriveTrain();
   Hopper hopper = new Hopper();
   Intake intake = new Intake();
-  Turret turret = new Turret();
+  Turret turret = new Turret(driveTrain);
   ControlPanel controlPanel = new ControlPanel();
   TrajectoryManager trajectoryManager = new TrajectoryManager();
 

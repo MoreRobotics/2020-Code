@@ -7,18 +7,21 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnTurret extends CommandBase {
   private final Turret turret;
+  private final DriveTrain driveTrain;
   
   /**
    * Creates a new StartFlyWheel.
    */ 
-  public TurnTurret(Turret turret) {
+  public TurnTurret(Turret turret, DriveTrain driveTrain) {
     this.turret = turret;
+    this.driveTrain = driveTrain;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
   }
@@ -26,13 +29,13 @@ public class TurnTurret extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    turret.turnTurret();
+    turret.turnTurret(driveTrain);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turret.turnTurret();
+    turret.turnTurret(driveTrain);
   }
 
   // Called once the command ends or is interrupted.
