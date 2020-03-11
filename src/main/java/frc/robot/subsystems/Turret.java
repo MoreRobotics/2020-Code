@@ -79,7 +79,7 @@ public class Turret extends SubsystemBase {
   }
   
   public void rotateToTurretAngle(Rotation2d rotationAngle) {
-    rotateToTarget(rotationAngle.getDegrees() * Constants.TURRET_GEAR_RATIO * Constants.ENCODER_UNITS_TO_DEGREES);
+    rotateToTarget(rotationAngle.getDegrees() * Constants.ENCODER_UNITS_TO_DEGREES);
     System.out.println(rotationAngle);
   }
 
@@ -104,7 +104,7 @@ public class Turret extends SubsystemBase {
   }
 
   //Turns the turret
-  public void turnTurret() {
+  public void turnTurret(DriveTrain driveTrain) {
     double power = operatorController.getX(Hand.kLeft);
     //Deadband Check
     if(Math.abs(power) <= 0.05) {
@@ -113,23 +113,16 @@ public class Turret extends SubsystemBase {
     }
     Rotation2d turretRotationAngle = new Rotation2d(operatorController.getY(Hand.kRight), operatorController.getX(Hand.kRight));
     rotateToTurretAngle(turretRotationAngle);
-  }
-
-  public void turretToAngle(double turretAngle) {
-     double encoderTickValue;
-     encoderTickValue = turretAngle * Constants.ENCODER_UNITS_TO_DEGREES;
-     turretMotor.set(ControlMode.MotionMagic, encoderTickValue);
-  }
- 
-  public void joystickToAngle() {
-    operatorController.getX(Hand.kLeft)
-  }
+    //Get gyro yaw
+    driveTrain.getHeading();
+    //Calculate turret relative angle of joystick and gyro
+    
+  } 
 
   public void turretToAngleAbsolute() {
     //Angle want to turn to from joystick
     
-    //Get gyro yaw
-    //Calculate turret relative angle of joystick and gyro
+    
   }
 
   //Stops the turret
