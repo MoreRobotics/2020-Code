@@ -42,10 +42,11 @@ public class RobotContainer {
   //Instantiates the subsystems
   Shooter shooter = new Shooter();
   DriveTrain driveTrain = new DriveTrain();
-  Hopper hopper = new Hopper();
+  Hopper hopper = new Hopper(shooter);
   Intake intake = new Intake();
   Turret turret = new Turret(driveTrain);
   ControlPanel controlPanel = new ControlPanel();
+  Climber climber = new Climber();
   TrajectoryManager trajectoryManager = new TrajectoryManager();
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -85,11 +86,9 @@ public class RobotContainer {
     operatorLBumper.whenHeld(new IntakePowerCells(intake));
     shooterHoodHandler();
     hopperHandler();
-    controlPanelHandler();
-    
-
-    
+    controlPanelHandler();    
   }
+
   //Encapsulates the shooter hood commands
   public void shooterHoodHandler() {
     operatorBButton.whenPressed(new HoodAngleUp(shooter));
@@ -99,6 +98,7 @@ public class RobotContainer {
   public void hopperHandler() {
     operatorRBumper.whenHeld(new StagePowerCells(hopper));
     operatorYButton.whenHeld(new FeedPowerCells(hopper));
+    operatorBackButton.whenHeld(new RemoveBallsFromTransporter(hopper));
   }
 
   public void controlPanelHandler() {
@@ -109,8 +109,8 @@ public class RobotContainer {
   public void intakeHandler() {
     operatorDPadDown.whenHeld(new IntakePushDown(intake));
     operatorDPadUp.whenHeld(new IntakePullUp(intake));
-
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -56,6 +56,7 @@ public class Shooter extends SubsystemBase {
     wheelRightSlave.configFactoryDefault();
     wheelLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
     wheelRightMaster.setInverted(false);
+    wheelRightSlave.setInverted(false);
     wheelLeftMaster.setSensorPhase(true);
     //wheelLeftMaster.configFactoryDefault();
     wheelLeftMaster.setInverted(true);
@@ -63,7 +64,7 @@ public class Shooter extends SubsystemBase {
     wheelLeftSlave.setInverted(true);
 
     //wheelLeftSlave.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MASTER_MOTOR_ID);
-    wheelRightSlave.follow(wheelRightMaster);
+    wheelRightSlave.follow(wheelLeftMaster);
     wheelLeftSlave.follow(wheelLeftMaster);
     wheelRightMaster.follow(wheelLeftMaster);
 
@@ -114,7 +115,7 @@ public class Shooter extends SubsystemBase {
   //Turns the shooter off
   public void stopShooter() {
     wheelLeftMaster.set(ControlMode.PercentOutput, 0);
-    wheelRightMaster.set(ControlMode.PercentOutput, 0);
+    //wheelRightMaster.set(ControlMode.PercentOutput, 0);
   }
 
   //Gets the current position of the left wheel
