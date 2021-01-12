@@ -8,73 +8,114 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 //TODO: Display velocity (RPM) on Dashboard
 //TODO: Document PID Tuning
 
 public class Shooter extends SubsystemBase { 
   //Declares the motor controllers for the wheels in the shooter
-  TalonSRX wheelLeftMaster, wheelLeftSlave, wheelRight, extraMotorController;
+  TalonSRX wheelLeftMaster;
+  VictorSPX wheelLeftSlave, wheelRightMaster, wheelRightSlave;
 
-  //Declares and/or initializes the variables for the shooter PID loop
-  double P = Constants.P;
-  double I = Constants.I;
-  double D = Constants.D;
-  double integral, derivative, previousError = 0.0;
-  double error;
+  //Declares the shooter pneumatic double solenoid
+  DoubleSolenoid shooterSolenoid;
+  double currentShooterSpeed = Constants.SHOOTER_SPEED;
 
-  
+  //Declares the operator controller
+  XboxController operatorController;
+
   /**
    * Creates a new Shooter.
    */
-  //TODO: Make right motor spin at -1, the others at 1
   
   public Shooter() {
-      wheelLeftMaster = new TalonSRX(Constants.SHOOTER_LEFT_MASTER_ID);
-      wheelLeftSlave = new TalonSRX(Constants.SHOOTER_LEFT_SLAVE_ID);
-      wheelRight = new TalonSRX(Constants.SHOOTER_RIGHT_ID);
-      //Extra added by Andrew's request
-      extraMotorController = new TalonSRX(Constants.SHOOTER_EXTRA_ID);
+    //Instantiates the shooter objects
+    wheelLeftMaster = new TalonSRX(Constants.SHOOTER_LEFT_MASTER_MOTOR_ID);
+    wheelLeftSlave = new VictorSPX(Constants.SHOOTER_LEFT_SLAVE_MOTOR_ID);
+    wheelRightMaster = new VictorSPX(Constants.SHOOTER_RIGHT_MASTER_MOTOR_ID);
+    wheelRightSlave = new VictorSPX(Constants.SHOOTER_RIGHT_SLAVE_MOTOR_ID);
+    shooterSolenoid = new DoubleSolenoid(Constants.SHOOTER_SOLENOID_FORWARD_CHANNEL, Constants.SHOOTER_SOLENOID_REVERSE_CHANNEL);
+    operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
-      //Sets the master motor controller to percent output, makes the other motors slaves to it
-      //Ask if necessary to set wheelRight since it isn't a follower
-      wheelLeftMaster.set(ControlMode.PercentOutput, 0);
-      wheelLeftSlave.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MASTER_ID);
-      wheelRight.set(ControlMode.PercentOutput, 0);
-      extraMotorController.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MASTER_ID);
+    //Sets the master motor controller to percent output, makes the other motors slaves to it
+    wheelLeftMaster.configFactoryDefault();
+    wheelLeftSlave.configFactoryDefault();
+    wheelRightMaster.configFactoryDefault();
+    wheelRightSlave.configFactoryDefault();
+    wheelLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+    wheelRightMaster.setInverted(false);
+    wheelRightSlave.setInverted(false);
+    wheelLeftMaster.setSensorPhase(true);
+    //wheelLeftMaster.configFactoryDefault();
+    wheelLeftMaster.setInverted(true);
+    //wheelLeftMaster.setSensorPhase(false);
+    wheelLeftSlave.setInverted(true);
+
+    //wheelLeftSlave.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MASTER_MOTOR_ID);
+    wheelRightSlave.follow(wheelLeftMaster);
+    wheelLeftSlave.follow(wheelLeftMaster);
+    wheelRightMaster.follow(wheelLeftMaster);
+
+    wheelLeftMaster.setNeutralMode(NeutralMode.Coast);
+    wheelRightMaster.setNeutralMode(NeutralMode.Coast);
+    wheelLeftSlave.setNeutralMode(NeutralMode.Coast);
+    wheelRightSlave.setNeutralMode(NeutralMode.Coast);
+
+    wheelLeftMaster.configNominalOutputForward(0, Constants.kTimeoutMs);
+    wheelLeftMaster.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    wheelLeftMaster.configPeakOutputForward(1, Constants.kTimeoutMs);
+    wheelLeftMaster.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+
+    wheelLeftMaster.config_kF(0, Constants.kGains_Shooter_Velocity.kF, Constants.kTimeoutMs);
+    wheelLeftMaster.config_kP(0, Constants.kGains_Shooter_Velocity.kP, Constants.kTimeoutMs);
+    wheelLeftMaster.config_kI(0, Constants.kGains_Shooter_Velocity.kI, Constants.kTimeoutMs);
+    wheelLeftMaster.config_kD(0, Constants.kGains_Shooter_Velocity.kD, Constants.kTimeoutMs);
+    
   }
 
   //Turns the shooter on
   public void startShooter() {
-    wheelLeftMaster.set(ControlMode.PercentOutput, -Constants.SHOOTER_SPEED);
-    wheelRight.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
+
+    wheelLeftMaster.set(ControlMode.PercentOutput, currentShooterSpeed);
+    //wheelRightMaster.set(ControlMode.PercentOutput, Constants.SHOOTER_SPEED);
 
   }
 
-  //Turns the shooter on, using a PID loop to reach targetVelocity
-  public void startShooterPID(double targetVelocityRPM) {
-    //PID variable declaration/initialization
-    double power;
-    double currentVelocityUnitsPer100Ms = wheelLeftMaster.getSensorCollection().getQuadratureVelocity();
-    double currentVelocityRPM = currentVelocityUnitsPer100Ms * Constants.ENCODER_UNITS_PER_100_MS_TO_REV_PER_MIN;
+  public void slowShooter() {
+    currentShooterSpeed = Constants.LOWERED_SHOOTER_SPEED;
 
-    //PID calculations
-    error = targetVelocityRPM - currentVelocityRPM;
-    integral += error * 0.02;
-    derivative = (error - previousError) / 0.02;
-    power = (P * error) + (I * integral) + (D * derivative);
-    previousError = error;
+  }
 
-    wheelLeftMaster.set(ControlMode.PercentOutput, power);
+  public void maxShooter() {
+    currentShooterSpeed = Constants.SHOOTER_SPEED;
+
+  }
+
+  //Runs the shooter up to the target velocity using PID
+  public void startShooterVelocityPID() {
+    double targetVelocityRPM = SmartDashboard.getNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM);
+    double targetVelocityEncoderUnitsPer100ms = targetVelocityRPM * Constants.RPM_TO_ENCODER_UNITS_PER_100_MS;
+      
+    //TODO: Figure out why the set lines won't cause the motors to spin
+    wheelLeftMaster.set(ControlMode.Velocity, targetVelocityEncoderUnitsPer100ms);
   }
 
   //Turns the shooter off
   public void stopShooter() {
     wheelLeftMaster.set(ControlMode.PercentOutput, 0);
-    wheelRight.set(ControlMode.PercentOutput, 0);
+    //wheelRightMaster.set(ControlMode.PercentOutput, 0);
   }
 
   //Gets the current position of the left wheel
@@ -90,8 +131,19 @@ public class Shooter extends SubsystemBase {
     wheelLeftMaster.setSelectedSensorPosition(0);
   }
 
+  //Pneumatically sets the hood angle up
+  public void hoodAngleUp() {
+    shooterSolenoid.set(Value.kForward);
+  }
+
+  //Pneumatically sets the hood angle down
+  public void hoodAngleDown() {
+    shooterSolenoid.set(Value.kReverse);
+  }
+
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Shooter RPM", wheelLeftMaster.getSelectedSensorVelocity() / Constants.RPM_TO_ENCODER_UNITS_PER_100_MS);
 
     // This method will be called once per scheduler run
   }

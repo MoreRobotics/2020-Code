@@ -11,12 +11,11 @@ import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class StartFlyWheel extends CommandBase {
-  
   private final Shooter flyWheel;
+  
   /**
    * Creates a new StartFlyWheel.
    */ 
-  
   public StartFlyWheel(Shooter flyWheel) {
     this.flyWheel = flyWheel;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,6 +32,7 @@ public class StartFlyWheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //flyWheel.startShooter();
   }
 
   // Called once the command ends or is interrupted.

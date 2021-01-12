@@ -7,11 +7,28 @@
 
 package frc.robot;
 
+import java.util.List;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+//import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.util.Units;
+import frc.robot.Robot;
+import frc.robot.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,11 +38,34 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //Instantiates the subsystems
+  Shooter shooter = new Shooter();
+  DriveTrain driveTrain = new DriveTrain();
+  Hopper hopper = new Hopper(shooter);
+  Intake intake = new Intake();
+  Turret turret = new Turret(driveTrain);
+  ControlPanel controlPanel = new ControlPanel();
+  Climber climber = new Climber();
+  TrajectoryManager trajectoryManager = new TrajectoryManager();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  //Instantiates the controllers and its associated buttons
+  XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+  JoystickButton driverLBumper = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
+  JoystickButton driverRBumper = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
 
+  XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+  JoystickButton operatorAButton = new JoystickButton(operatorController, XboxController.Button.kA.value);
+  JoystickButton operatorBButton = new JoystickButton(operatorController, XboxController.Button.kB.value);
+  JoystickButton operatorXButton = new JoystickButton(operatorController, XboxController.Button.kX.value);
+  JoystickButton operatorYButton = new JoystickButton(operatorController, XboxController.Button.kY.value);
+  JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
+  JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
+  JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
+  POVButton operatorDPadDown = new POVButton(operatorController, 180);
+  POVButton operatorDPadUp = new POVButton(operatorController, 0);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -42,6 +82,33 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
+    operatorLBumper.whenHeld(new IntakePowerCells(intake));
+    shooterHoodHandler();
+    hopperHandler();
+    controlPanelHandler();    
+  }
+
+  //Encapsulates the shooter hood commands
+  public void shooterHoodHandler() {
+    operatorBButton.whenPressed(new HoodAngleUp(shooter));
+    operatorXButton.whenPressed(new HoodAngleDown(shooter));
+  }
+
+  public void hopperHandler() {
+    operatorRBumper.whenHeld(new StagePowerCells(hopper));
+    operatorYButton.whenHeld(new FeedPowerCells(hopper));
+    operatorBackButton.whenHeld(new RemoveBallsFromTransporter(hopper));
+  }
+
+  public void controlPanelHandler() {
+    driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
+    driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
+  }
+
+  public void intakeHandler() {
+    operatorDPadDown.whenHeld(new IntakePushDown(intake));
+    operatorDPadUp.whenHeld(new IntakePullUp(intake));
   }
 
 
@@ -51,7 +118,50 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    var autoVoltageConstraint =
+        new DifferentialDriveVoltageConstraint(
+            new SimpleMotorFeedforward(Constants.ksVolts,
+                                       Constants.kvVoltSecondsPerMeter,
+                                       Constants.kaVoltSecondsSquaredPerMeter),
+            Constants.kDriveKinematics,
+            10);
+
+    // Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
+                             Units.metersToInches(Constants.kMaxAccelerationMetersPerSecondSquared))
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(Constants.kDriveKinematics)
+            // Apply the voltage constraint
+            .addConstraint(autoVoltageConstraint);
+
+    // An example trajectory to follow.  All units in meters.
+    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(
+            new Translation2d(1, 1),
+            new Translation2d(2, -1)
+        ),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(3, 0, new Rotation2d(0)),
+        // Pass config
+        config
+    );
+
+    switch(Robot.chosenAutoPath) {
+      case 0:
+        return new TestAutonomous(driveTrain, exampleTrajectory);
+      
+      case 1:
+        return new TestAutonomous(driveTrain, trajectoryManager.lineToTrench);
+      
+      case 2:
+        return new TestAutonomous(driveTrain, trajectoryManager.linetoThreeCenterBalls);
+
+      default:
+        return new TestAutonomous(driveTrain, trajectoryManager.testPath);
+    }
   }
 }

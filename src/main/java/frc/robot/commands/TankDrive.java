@@ -8,13 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveTrain;
 
 public class TankDrive extends CommandBase {
+  //Initializes a DriveTrain
+  private final DriveTrain driveTrain;
   /**
    * Creates a new TankDrive.
    */
-  public TankDrive() {
+  public TankDrive(DriveTrain driveTrain) {
+    this.driveTrain = driveTrain;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(driveTrain);
   }
 
   // Called when the command is initially scheduled.
@@ -25,6 +30,8 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    driveTrain.drive();
+    
   }
 
   // Called once the command ends or is interrupted.

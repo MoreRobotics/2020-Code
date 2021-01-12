@@ -8,16 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
 
-public class Drive extends CommandBase {
-
-  private final DriveTrain driveTrain;
+public class AutoShooter extends CommandBase {
   /**
-   * Creates a new Drive.
+   * Creates a new AutoShooter.
    */
-  public Drive(DriveTrain driveTrain) {
-    this.driveTrain = driveTrain;
+  public AutoShooter() {
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
