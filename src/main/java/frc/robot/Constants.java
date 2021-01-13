@@ -32,7 +32,6 @@ public final class Constants {
     public static final int SHOOTER_RIGHT_MASTER_MOTOR_ID = 22;
     public static final int SHOOTER_RIGHT_SLAVE_MOTOR_ID = 23;
     public static final int SHOOTER_FEEDER_MOTOR_ID = 24;
-    //TODO: Add shooter feeder with ID = 24
 
     //Defines the channels of the solenoids on the shooter
     public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 2;

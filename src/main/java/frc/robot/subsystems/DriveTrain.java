@@ -44,7 +44,6 @@ public class DriveTrain extends SubsystemBase {
   SimpleMotorFeedforward simpleMotorFeedforward;
   RamseteController ramseteController;
   PIDController leftPIDController, rightPIDController;
-
   
 
   /**

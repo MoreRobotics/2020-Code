@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-//TODO: Display velocity (RPM) on Dashboard
 //TODO: Document PID Tuning
 
 public class Shooter extends SubsystemBase { 
