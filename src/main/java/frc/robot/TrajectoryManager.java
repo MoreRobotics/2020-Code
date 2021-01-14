@@ -45,5 +45,4 @@ public class TrajectoryManager {
     shootingSpot = LoadTrajectory("shootingSpot");
     
   }
-
 }
