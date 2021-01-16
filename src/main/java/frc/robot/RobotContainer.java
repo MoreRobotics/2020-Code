@@ -86,38 +86,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
-    operatorLBumper.whenHeld(new IntakePowerCells(intake));
-    /*
-     * shooterHoodHandler(); hopperHandler();
-     */
-    controlPanelHandler();
-  }
-
-  // Encapsulates the shooter hood commands
-  /*
-   * public void shooterHoodHandler() { operatorBButton.whenPressed(new
-   * HoodAngleUp(shooter)); operatorXButton.whenPressed(new
-   * HoodAngleDown(shooter)); }
-   * 
-   * public void hopperHandler() { operatorRBumper.whenHeld(new
-   * StagePowerCells(hopper)); operatorYButton.whenHeld(new
-   * FeedPowerCells(hopper)); operatorBackButton.whenHeld(new
-   * RemoveBallsFromTransporter(hopper)); }
-   */
-
-  public void controlPanelHandler() {
     driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
     driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
-  }
+    operatorRBumper.whenHeld(new ParallelCommandGroup(new IntakePushDown(intake), new IntakePowerCells(intake)));
 
-  public void intakeHandler() {
-    operatorDPadDown.whenHeld(new IntakePushDown(intake));
-    operatorDPadUp.whenHeld(new IntakePullUp(intake));
-  }
+    operatorAButton.whenHeld(new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter), new FeedPowerCells(hopper),
+        new StagePowerCells(hopper)));
 
-  public void newShooter() {
-    operatorAButton.whenPressed(new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter),
-        new FeedPowerCells(hopper), new StagePowerCells(hopper)));
   }
 
   /**
