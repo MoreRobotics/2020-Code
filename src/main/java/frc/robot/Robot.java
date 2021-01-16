@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
     autoPathChooser.setDefaultOption("Test Path", 0);
     autoPathChooser.addOption("Line to Trench", 1);
     autoPathChooser.addOption("Line to Three Center Balls", 2);
+    autoPathChooser.addOption("slalom", 3);
   }
 
   /**
@@ -133,23 +134,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-  }
-
-  // //Encapsulates the shooter hood commands
-  // public void shooterHoodHandler() {
-  //   operatorBButton.whenPressed(new HoodAngleUp(shooter));
-  //   operatorXButton.whenPressed(new HoodAngleDown(shooter));
-  // }
-
-  // public void hopperHandler() {
-  //   operatorRBumper.whenHeld(new StagePowerCells(hopper));
-  //   operatorYButton.whenHeld(new FeedPowerCells(hopper));
-  // }
-
-  // public void controlPanelHandler() {
-  //   driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
-  //   driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
-  // }
-  
+  }  
 
 }

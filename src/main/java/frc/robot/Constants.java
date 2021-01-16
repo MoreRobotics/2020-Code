@@ -76,6 +76,9 @@ public final class Constants {
     //Defines the ID of the control panel motor
     public static final int CONTROL_PANEL_MOTOR_ID = 13;
 
+    //Defines the channel of the photo eye
+    public static final int PHOTO_EYE_CHANNEL = 0;
+
     //Defimes the speed the control panel motor will be run at
     public static final int CONTROL_PANEL_SPEED = 1;
     

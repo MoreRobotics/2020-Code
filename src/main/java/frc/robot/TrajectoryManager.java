@@ -23,6 +23,13 @@ public class TrajectoryManager {
   public Trajectory lineToTrench;
   public Trajectory linetoThreeCenterBalls;
   public Trajectory shootingSpot;
+  public Trajectory slalomPath;
+  public Trajectory galacticSearchChallengeARed;
+  public Trajectory galacticSearchChallengeABlue;
+  public Trajectory galacticSearchChallengeBRed;
+  public Trajectory galacticSearchChallengeBBlue;
+  public Trajectory bouncePath;
+  public Trajectory barrelRacingPath;
   public static Trajectory excessPath;
   
   public Trajectory LoadTrajectory(String trajectoryFile) {

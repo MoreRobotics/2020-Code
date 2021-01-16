@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -44,6 +45,7 @@ public class DriveTrain extends SubsystemBase {
   SimpleMotorFeedforward simpleMotorFeedforward;
   RamseteController ramseteController;
   PIDController leftPIDController, rightPIDController;
+  public DigitalInput photoEye;
   
 
   /**
@@ -64,6 +66,7 @@ public class DriveTrain extends SubsystemBase {
    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
    this.setDefaultCommand(new TankDrive(this));
    zeroHeading();
+   photoEye = new DigitalInput(Constants.PHOTO_EYE_CHANNEL);
    
    //falconFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
    //falconFrontRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -165,6 +168,5 @@ public class DriveTrain extends SubsystemBase {
   //Drives the robot depending on the thumbstick inputs
   public void drive() {
     drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
-  }
-  
+  } 
 }
