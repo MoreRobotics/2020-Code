@@ -25,7 +25,7 @@ public class FeedPowerCells extends CommandBase {
   @Override
   public void initialize() {
       //Starts the hopper feeder motor
-      hopper.startFeeder();
+      hopper.startTransporter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +37,7 @@ public class FeedPowerCells extends CommandBase {
   @Override
   public void end(boolean interrupted) {
       //Stops the hopper feeder motor
-      hopper.stopFeeder();
+      hopper.stopTransporter();
   }
 
   // Returns true when the command should end.

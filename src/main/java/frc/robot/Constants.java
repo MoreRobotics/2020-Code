@@ -31,7 +31,7 @@ public final class Constants {
     public static final int SHOOTER_LEFT_SLAVE_MOTOR_ID = 21;
     public static final int SHOOTER_RIGHT_MASTER_MOTOR_ID = 22;
     public static final int SHOOTER_RIGHT_SLAVE_MOTOR_ID = 23;
-    public static final int SHOOTER_FEEDER_MOTOR_ID = 24;
+    public static final int GYRO_CONTROLLER_MOTOR_ID = 24;
 
     //Defines the channels of the solenoids on the shooter
     public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 2;
@@ -51,7 +51,7 @@ public final class Constants {
     //Defines the IDs of the motor controllers on the hopper
     public static final int HOPPER_FRONT_MASTER_MOTOR_ID = 51;
     
-    public static final int HOPPER_FEEDER_MOTOR_ID = 53;
+    public static final int TRANSPORTER_MOTOR_ID = 53;
 
     //Defines the IDs of the motor controllers on the intake
     public static final int INTAKE_MOTOR_ID = 60;

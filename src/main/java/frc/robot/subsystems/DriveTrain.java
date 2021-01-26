@@ -60,7 +60,7 @@ public class DriveTrain extends SubsystemBase {
    falconRearLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
    drive = new DifferentialDrive(rightDrive, leftDrive);
-   gyroController = new TalonSRX(Constants.SHOOTER_FEEDER_MOTOR_ID);
+   gyroController = new TalonSRX(Constants.GYRO_CONTROLLER_MOTOR_ID);
    gyro = new PigeonIMU(gyroController);
    resetEncoders();
    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));

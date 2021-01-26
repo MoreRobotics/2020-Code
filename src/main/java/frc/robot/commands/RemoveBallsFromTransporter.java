@@ -25,7 +25,7 @@ public class RemoveBallsFromTransporter extends CommandBase {
   @Override
   public void initialize() {
       //Reverses the hopper feeder motor
-      hopper.reverseFeeder();
+      hopper.reverseTransporter();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +37,7 @@ public class RemoveBallsFromTransporter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
       //Stops the hopper feeder motor
-      hopper.stopFeeder();
+      hopper.stopTransporter();
   }
 
   // Returns true when the command should end.
