@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakePushDown extends CommandBase {
   private final Intake solenoid;
-  
+
   /**
    * Creates a new StartFlyWheel.
-   */ 
+   */
   public IntakePushDown(Intake solenoid) {
     this.solenoid = solenoid;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,7 +24,7 @@ public class IntakePushDown extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      solenoid.intakePushDown();
+    solenoid.intakePushDown();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,7 +35,7 @@ public class IntakePushDown extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  }
+    }
 
   // Returns true when the command should end.
   @Override

@@ -45,62 +45,53 @@ public class DriveTrain extends SubsystemBase {
   RamseteController ramseteController;
   PIDController leftPIDController, rightPIDController;
 
-  
-
   /**
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
-   //Instantiates the drive motors
-   falconFrontRight = new WPI_TalonFX(Constants.DRIVE_TRAIN_FRONT_RIGHT_ID);
-   falconRearRight = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_RIGHT_ID);
-   rightDrive = new SpeedControllerGroup(falconFrontRight, falconRearRight);
-   falconFrontLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_FRONT_LEFT_ID);
-   falconRearLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
-   leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
-   drive = new DifferentialDrive(rightDrive, leftDrive);
-   gyroController = new TalonSRX(Constants.SHOOTER_FEEDER_MOTOR_ID);
-   gyro = new PigeonIMU(gyroController);
-   resetEncoders();
-   odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-   this.setDefaultCommand(new TankDrive(this));
-   zeroHeading();
-   
-   //falconFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-   //falconFrontRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    // Instantiates the drive motors
+    falconFrontRight = new WPI_TalonFX(Constants.DRIVE_TRAIN_FRONT_RIGHT_ID);
+    falconRearRight = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_RIGHT_ID);
+    rightDrive = new SpeedControllerGroup(falconFrontRight, falconRearRight);
+    falconFrontLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_FRONT_LEFT_ID);
+    falconRearLeft = new WPI_TalonFX(Constants.DRIVE_TRAIN_REAR_LEFT_ID);
+    leftDrive = new SpeedControllerGroup(falconFrontLeft, falconRearLeft);
+    drive = new DifferentialDrive(rightDrive, leftDrive);
+    gyroController = new TalonSRX(Constants.SHOOTER_FEEDER_MOTOR_ID);
+    gyro = new PigeonIMU(gyroController);
+    resetEncoders();
+    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    this.setDefaultCommand(new TankDrive(this));
+    zeroHeading();
 
-   //falconFrontLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 70, 25, 1.0));
-   falconFrontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
-   falconFrontRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
-   falconRearLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
-   falconRearRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
+    // falconFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    // falconFrontRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-   falconFrontLeft.setSensorPhase(true);
-   falconFrontRight.setSensorPhase(true);
+    // falconFrontLeft.configStatorCurrentLimit(new
+    // StatorCurrentLimitConfiguration(true, 70, 25, 1.0));
+    falconFrontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
+    falconFrontRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
+    falconRearLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
+    falconRearRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
 
-   //falconRearLeft.follow(falconFrontLeft);
-   //falconRearRight.follow(falconFrontRight);
-   ramseteController = new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta);
-   simpleMotorFeedforward = new SimpleMotorFeedforward(Constants.ksVolts, 
-    Constants.kvVoltSecondsPerMeter,
-    Constants.kaVoltSecondsSquaredPerMeter);
+    falconFrontLeft.setSensorPhase(true);
+    falconFrontRight.setSensorPhase(true);
 
-   leftPIDController = new PIDController(Constants.kPDriveVel, 0, 0);
-   rightPIDController = new PIDController(Constants.kPDriveVel, 0, 0);
+    // falconRearLeft.follow(falconFrontLeft);
+    // falconRearRight.follow(falconFrontRight);
+    ramseteController = new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta);
+    simpleMotorFeedforward = new SimpleMotorFeedforward(Constants.ksVolts, Constants.kvVoltSecondsPerMeter,
+        Constants.kaVoltSecondsSquaredPerMeter);
+
+    leftPIDController = new PIDController(Constants.kPDriveVel, 0, 0);
+    rightPIDController = new PIDController(Constants.kPDriveVel, 0, 0);
 
   }
+
   public RamseteCommand getRamseteCommand(Trajectory trajectory) {
-    return new RamseteCommand(
-      trajectory, 
-      this::getPose, 
-      ramseteController, 
-      simpleMotorFeedforward,
-      Constants.kDriveKinematics,
-      this::getWheelSpeeds,
-      leftPIDController,
-      rightPIDController,
-      this::tankDriveVolts,
-      this);
+    return new RamseteCommand(trajectory, this::getPose, ramseteController, simpleMotorFeedforward,
+        Constants.kDriveKinematics, this::getWheelSpeeds, leftPIDController, rightPIDController, this::tankDriveVolts,
+        this);
   }
 
   public void zeroHeading() {
@@ -117,15 +108,14 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getHeading() {
-    double [] ypr = new double[3];
+    double[] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);
-    System.out.println("Yaw " + ypr[0]);
     return Math.IEEEremainder(ypr[0], 360);
   }
 
   @Override
   public void periodic() {
-    //drive();
+    // drive();
     // This method will be called once per scheduler run
     odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftDistance(), getRightDistance());
     SmartDashboard.putNumber("Heading ", getHeading());
@@ -146,16 +136,15 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void tankDriveVolts(final double leftVolts, final double rightVolts) {
-    System.out.println("LeftVolt " + leftVolts);
-    System.out.println("RightVolt " + rightVolts);
     leftDrive.setVoltage(leftVolts);
     rightDrive.setVoltage(-rightVolts);
     drive.feed();
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(falconRearLeft.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER ,
-    falconFrontRight.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER );
+    return new DifferentialDriveWheelSpeeds(
+        falconRearLeft.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER,
+        falconFrontRight.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER);
   }
 
   public void resetOdometry(Pose2d pose2d) {
@@ -163,9 +152,9 @@ public class DriveTrain extends SubsystemBase {
     odometry.resetPosition(pose2d, Rotation2d.fromDegrees(getHeading()));
   }
 
-  //Drives the robot depending on the thumbstick inputs
+  // Drives the robot depending on the thumbstick inputs
   public void drive() {
     drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
   }
-  
+
 }

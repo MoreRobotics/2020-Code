@@ -31,15 +31,16 @@ import frc.robot.Robot;
 import frc.robot.Constants;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  //Instantiates the subsystems
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // Instantiates the subsystems
   Shooter shooter = new Shooter();
   DriveTrain driveTrain = new DriveTrain();
   Hopper hopper = new Hopper(shooter);
@@ -49,9 +50,10 @@ public class RobotContainer {
   Climber climber = new Climber();
   TrajectoryManager trajectoryManager = new TrajectoryManager();
 
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  // private final ExampleCommand m_autoCommand = new
+  // ExampleCommand(m_exampleSubsystem);
 
-  //Instantiates the controllers and its associated buttons
+  // Instantiates the controllers and its associated buttons
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   JoystickButton driverLBumper = new JoystickButton(driverController, XboxController.Button.kBumperLeft.value);
   JoystickButton driverRBumper = new JoystickButton(driverController, XboxController.Button.kBumperRight.value);
@@ -68,7 +70,7 @@ public class RobotContainer {
   POVButton operatorDPadUp = new POVButton(operatorController, 0);
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
@@ -76,20 +78,20 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
     operatorLBumper.whenHeld(new IntakePowerCells(intake));
     shooterHoodHandler();
     hopperHandler();
-    controlPanelHandler();    
+    controlPanelHandler();
   }
 
-  //Encapsulates the shooter hood commands
+  // Encapsulates the shooter hood commands
   public void shooterHoodHandler() {
     operatorBButton.whenPressed(new HoodAngleUp(shooter));
     operatorXButton.whenPressed(new HoodAngleDown(shooter));
@@ -110,7 +112,6 @@ public class RobotContainer {
     operatorDPadDown.whenHeld(new IntakePushDown(intake));
     operatorDPadUp.whenHeld(new IntakePullUp(intake));
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
