@@ -33,11 +33,12 @@ public class IntakePushDown extends CommandBase {
   }
 
   // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    solenoid.intakePullUp();
-
-  }
+  /*
+   * @Override public void end(boolean interrupted) { solenoid.intakePullUp();
+   * System.out.println("Intake up");
+   * 
+   * }
+   */
 
   // Returns true when the command should end.
   @Override
