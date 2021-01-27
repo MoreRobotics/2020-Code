@@ -25,7 +25,6 @@ public class IntakePushDown extends CommandBase {
   @Override
   public void initialize() {
     solenoid.intakePushDown();
-    System.out.println("Intake down");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +36,7 @@ public class IntakePushDown extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     solenoid.intakePullUp();
-    System.out.println("intake up");
+
   }
 
   // Returns true when the command should end.

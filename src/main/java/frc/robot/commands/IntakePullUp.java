@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakePullUp extends CommandBase {
   private final Intake solenoid;
-  
+
   /**
    * Creates a new StartFlyWheel.
-   */ 
+   */
   public IntakePullUp(Intake solenoid) {
     this.solenoid = solenoid;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,8 +24,8 @@ public class IntakePullUp extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //Starts the shooter
-    //flyWheel.startShooterPID(6000);
+    // Starts the shooter
+    // flyWheel.startShooterPID(6000);
     solenoid.intakePullUp();
   }
 

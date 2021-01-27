@@ -52,19 +52,17 @@ public class Robot extends TimedRobot {
   Supplier<Double> rightEncoderRate;
   Supplier<Double> gyroAngleRadians;
 
-  NetworkTableEntry autoSpeedEntry =
-      NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
-  NetworkTableEntry telemetryEntry =
-      NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
-  NetworkTableEntry rotateEntry =
-    NetworkTableInstance.getDefault().getEntry("/robot/rotate");
+  NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
+  NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
+  NetworkTableEntry rotateEntry = NetworkTableInstance.getDefault().getEntry("/robot/rotate");
 
   double priorAutospeed = 0;
   Number[] numberArray = new Number[10];
 
   @Override
   public void robotInit() {
-    if (!isReal()) SmartDashboard.putData(new SimEnabler());
+    if (!isReal())
+      SmartDashboard.putData(new SimEnabler());
 
     stick = new Joystick(0);
 
@@ -116,28 +114,15 @@ public class Robot extends TimedRobot {
     // return units and units/s
     //
 
-    double encoderConstant =
-        (1 / ENCODER_EDGES_PER_REV) * WHEEL_DIAMETER * Math.PI;
+    double encoderConstant = (1 / ENCODER_EDGES_PER_REV) * WHEEL_DIAMETER * Math.PI;
 
-    leftMaster.configSelectedFeedbackSensor(
-        FeedbackDevice.IntegratedSensor,
-        PIDIDX, 10
-    );
-    leftEncoderPosition = ()
-        -> leftMaster.getSelectedSensorPosition(PIDIDX) * encoderConstant;
-    leftEncoderRate = ()
-        -> leftMaster.getSelectedSensorVelocity(PIDIDX) * encoderConstant *
-               10;
+    leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, PIDIDX, 10);
+    leftEncoderPosition = () -> leftMaster.getSelectedSensorPosition(PIDIDX) * encoderConstant;
+    leftEncoderRate = () -> leftMaster.getSelectedSensorVelocity(PIDIDX) * encoderConstant * 10;
 
-    rightMaster.configSelectedFeedbackSensor(
-        FeedbackDevice.IntegratedSensor,
-        PIDIDX, 10
-    );
-    rightEncoderPosition = ()
-        -> rightMaster.getSelectedSensorPosition(PIDIDX) * encoderConstant;
-    rightEncoderRate = ()
-        -> rightMaster.getSelectedSensorVelocity(PIDIDX) * encoderConstant *
-               10;
+    rightMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, PIDIDX, 10);
+    rightEncoderPosition = () -> rightMaster.getSelectedSensorPosition(PIDIDX) * encoderConstant;
+    rightEncoderRate = () -> rightMaster.getSelectedSensorVelocity(PIDIDX) * encoderConstant * 10;
 
     // Reset encoders
     leftMaster.setSelectedSensorPosition(0);
@@ -150,12 +135,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    System.out.println("Robot disabled");
     drive.tankDrive(0, 0);
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   @Override
   public void robotPeriodic() {
@@ -168,7 +153,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    System.out.println("Robot in operator control mode");
+
   }
 
   @Override
@@ -178,7 +163,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    System.out.println("Robot in autonomous mode");
+
   }
 
   /**
@@ -211,10 +196,7 @@ public class Robot extends TimedRobot {
     priorAutospeed = autospeed;
 
     // command motors to do things
-    drive.tankDrive(
-      (rotateEntry.getBoolean(false) ? -1 : 1) * autospeed, autospeed,
-      false
-    );
+    drive.tankDrive((rotateEntry.getBoolean(false) ? -1 : 1) * autospeed, autospeed, false);
 
     // send telemetry data array back to NT
     numberArray[0] = now;
