@@ -24,6 +24,7 @@ public class TrajectoryManager {
   public Trajectory linetoThreeCenterBalls;
   public Trajectory shootingSpot;
   public Trajectory slalomPath;
+  public Trajectory slalomtest;
   public Trajectory galacticSearchChallengeARed;
   public Trajectory galacticSearchChallengeABlue;
   public Trajectory galacticSearchChallengeBRed;

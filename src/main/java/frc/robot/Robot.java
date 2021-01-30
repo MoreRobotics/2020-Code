@@ -48,7 +48,8 @@ public class Robot extends TimedRobot {
     autoPathChooser.setDefaultOption("Test Path", 0);
     autoPathChooser.addOption("Line to Trench", 1);
     autoPathChooser.addOption("Line to Three Center Balls", 2);
-    autoPathChooser.addOption("slalom", 3);
+    autoPathChooser.addOption("slalomPath", 3);
+    autoPathChooser.addOption("slalomTest", 4);
   }
 
   /**
