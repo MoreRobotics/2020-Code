@@ -21,6 +21,6 @@ public class FeedBallsToShooterCG extends ParallelCommandGroup {
   public FeedBallsToShooterCG(Intake intake, Hopper hopper) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new FeedPowerCells(hopper), new IntakePowerCells(intake));
+    super(new FeedPowerCells(hopper), new IntakePowerCells(intake, intake));
   }
 }

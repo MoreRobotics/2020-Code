@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 //import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
@@ -89,8 +88,7 @@ public class RobotContainer {
     // operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
     driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
     driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
-    operatorRBumper.whenHeld(new ParallelCommandGroup(new IntakePushDown(intake), new IntakePowerCells(intake)));
-    operatorRBumper.whenReleased(new ParallelCommandGroup(new IntakePullUp(intake), new PrintCommand("Intake up")));
+    operatorRBumper.whenHeld(new ParallelCommandGroup(new IntakePushDown(intake), new IntakePowerCells(intake, intake)));
 
     operatorAButton.whenHeld(new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter), new FeedPowerCells(hopper),
         new StagePowerCells(hopper)));

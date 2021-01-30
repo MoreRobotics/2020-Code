@@ -106,7 +106,7 @@ public class Turret extends SubsystemBase {
 
   // Turns the turret
   public void turnTurret(DriveTrain driveTrain) {
-    double x = operatorController.getY(Hand.kRight);
+    double x = operatorController.getX(Hand.kRight);
     // Deadband Check
     if (Math.abs(x) <= 0.05) {
       x = 0;
@@ -116,8 +116,7 @@ public class Turret extends SubsystemBase {
     if (Math.abs(y) <= 0.05) {
       y = 0;
     }
-    Rotation2d turretRotationAngle = new Rotation2d(-operatorController.getY(Hand.kRight),
-        operatorController.getX(Hand.kRight));
+    Rotation2d turretRotationAngle = new Rotation2d(-y, x);
     rotateToTurretAngle(turretRotationAngle);
     // Get gyro yaw
     driveTrain.getHeading();
