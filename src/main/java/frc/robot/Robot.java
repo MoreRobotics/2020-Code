@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
     autoPathChooser.addOption("Line to Three Center Balls", 2);
     autoPathChooser.addOption("slalomPath", 3);
     autoPathChooser.addOption("slalomTest", 4);
+    SmartDashboard.putData("Selected Path", autoPathChooser);
   }
 
   /**
