@@ -25,12 +25,12 @@ public class StagePowerCells extends CommandBase {
   @Override
   public void initialize() {
       //Starts the front two motors of the hopper
-      hopper.startFront();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    hopper.startFront();
   }
 
   // Called once the command ends or is interrupted.

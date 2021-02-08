@@ -25,12 +25,13 @@ public class FeedPowerCells extends CommandBase {
   @Override
   public void initialize() {
       //Starts the hopper feeder motor
-      hopper.startFeeder();
+      
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    hopper.startFeeder();
   }
 
   // Called once the command ends or is interrupted.
