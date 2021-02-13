@@ -45,11 +45,12 @@ public class Robot extends TimedRobot {
 
     //Instantiates the auto path chooser and adds its options
     autoPathChooser = new SendableChooser<Integer>();
-    autoPathChooser.setDefaultOption("Test Path", 0);
-    autoPathChooser.addOption("Line to Trench", 1);
-    autoPathChooser.addOption("Line to Three Center Balls", 2);
-    autoPathChooser.addOption("slalomPath", 3);
-    autoPathChooser.addOption("slalomTest", 4);
+    autoPathChooser.setDefaultOption("testPath", 0);
+    autoPathChooser.addOption("barrelRacingPath", 1);
+    autoPathChooser.addOption("bouncePath", 2);
+    autoPathChooser.addOption("galacticSearchA", 3);
+    autoPathChooser.addOption("galacticSearchB", 4);
+    autoPathChooser.addOption("slalomPath", 5);
     SmartDashboard.putData("Selected Path", autoPathChooser);
   }
 

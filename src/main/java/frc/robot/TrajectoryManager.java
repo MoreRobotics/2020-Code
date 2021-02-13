@@ -19,16 +19,12 @@ import edu.wpi.first.wpilibj.trajectory.*;
  * Add your docs here.
  */
 public class TrajectoryManager {
-  public Trajectory testPath;
-  public Trajectory lineToTrench;
-  public Trajectory linetoThreeCenterBalls;
-  public Trajectory shootingSpot;
   public Trajectory slalomPath;
-  public Trajectory slalomtest;
-  public Trajectory galacticSearchChallengeARed;
-  public Trajectory galacticSearchChallengeABlue;
-  public Trajectory galacticSearchChallengeBRed;
-  public Trajectory galacticSearchChallengeBBlue;
+  public Trajectory testPath;
+  public Trajectory galacticSearchARed;
+  public Trajectory galacticSearchABlue;
+  public Trajectory galacticSearchBRed;
+  public Trajectory galacticSearchBBlue;
   public Trajectory bouncePath;
   public Trajectory barrelRacingPath;
   public static Trajectory excessPath;
@@ -46,11 +42,15 @@ public class TrajectoryManager {
   }
 
   public void LoadAllPaths() {
+    barrelRacingPath = LoadTrajectory("barrelRacingPath");
+    bouncePath = LoadTrajectory("bouncePath");
+    galacticSearchARed = LoadTrajectory("galacticSearchARed");
+    galacticSearchABlue = LoadTrajectory("galacticSearchABlue");
+    galacticSearchBRed = LoadTrajectory("galacticSearchBRed");
+    galacticSearchBRed = LoadTrajectory("galacticSearchBRed");
+    slalomPath = LoadTrajectory("slalomPath");
     testPath = LoadTrajectory("testPath");
-    lineToTrench = LoadTrajectory("lineToTrench");
-    linetoThreeCenterBalls = LoadTrajectory("lineToThreeCenterBalls");
-    //still needs to be added to Pathweaver
-    shootingSpot = LoadTrajectory("shootingSpot");
+    
     
   }
 }

@@ -60,8 +60,8 @@ public class Turret extends SubsystemBase {
     turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kI, Constants.kTimeoutMs);
     turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kD, Constants.kTimeoutMs);
 
-    turretMotor.configMotionCruiseVelocity(800 / 3, Constants.kTimeoutMs);
-    turretMotor.configMotionAcceleration(800 / 3, Constants.kTimeoutMs);
+    turretMotor.configMotionCruiseVelocity(10 / (60 / Constants.TURRET_ENCODER_EDGES), Constants.kTimeoutMs);
+    turretMotor.configMotionAcceleration(10 / (60 / Constants.TURRET_ENCODER_EDGES), Constants.kTimeoutMs);
 
     // turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx,
     // Constants.kTimeoutMs);
