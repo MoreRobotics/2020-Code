@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -67,8 +68,11 @@ public class RobotContainer {
   JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
   JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
   JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
-  POVButton operatorDPadDown = new POVButton(operatorController, 180);
   POVButton operatorDPadUp = new POVButton(operatorController, 0);
+  POVButton operatorDPadRight = new POVButton(operatorController, 90);
+  POVButton operatorDPadDown = new POVButton(operatorController, 180);
+  POVButton operatorDPadLeft = new POVButton(operatorController, 270);
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -92,6 +96,12 @@ public class RobotContainer {
 
     operatorAButton.whenHeld(new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter), new FeedPowerCells(hopper),
         new StagePowerCells(hopper)));
+    operatorDPadUp.whenPressed(new SetHighTargetRPM());
+    operatorDPadRight.whenPressed(new SetMediumTargetRPM());
+    operatorDPadDown.whenPressed(new SetLowTargetRPM());
+    operatorDPadLeft.whenPressed(new ResetTargetRPM());
+
+    
 
   }
 

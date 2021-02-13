@@ -34,14 +34,8 @@ public class Hopper extends SubsystemBase {
   }
 
   // Starts the front two hopper motors
-  /*
-   * I basically implemented the thing Riley made where the feeder motors don't go
-   * until the flywheel rpm is at a cetain threshold, but for the hopper. That
-   * way, the hopper won't ty to shove balls into the feeder without the feeder
-   * running. Let me know if I screwed anything up. -Samuel
-   */
   public void startFront() {
-    if (SmartDashboard.getNumber("Shooter RPM", 0) >= Constants.SHOOTER_DEFAULT_TARGET_RPM * .75) {
+    if (SmartDashboard.getNumber("Shooter RPM", 0) >= SmartDashboard.getNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM) * .75) {
       wheelFrontMaster.set(ControlMode.PercentOutput, Constants.HOPPER_SPEED);
     }
   }
@@ -53,7 +47,7 @@ public class Hopper extends SubsystemBase {
 
   // Starts the hopper feeder motor
   public void startFeeder() {
-    if (SmartDashboard.getNumber("Shooter RPM", 0) >= Constants.SHOOTER_DEFAULT_TARGET_RPM * .75) {
+    if (SmartDashboard.getNumber("Shooter RPM", 0) >= SmartDashboard.getNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM) * .75) {
       wheelFeeder.set(ControlMode.PercentOutput, -1);
     }
   }
