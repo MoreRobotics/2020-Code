@@ -65,7 +65,7 @@ public class DriveTrain extends SubsystemBase {
    resetEncoders();
    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
    this.setDefaultCommand(new TankDrive(this));
-   zeroHeading();
+   
    photoEye = new DigitalInput(Constants.PHOTO_EYE_CHANNEL);
    
    //falconFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -106,7 +106,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void zeroHeading() {
-    gyro.setCompassAngle(0.0);
+    gyro.setCompassAngle(90.0);
   }
 
   public void resetEncoders() {
@@ -122,7 +122,7 @@ public class DriveTrain extends SubsystemBase {
     double [] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);
     System.out.println("Yaw " + ypr[0]);
-    return Math.IEEEremainder(ypr[0], 360);
+    return ypr[0]%360;
   }
 
   @Override
