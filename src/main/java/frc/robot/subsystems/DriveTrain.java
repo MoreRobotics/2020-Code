@@ -154,7 +154,14 @@ public class DriveTrain extends SubsystemBase {
 
   // Drives the robot depending on the thumbstick inputs
   public void drive() {
-    drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
+    double y = driverController.getY(Hand.kLeft);
+    double x = driverController.getX(Hand.kRight);
+    if(y <= 0.05) {
+      y = 0;
+    }
+    if(x <= 0.05) {
+      x = 0;
+    }
+    drive.curvatureDrive(y, x, false);
   }
-
 }
