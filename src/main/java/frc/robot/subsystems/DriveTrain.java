@@ -156,10 +156,10 @@ public class DriveTrain extends SubsystemBase {
   public void drive() {
     double y = driverController.getY(Hand.kLeft);
     double x = driverController.getX(Hand.kRight);
-    if(y <= 0.05) {
+    if(Math.abs(y) <= 0.05) {
       y = 0;
     }
-    if(x <= 0.05) {
+    if(Math.abs(x) <= 0.05) {
       x = 0;
     }
     drive.curvatureDrive(y, x, false);
