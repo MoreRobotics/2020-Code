@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonTrackedTarget;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -25,17 +27,20 @@ import frc.robot.commands.TurnTurret;
 
 public class Turret extends SubsystemBase {
   private final DriveTrain driveTrain;
-  //Declares the motor controller for the turret motor
+  // Declares the motor controller for the turret motor
   TalonSRX turretMotor;
 
-  //Declares the operator controller
+  // Declares the operator controller
   XboxController operatorController;
-  NetworkTableEntry yaw;
-  NetworkTableEntry pitch;
-  NetworkTableEntry isDriverMode;
+  //NetworkTableEntry yaw;
+  //NetworkTableEntry pitch;
+  //NetworkTableEntry isDriverMode;
   double targetHeightFromCamera = Constants.TARGET_HEIGHT - Constants.CAMERA_HEIGHT;
   double targetPosition = 0 * Constants.ENCODER_UNITS_TO_DEGREES;
   double degreesOffTarget;
+  PhotonCamera camera = new PhotonCamera("Pi Camera");
+  PhotonTrackedTarget target = camera.getLatestResult().getBestTarget();
+  double yaw = target.getYaw();
 
   /**
    * Creates a new Turret.
@@ -46,36 +51,39 @@ public class Turret extends SubsystemBase {
     operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
 
     turretMotor.configFactoryDefault();
-    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
+        Constants.kTimeoutMs);
     turretMotor.setSensorPhase(true);
-    
+
     turretMotor.configNominalOutputForward(0, Constants.kTimeoutMs);
     turretMotor.configNominalOutputReverse(0, Constants.kTimeoutMs);
     turretMotor.configPeakOutputForward(1, Constants.kTimeoutMs);
     turretMotor.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
     turretMotor.config_kF(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kF, Constants.kTimeoutMs);
-		turretMotor.config_kP(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kP, Constants.kTimeoutMs);
-		turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kI, Constants.kTimeoutMs);
+    turretMotor.config_kP(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kP, Constants.kTimeoutMs);
+    turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kI, Constants.kTimeoutMs);
     turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kD, Constants.kTimeoutMs);
 
     turretMotor.configMotionCruiseVelocity(800 / 3, Constants.kTimeoutMs);
     turretMotor.configMotionAcceleration(800 / 3, Constants.kTimeoutMs);
 
-    //turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    // turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx,
+    // Constants.kTimeoutMs);
 
     this.setDefaultCommand(new TurnTurret(this, driveTrain));
-    
+
     int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition() - 8000;
     absolutePosition &= 0xFFF;
     absolutePosition *= -1;
     turretMotor.setSelectedSensorPosition(0);
+
     
-    NetworkTableInstance table = NetworkTableInstance.getDefault();
-    NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
-    yaw = cameraTable.getEntry("targetYaw");
-    pitch = cameraTable.getEntry("targetPitch");
-    isDriverMode = cameraTable.getEntry("driver_mode");
+    //NetworkTableInstance table = NetworkTableInstance.getDefault();
+    //NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
+    //yaw = cameraTable.getEntry("targetYaw");
+    //pitch = cameraTable.getEntry("targetPitch");
+    //isDriverMode = cameraTable.getEntry("driver_mode");
 
 
   }
@@ -98,11 +106,14 @@ public class Turret extends SubsystemBase {
   }
 
   public void turnTurretAuto() {
-    NetworkTableInstance table = NetworkTableInstance.getDefault();
-    NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
-    yaw = cameraTable.getEntry("targetYaw");
-    degreesOffTarget = yaw.getDouble(0.0);
-    rotateToTarget(targetPosition - degreesOffTarget * Constants.ENCODER_UNITS_TO_DEGREES);
+    //NetworkTableInstance table = NetworkTableInstance.getDefault();
+    //NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("Pi Camera");
+    //yaw = cameraTable.getEntry("targetYaw");
+    PhotonCamera camera = new PhotonCamera("Pi Camera");
+    PhotonTrackedTarget target = camera.getLatestResult().getBestTarget();
+    //double yaw = target.getYaw();
+    //degreesOffTarget = yaw.getDouble(0.0);
+    rotateToTarget(targetPosition - yaw * Constants.ENCODER_UNITS_TO_DEGREES);
   }
 
   //Turns the turret
@@ -141,8 +152,11 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Yaw", yaw.getDouble(0.0));
-    double distanceFromTarget = targetHeightFromCamera / Math.tan(pitch.getDouble(0.0) + Constants.CAMERA_ANGLE);
+    target = camera.getLatestResult().getBestTarget();
+    double yaw = target.getYaw();
+    //SmartDashboard.putNumber("Yaw", yaw.getDouble(0.0));
+    double pitch = target.getPitch();
+    double distanceFromTarget = targetHeightFromCamera / Math.tan(pitch + Constants.CAMERA_ANGLE);
     SmartDashboard.putNumber("Distance to Target", distanceFromTarget);
     SmartDashboard.putNumber("Target Position", targetPosition);
   }
