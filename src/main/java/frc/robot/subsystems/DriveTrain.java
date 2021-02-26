@@ -106,7 +106,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void zeroHeading() {
-    gyro.setCompassAngle(90.0);
+    //gyro.setCompassAngle(0.0);
+    gyro.setYaw(0.0);
   }
 
   public void resetEncoders() {
@@ -122,7 +123,7 @@ public class DriveTrain extends SubsystemBase {
     double [] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);
     System.out.println("Yaw " + ypr[0]);
-    return ypr[0]%360;
+    return Math.IEEEremainder(ypr[0], 360);
   }
 
   @Override
