@@ -35,9 +35,8 @@ public class Hopper extends SubsystemBase {
 
   //Starts the front two hopper motors
   public void startFront() {
-    if (shooter.wheelLeftMaster.getSelectedSensorVelocity() / Constants.RPM_TO_ENCODER_UNITS_PER_100_MS >= Constants.SHOOTER_DEFAULT_TARGET_RPM * .75) {
-      wheelFrontMaster.set(ControlMode.PercentOutput, Constants.HOPPER_SPEED);
-    }
+    wheelFrontMaster.set(ControlMode.PercentOutput, Constants.HOPPER_SPEED);
+
   }
 
   //Stops the front two hopper motors
