@@ -93,8 +93,8 @@ public class Turret extends SubsystemBase {
     System.out.println(rotationAngle);
   }
 
-  public void rotateToTarget(double target) {
-    targetPosition = target;
+  public void rotateToTarget(double targetPos) {
+    targetPosition = targetPos;
     if (targetPosition > Constants.TURRET_MAX_ROTATION) {
       targetPosition = Constants.TURRET_MAX_ROTATION;
     }
@@ -111,7 +111,7 @@ public class Turret extends SubsystemBase {
     //yaw = cameraTable.getEntry("targetYaw");
     PhotonCamera camera = new PhotonCamera("Pi Camera");
     PhotonTrackedTarget target = camera.getLatestResult().getBestTarget();
-    //double yaw = target.getYaw();
+    double yaw = target.getYaw();
     //degreesOffTarget = yaw.getDouble(0.0);
     rotateToTarget(targetPosition - yaw * Constants.ENCODER_UNITS_TO_DEGREES);
   }

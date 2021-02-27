@@ -64,6 +64,7 @@ public class RobotContainer {
   JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
   JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
   JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
+  JoystickButton operatorStartButton = new JoystickButton(operatorController, XboxController.Button.kStart.value);
   POVButton operatorDPadDown = new POVButton(operatorController, 180);
   POVButton operatorDPadUp = new POVButton(operatorController, 0);
 
@@ -84,6 +85,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
     operatorLBumper.whenHeld(new IntakePowerCells(intake));
+    operatorStartButton.whenHeld(new TurnTurretAuto(turret));
     shooterHoodHandler();
     hopperHandler();
     controlPanelHandler();    
