@@ -42,7 +42,7 @@ public class DriveTrain extends SubsystemBase {
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   PigeonIMU gyro;
   DifferentialDriveOdometry odometry;
-  SimpleMotorFeedforward simpleMotorFeedforward;
+  public SimpleMotorFeedforward simpleMotorFeedForward;
   RamseteController ramseteController;
   PIDController leftPIDController, rightPIDController;
   public DigitalInput photoEye;
@@ -83,7 +83,7 @@ public class DriveTrain extends SubsystemBase {
    //falconRearLeft.follow(falconFrontLeft);
    //falconRearRight.follow(falconFrontRight);
    ramseteController = new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta);
-   simpleMotorFeedforward = new SimpleMotorFeedforward(Constants.ksVolts, 
+   simpleMotorFeedForward = new SimpleMotorFeedforward(Constants.ksVolts, 
     Constants.kvVoltSecondsPerMeter,
     Constants.kaVoltSecondsSquaredPerMeter);
 
@@ -96,7 +96,7 @@ public class DriveTrain extends SubsystemBase {
       trajectory, 
       this::getPose, 
       ramseteController, 
-      simpleMotorFeedforward,
+      simpleMotorFeedForward,
       Constants.kDriveKinematics,
       this::getWheelSpeeds,
       leftPIDController,
