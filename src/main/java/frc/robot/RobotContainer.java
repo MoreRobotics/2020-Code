@@ -152,15 +152,20 @@ public class RobotContainer {
 
     switch(Robot.chosenAutoPath) {
       case 0:
-        return new TestAutonomous(driveTrain, exampleTrajectory);
-      
+        System.out.println("test path");
+        System.out.println(trajectoryManager.testPath);
+        return new TestAutonomous(driveTrain, trajectoryManager.testPath);
+
       case 1:
+        System.out.println("barrel racing path");
         return new TestAutonomous(driveTrain, trajectoryManager.barrelRacingPath);
       
       case 2:
+        System.out.println("bounce path");
         return new TestAutonomous(driveTrain, trajectoryManager.bouncePath);
 
       default:
+        System.out.println("test path default");
         return new TestAutonomous(driveTrain, trajectoryManager.testPath);
     }
   }

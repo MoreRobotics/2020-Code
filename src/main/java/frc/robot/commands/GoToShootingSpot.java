@@ -23,7 +23,7 @@ public class GoToShootingSpot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    trajectory.LoadTrajectory("shootingSpot");
+    //trajectory.LoadTrajectory("shootingSpot");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
