@@ -107,7 +107,11 @@ public class Robot extends TimedRobot {
     // setup encoder if motor isn't a follower
     if (side != Sides.FOLLOWER) {
     
-      Encoder encoder;
+      
+      motor.configSelectedFeedbackSensor(
+            FeedbackDevice.IntegratedSensor,
+            PIDIDX, 10
+      );    
 
 
 
@@ -117,21 +121,25 @@ public class Robot extends TimedRobot {
       case RIGHT:
         // set right side methods = encoder methods
 
-        encoder = new Encoder(4, 5);
-        encoder.setReverseDirection(false);
+          
+        motor.setSensorPhase(false);
+        rightEncoderPosition = ()
+          -> motor.getSelectedSensorPosition(PIDIDX) * encoderConstant;
+        rightEncoderRate = ()
+          -> motor.getSelectedSensorVelocity(PIDIDX) * encoderConstant *
+               10;
 
-        encoder.setDistancePerPulse(encoderConstant);
-        rightEncoderPosition = encoder::getDistance;
-        rightEncoderRate = encoder::getRate;
 
         break;
       case LEFT:
-        encoder = new Encoder(2, 3);
-        encoder.setReverseDirection(false);
-        encoder.setDistancePerPulse(encoderConstant);
-        leftEncoderPosition = encoder::getDistance;
-        leftEncoderRate = encoder::getRate;
-
+        motor.setSensorPhase(false);
+        
+        leftEncoderPosition = ()
+          -> motor.getSelectedSensorPosition(PIDIDX) * encoderConstant;
+        leftEncoderRate = ()
+          -> motor.getSelectedSensorVelocity(PIDIDX) * encoderConstant *
+               10;
+        
 
         break;
       default:

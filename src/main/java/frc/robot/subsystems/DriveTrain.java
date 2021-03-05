@@ -107,7 +107,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void zeroHeading() {
     //gyro.setCompassAngle(0.0);
-    gyro.setYaw(0.0);
+    gyro.setYaw(90.0);
   }
 
   public void resetEncoders() {
