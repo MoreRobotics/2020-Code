@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -7,40 +8,34 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Hopper;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.TrajectoryManager;
 
-public class RemoveBallsFromTransporter extends CommandBase {
-  private final Hopper hopper;
-  
-  /**
-   * Creates a new StartFlyWheel.
-   */ 
-  public RemoveBallsFromTransporter(Hopper hopper) {
-    this.hopper = hopper;
-    // Use addRequirements() here to declare subsystem dependencies.
+public class SlalomPath extends CommandBase {
+  private final DriveTrain driveTrain;
+  private final TrajectoryManager trajectoryManager;
+
+  public SlalomPath(DriveTrain driveTrain, TrajectoryManager trajectoryManager) {
+    this.driveTrain = driveTrain;
+    this.trajectoryManager = trajectoryManager;
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      //Reverses the hopper feeder motor
-      hopper.reverseTransporter();
+    driveTrain.getRamseteCommand(trajectoryManager.slalomPath);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      //Stops the hopper feeder motor
-      hopper.stopTransporter();
+
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

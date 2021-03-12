@@ -17,7 +17,7 @@ import frc.robot.Constants;
 
 public class Hopper extends SubsystemBase {
   //Declares the wheels in the hopper
-  TalonSRX wheelFrontMaster, wheelFeeder;
+  TalonSRX wheelFrontMaster, transporter;
   private final Shooter shooter;
 
   
@@ -28,7 +28,7 @@ public class Hopper extends SubsystemBase {
     this.shooter = shooter;
     //Instantiates shooter motors
     wheelFrontMaster = new TalonSRX(Constants.HOPPER_FRONT_MASTER_MOTOR_ID);
-    wheelFeeder = new TalonSRX(Constants.HOPPER_FEEDER_MOTOR_ID);
+    transporter = new TalonSRX(Constants.TRANSPORTER_MOTOR_ID);
     wheelFrontMaster.setInverted(true);
   
   }
@@ -46,18 +46,18 @@ public class Hopper extends SubsystemBase {
   }
 
   //Starts the hopper feeder motor
-  public void startFeeder() {
-    wheelFeeder.set(ControlMode.PercentOutput, -1);
+  public void startTransporter() {
+    transporter.set(ControlMode.PercentOutput, -1);
   }
 
   //Stops the hopper feeder motor
-  public void stopFeeder() {
-    wheelFeeder.set(ControlMode.PercentOutput, 0);
+  public void stopTransporter() {
+    transporter.set(ControlMode.PercentOutput, 0);
   }
 
   //Starts the hopper feeder motor in the reverse direction
-  public void reverseFeeder() {
-    wheelFeeder.set(ControlMode.PercentOutput, 1);
+  public void reverseTransporter() {
+    transporter.set(ControlMode.PercentOutput, 1);
   }
 
   @Override

@@ -45,9 +45,13 @@ public class Robot extends TimedRobot {
 
     //Instantiates the auto path chooser and adds its options
     autoPathChooser = new SendableChooser<Integer>();
-    autoPathChooser.setDefaultOption("Test Path", 0);
-    autoPathChooser.addOption("Line to Trench", 1);
-    autoPathChooser.addOption("Line to Three Center Balls", 2);
+    autoPathChooser.setDefaultOption("testPath", 0);
+    autoPathChooser.addOption("barrelRacingPath", 1);
+    autoPathChooser.addOption("bouncePath", 2);
+    autoPathChooser.addOption("galacticSearchA", 3);
+    autoPathChooser.addOption("galacticSearchB", 4);
+    autoPathChooser.addOption("slalomPath", 5);
+    SmartDashboard.putData("Selected Path", autoPathChooser);
   }
 
   /**
@@ -133,23 +137,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-  }
-
-  // //Encapsulates the shooter hood commands
-  // public void shooterHoodHandler() {
-  //   operatorBButton.whenPressed(new HoodAngleUp(shooter));
-  //   operatorXButton.whenPressed(new HoodAngleDown(shooter));
-  // }
-
-  // public void hopperHandler() {
-  //   operatorRBumper.whenHeld(new StagePowerCells(hopper));
-  //   operatorYButton.whenHeld(new FeedPowerCells(hopper));
-  // }
-
-  // public void controlPanelHandler() {
-  //   driverLBumper.whenHeld(new TurnControlPanelLeft(controlPanel));
-  //   driverRBumper.whenHeld(new TurnControlPanelRight(controlPanel));
-  // }
-  
+  }  
 
 }

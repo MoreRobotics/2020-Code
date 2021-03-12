@@ -155,10 +155,10 @@ public class RobotContainer {
         return new TestAutonomous(driveTrain, exampleTrajectory);
       
       case 1:
-        return new TestAutonomous(driveTrain, trajectoryManager.lineToTrench);
+        return new TestAutonomous(driveTrain, trajectoryManager.barrelRacingPath);
       
       case 2:
-        return new TestAutonomous(driveTrain, trajectoryManager.linetoThreeCenterBalls);
+        return new TestAutonomous(driveTrain, trajectoryManager.bouncePath);
 
       default:
         return new TestAutonomous(driveTrain, trajectoryManager.testPath);
