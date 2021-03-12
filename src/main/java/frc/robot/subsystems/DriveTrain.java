@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.SlewRateLimiter;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -42,6 +43,7 @@ public class DriveTrain extends SubsystemBase {
   DifferentialDrive drive;
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   PigeonIMU gyro;
+  SlewRateLimiter filter;
   DifferentialDriveOdometry odometry;
   SimpleMotorFeedforward simpleMotorFeedforward;
   RamseteController ramseteController;
@@ -62,6 +64,7 @@ public class DriveTrain extends SubsystemBase {
     drive = new DifferentialDrive(rightDrive, leftDrive);
     gyroController = new TalonSRX(Constants.GYRO_CONTROLLER_MOTOR_ID);
     gyro = new PigeonIMU(gyroController);
+    filter = new SlewRateLimiter(0.5);
     resetEncoders();
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     this.setDefaultCommand(new TankDrive(this));
@@ -83,6 +86,11 @@ public class DriveTrain extends SubsystemBase {
     falconFrontRight.setNeutralMode(NeutralMode.Brake);
     falconRearLeft.setNeutralMode(NeutralMode.Brake);
     falconRearRight.setNeutralMode(NeutralMode.Brake);
+
+    // set max acceleration
+    // Creates a SlewRateLimiter that limits the rate of change of the signal to 0.5
+    // units per second
+    SlewRateLimiter filter = new SlewRateLimiter(0.5);
 
     falconFrontLeft.setSensorPhase(true);
     falconFrontRight.setSensorPhase(true);
@@ -167,6 +175,7 @@ public class DriveTrain extends SubsystemBase {
 
   // Drives the robot depending on the thumbstick inputs
   public void drive() {
-    drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
+    drive.curvatureDrive(filter.calculate(driverController.getY(Hand.kLeft)), driverController.getX(Hand.kRight),
+        false);
   }
 }
