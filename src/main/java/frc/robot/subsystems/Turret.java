@@ -102,7 +102,7 @@ public class Turret extends SubsystemBase {
       targetPosition = -Constants.TURRET_MAX_ROTATION;
     }
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
-    System.out.println("Target Position " + targetPosition);
+    SmartDashboard.putNumber("Target Position ", targetPosition);
   }
 
   public void turnTurretAuto() {
@@ -113,6 +113,7 @@ public class Turret extends SubsystemBase {
     PhotonTrackedTarget target = camera.getLatestResult().getBestTarget();
     double yaw = target.getYaw();
     //degreesOffTarget = yaw.getDouble(0.0);
+    SmartDashboard.putNumber("Turret Yaw", yaw);
     rotateToTarget(targetPosition - yaw * Constants.ENCODER_UNITS_TO_DEGREES);
   }
 
