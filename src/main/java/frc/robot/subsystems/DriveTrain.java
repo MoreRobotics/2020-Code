@@ -44,6 +44,7 @@ public class DriveTrain extends SubsystemBase {
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
   PigeonIMU gyro;
   SlewRateLimiter filter;
+  SlewRateLimiter filter2;
   DifferentialDriveOdometry odometry;
   SimpleMotorFeedforward simpleMotorFeedforward;
   RamseteController ramseteController;
@@ -90,6 +91,7 @@ public class DriveTrain extends SubsystemBase {
     // set max acceleration
     // limits the rate of change of the signal to max joystick slew rate
     SlewRateLimiter filter = new SlewRateLimiter(Constants.MAX_JOYSTICK_SLEW_RATE);
+    SlewRateLimiter filter2 = new SlewRateLimiter(Constants.MIN_JOYSTICK_SLEW_RATE);
 
     falconFrontLeft.setSensorPhase(true);
     falconFrontRight.setSensorPhase(true);
@@ -180,7 +182,8 @@ public class DriveTrain extends SubsystemBase {
       y = 0;
     }
     if (y == 0) {
-      drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
+      drive.curvatureDrive(filter2.calculate(driverController.getY(Hand.kLeft)), driverController.getX(Hand.kRight),
+          false);
     } else {
       drive.curvatureDrive(filter.calculate(driverController.getY(Hand.kLeft)), driverController.getX(Hand.kRight),
           false);
