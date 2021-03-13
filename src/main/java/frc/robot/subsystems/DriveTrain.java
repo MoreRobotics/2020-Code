@@ -185,6 +185,5 @@ public class DriveTrain extends SubsystemBase {
       drive.curvatureDrive(filter.calculate(driverController.getY(Hand.kLeft)), driverController.getX(Hand.kRight),
           false);
     }
-
   }
 }
