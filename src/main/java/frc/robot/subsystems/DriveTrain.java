@@ -176,7 +176,7 @@ public class DriveTrain extends SubsystemBase {
   public void drive() {
     double y = driverController.getY(Hand.kLeft);
     // Deadband Check
-    if (Math.abs(y) <= 0.05) {
+    if (Math.abs(y) <= 0.1) {
       y = 0;
     }
     if (y == 0) {
