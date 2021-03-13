@@ -88,9 +88,8 @@ public class DriveTrain extends SubsystemBase {
     falconRearRight.setNeutralMode(NeutralMode.Brake);
 
     // set max acceleration
-    // Creates a SlewRateLimiter that limits the rate of change of the signal to 0.5
-    // units per second
-    SlewRateLimiter filter = new SlewRateLimiter(0.5);
+    // limits the rate of change of the signal to max joystick slew rate
+    SlewRateLimiter filter = new SlewRateLimiter(Constants.MAX_JOYSTICK_SLEW_RATE);
 
     falconFrontLeft.setSensorPhase(true);
     falconFrontRight.setSensorPhase(true);
