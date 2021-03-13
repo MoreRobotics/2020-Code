@@ -55,13 +55,13 @@ public class Shooter extends SubsystemBase {
     wheelRightMaster.configFactoryDefault();
     wheelRightSlave.configFactoryDefault();
     wheelLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
-    wheelRightMaster.setInverted(false);
-    wheelRightSlave.setInverted(false);
+    wheelRightMaster.setInverted(true);
+    wheelRightSlave.setInverted(true);
     wheelLeftMaster.setSensorPhase(true);
     //wheelLeftMaster.configFactoryDefault();
-    wheelLeftMaster.setInverted(true);
+    wheelLeftMaster.setInverted(false);
     //wheelLeftMaster.setSensorPhase(false);
-    wheelLeftSlave.setInverted(true);
+    wheelLeftSlave.setInverted(false);
 
     //wheelLeftSlave.set(ControlMode.Follower, Constants.SHOOTER_LEFT_MASTER_MOTOR_ID);
     wheelRightSlave.follow(wheelLeftMaster);
@@ -143,7 +143,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Shooter RPM", wheelLeftMaster.getSelectedSensorVelocity() / Constants.RPM_TO_ENCODER_UNITS_PER_100_MS);
+    SmartDashboard.putNumber("Shooter RPM", -wheelLeftMaster.getSelectedSensorVelocity() / Constants.RPM_TO_ENCODER_UNITS_PER_100_MS);
 
     // This method will be called once per scheduler run
   }

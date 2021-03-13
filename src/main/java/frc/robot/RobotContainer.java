@@ -96,6 +96,8 @@ public class RobotContainer {
 
     operatorAButton.whenHeld(new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter), new FeedPowerCells(hopper),
         new StagePowerCells(hopper)));
+    operatorBButton.whenPressed(new HoodAngleDown(shooter));
+    operatorXButton.whenPressed(new HoodAngleUp(shooter));
     operatorDPadUp.whenPressed(new SetHighTargetRPM());
     operatorDPadRight.whenPressed(new SetMediumTargetRPM());
     operatorDPadDown.whenPressed(new SetLowTargetRPM());
