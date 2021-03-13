@@ -125,6 +125,10 @@ public class DriveTrain extends SubsystemBase {
     return odometry.getPoseMeters();
   }
 
+  public Boolean isBallPresent() {
+    return photoEye.get();
+  }
+
   public double getHeading() {
     double [] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);

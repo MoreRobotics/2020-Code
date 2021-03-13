@@ -167,6 +167,26 @@ public class RobotContainer {
         System.out.println("bounce path");
         return new TestAutonomous(driveTrain, trajectoryManager.bouncePath);
 
+      case 3:
+        System.out.println("Galactic Search Challenge A Red");
+        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchARed);
+
+      case 4:
+        System.out.println("Galactic Search Challenge B Red");
+        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchBRed);
+
+      case 5:
+        System.out.println("Slalom Path");
+        return new TestAutonomous(driveTrain, trajectoryManager.slalomPath);
+
+      case 6:
+        System.out.println("Galactic Search Challenge A Blue");
+        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchABlue);
+
+      case 7:
+        System.out.println("Galactic Search Challenge B Blue");
+        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchBBlue);
+
       default:
         System.out.println("test path default");
         return new TestAutonomous(driveTrain, trajectoryManager.testPath);

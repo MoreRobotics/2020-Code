@@ -89,6 +89,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     chosenAutoPath = autoPathChooser.getSelected();
+    if(chosenAutoPath == 3) {
+      if(m_robotContainer.getDriveTrain().isBallPresent()) {
+        chosenAutoPath = 6;
+      }
+    }
+    if(chosenAutoPath == 4) {
+      if(m_robotContainer.getDriveTrain().isBallPresent()) {
+        chosenAutoPath = 7;
+      }
+    }
     Pose2d autoPose2d = new Pose2d(1.0, 3.572, new Rotation2d(0));
     m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
     //m_robotContainer.getDriveTrain().zeroHeading();
