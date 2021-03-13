@@ -64,7 +64,7 @@ public class DriveTrain extends SubsystemBase {
     drive = new DifferentialDrive(rightDrive, leftDrive);
     gyroController = new TalonSRX(Constants.GYRO_CONTROLLER_MOTOR_ID);
     gyro = new PigeonIMU(gyroController);
-    filter = new SlewRateLimiter(0.5);
+    filter = new SlewRateLimiter(Constants.MAX_JOYSTICK_SLEW_RATE);
     resetEncoders();
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     this.setDefaultCommand(new TankDrive(this));
@@ -174,7 +174,17 @@ public class DriveTrain extends SubsystemBase {
 
   // Drives the robot depending on the thumbstick inputs
   public void drive() {
-    drive.curvatureDrive(filter.calculate(driverController.getY(Hand.kLeft)), driverController.getX(Hand.kRight),
-        false);
+    double y = driverController.getY(Hand.kLeft);
+    // Deadband Check
+    if (Math.abs(y) <= 0.05) {
+      y = 0;
+    }
+    if (y == 0) {
+      drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
+    } else {
+      drive.curvatureDrive(filter.calculate(driverController.getY(Hand.kLeft)), driverController.getX(Hand.kRight),
+          false);
+    }
+
   }
 }
