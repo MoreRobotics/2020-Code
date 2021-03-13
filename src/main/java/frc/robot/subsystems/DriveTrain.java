@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -71,6 +72,11 @@ public class DriveTrain extends SubsystemBase {
    //falconFrontLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
    //falconFrontRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
+   falconFrontLeft.setNeutralMode(NeutralMode.Brake);
+   falconRearLeft.setNeutralMode(NeutralMode.Brake);
+   falconFrontRight.setNeutralMode(NeutralMode.Brake);
+   falconRearRight.setNeutralMode(NeutralMode.Brake);
+
    //falconFrontLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 70, 25, 1.0));
    falconFrontLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
    falconFrontRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 70, 15, 0.5));
@@ -107,7 +113,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void zeroHeading() {
     //gyro.setCompassAngle(0.0);
-    gyro.setYaw(90.0);
+    gyro.setYaw(0.0);
   }
 
   public void resetEncoders() {
@@ -122,7 +128,7 @@ public class DriveTrain extends SubsystemBase {
   public double getHeading() {
     double [] ypr = new double[3];
     gyro.getYawPitchRoll(ypr);
-    //System.out.println("Yaw " + ypr[0]);
+    System.out.println("Yaw " + ypr[0]);
     return Math.IEEEremainder(ypr[0], 360);
   }
 

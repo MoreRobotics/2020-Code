@@ -111,6 +111,9 @@ public class RobotContainer {
     operatorDPadUp.whenHeld(new IntakePullUp(intake));
   }
 
+  public DriveTrain getDriveTrain() {
+    return driveTrain;
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

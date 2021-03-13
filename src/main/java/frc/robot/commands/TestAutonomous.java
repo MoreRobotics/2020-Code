@@ -21,7 +21,7 @@ public class TestAutonomous extends SequentialCommandGroup {
    */
   public TestAutonomous(DriveTrain driveTrain, Trajectory testPath) {
     m_driveTrain = driveTrain;
-    m_driveTrain.zeroHeading();
+    
     addCommands(m_driveTrain.getRamseteCommand(testPath));
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
