@@ -147,11 +147,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftDistance() {
-    return falconFrontLeft.getSelectedSensorPosition() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER;
+    return falconFrontLeft.getSelectedSensorPosition() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE;
   }
 
   public double getRightDistance() {
-    return -falconFrontRight.getSelectedSensorPosition() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER;
+    return -falconFrontRight.getSelectedSensorPosition() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE;
   }
 
   public void tankDriveVolts(final double leftVolts, final double rightVolts) {
@@ -163,8 +163,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(falconRearLeft.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER ,
-    falconFrontRight.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_DIAMETER );
+    return new DifferentialDriveWheelSpeeds(falconRearLeft.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE,
+    falconFrontRight.getSelectedSensorVelocity() / Constants.EDGES_PER_REVOLUTION * Constants.WHEEL_CIRCUMFERENCE);
   }
 
   public void resetOdometry(Pose2d pose2d) {

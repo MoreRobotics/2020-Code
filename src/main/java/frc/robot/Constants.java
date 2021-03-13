@@ -114,15 +114,15 @@ public final class Constants {
     // public static final double kaVoltSecondsSquaredPerInch = 0.00495;
     // public static final double kPDriveVel = 0.465;
 
-    public static final double ksVolts = 0.631;
-    public static final double kvVoltSecondsPerMeter = 1.78;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.13;
-    public static final double kPDriveVel = 2.15;
+    public static final double ksVolts = 0.63;
+    public static final double kvVoltSecondsPerMeter = 2.38;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.175;
+    public static final double kPDriveVel = 2.08;
    
     // public static final double kTrackwidthInches = 28.45;
     // public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthInches);
 
-    public static final double kTrackwidthMeters = 0.8542859266460718;
+    public static final double kTrackwidthMeters = 0.6408786261443097;
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
 
@@ -140,8 +140,8 @@ public final class Constants {
     public static final double kEncoderDistancePerPulse = 5362.0224;
 
     public static final double EDGES_PER_REVOLUTION = 21448.15;
-    //ticks*(1 rev/4096 ticks)*(1/10.27272727)
+    //ticks*(1 rev/2048 ticks)*(1/10.4727272727)
     //public static final double EDGES_PER_REVOLUTION = 2048;
-    public static final double WHEEL_DIAMETER = .152;
+    public static final double WHEEL_CIRCUMFERENCE = .152 * Math.PI;
 
 }  
