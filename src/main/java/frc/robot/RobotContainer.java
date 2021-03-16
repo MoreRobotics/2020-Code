@@ -102,6 +102,8 @@ public class RobotContainer {
     operatorDPadRight.whenPressed(new SetMediumTargetRPM());
     operatorDPadDown.whenPressed(new SetLowTargetRPM());
     operatorDPadLeft.whenPressed(new ResetTargetRPM());
+    //operatorYButton.whenHeld(new FeedPowerCells(hopper));
+    //operatorLBumper.whenHeld(new StagePowerCells(hopper));
 
     
 
