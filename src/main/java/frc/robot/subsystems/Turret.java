@@ -131,7 +131,7 @@ public class Turret extends SubsystemBase {
 
   // Stops the turret
   public void stopTurret() {
-    turretMotor.set(ControlMode.MotionMagic, 0);
+    turretMotor.set(ControlMode.Velocity, 0);
 
   }
 
