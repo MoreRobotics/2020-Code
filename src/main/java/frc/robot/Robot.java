@@ -53,6 +53,9 @@ public class Robot extends TimedRobot {
     autoPathChooser.addOption("galacticSearchA", 3);
     autoPathChooser.addOption("galacticSearchB", 4);
     autoPathChooser.addOption("slalomPath", 5);
+    autoPathChooser.addOption("galacticSearchABlue", 6);
+    autoPathChooser.addOption("galacticSearchBBlue", 7);
+    autoPathChooser.addOption("newBarrelRacingPath", 8);
     SmartDashboard.putData("Selected Path", autoPathChooser);
   }
 
@@ -99,7 +102,7 @@ public class Robot extends TimedRobot {
         chosenAutoPath = 7;
       }
     }
-    Pose2d autoPose2d = new Pose2d(1.0, 3.572, new Rotation2d(0));
+    Pose2d autoPose2d = new Pose2d(1.2373115583894732,2.1314370643042038, new Rotation2d(0));
     m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
     //m_robotContainer.getDriveTrain().zeroHeading();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();

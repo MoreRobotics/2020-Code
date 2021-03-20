@@ -32,6 +32,7 @@ public class TrajectoryManager {
   public Trajectory bouncePath;
   public Trajectory barrelRacingPath;
   public static Trajectory excessPath;
+  public Trajectory newBarrelRacingPath;
   
   public Trajectory LoadTrajectory(String trajectoryFile) {
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(4.267, 0.5);
@@ -55,5 +56,6 @@ public class TrajectoryManager {
     galacticSearchBRed = LoadTrajectory("galacticSearchBRed");
     slalomPath = LoadTrajectory("slalomPath");
     testPath = LoadTrajectory("testPath");    
+    newBarrelRacingPath = LoadTrajectory("newBarrelRacingPath");
   }
 }
