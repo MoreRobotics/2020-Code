@@ -187,9 +187,9 @@ public class RobotContainer {
         System.out.println("Galactic Search Challenge B Blue");
         return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchBBlue);
       
-      case 8:
-        System.out.println("New Barrel Racing Path");
-        return new TestAutonomous(driveTrain, trajectoryManager.newBarrelRacingPath);
+      //case 8:
+      //  System.out.println("New Barrel Racing Path");
+      //  return new TestAutonomous(driveTrain, trajectoryManager.newBarrelRacingPath);
 
       default:
         System.out.println("test path default");

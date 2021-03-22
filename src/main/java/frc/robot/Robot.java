@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     autoPathChooser.addOption("slalomPath", 5);
     autoPathChooser.addOption("galacticSearchABlue", 6);
     autoPathChooser.addOption("galacticSearchBBlue", 7);
-    autoPathChooser.addOption("newBarrelRacingPath", 8);
+    //autoPathChooser.addOption("newBarrelRacingPath", 8);
     SmartDashboard.putData("Selected Path", autoPathChooser);
   }
 
@@ -102,7 +102,32 @@ public class Robot extends TimedRobot {
         chosenAutoPath = 7;
       }
     }
-    Pose2d autoPose2d = new Pose2d(1.2373115583894732,2.1314370643042038, new Rotation2d(0));
+    Translation2d autoTranslation2d = new Translation2d(-1,-1);
+    if(chosenAutoPath == 0) {
+      autoTranslation2d = new Translation2d(1.0, 3.572);
+    }
+    if(chosenAutoPath == 1) {
+      autoTranslation2d = new Translation2d(1.2373115583894732, 2.1314370643042038);
+    }
+    if(chosenAutoPath == 2) {
+      autoTranslation2d = new Translation2d(1.2230110923987334, 2.302863659164286);
+    }
+    if(chosenAutoPath == 3) {
+      autoTranslation2d = new Translation2d(0.7286354701686436, 2.3023361101631967);
+    }
+    if(chosenAutoPath == 4) {
+      autoTranslation2d = new Translation2d(0.7459829396831342, 2.9049971112062414);
+    }
+    if(chosenAutoPath == 5) {
+      autoTranslation2d = new Translation2d(1.2068749607464244, 0.6630461830112444);
+    }
+    if(chosenAutoPath == 6) {
+      autoTranslation2d = new Translation2d(0.7286354701686436, 1.670864716165513);
+    }
+    if(chosenAutoPath == 7) {
+      autoTranslation2d = new Translation2d(0.7057997147435722, 1.6420957559628646);
+    } 
+    Pose2d autoPose2d = new Pose2d(autoTranslation2d, new Rotation2d(0));
     m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
     //m_robotContainer.getDriveTrain().zeroHeading();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
