@@ -157,43 +157,43 @@ public class RobotContainer {
       case 0:
         System.out.println("test path");
         System.out.println(trajectoryManager.testPath);
-        return new TestAutonomous(driveTrain, trajectoryManager.testPath);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.testPath);
 
       case 1:
         System.out.println("barrel racing path");
-        return new TestAutonomous(driveTrain, trajectoryManager.barrelRacingPath);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.barrelRacingPath);
       
       case 2:
         System.out.println("bounce path");
-        return new TestAutonomous(driveTrain, trajectoryManager.bouncePath);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.bouncePath);
 
       case 3:
         System.out.println("Galactic Search Challenge A Red");
-        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchARed);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchARed);
 
       case 4:
         System.out.println("Galactic Search Challenge B Red");
-        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchBRed);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchBRed);
 
       case 5:
         System.out.println("Slalom Path");
-        return new TestAutonomous(driveTrain, trajectoryManager.slalomPath);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.slalomPath);
 
       case 6:
         System.out.println("Galactic Search Challenge A Blue");
-        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchABlue);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchABlue);
 
       case 7:
         System.out.println("Galactic Search Challenge B Blue");
-        return new TestAutonomous(driveTrain, trajectoryManager.galacticSearchBBlue);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchBBlue);
       
       case 8:
         System.out.println("New Bounce Path");
-        return new TestAutonomous(driveTrain, trajectoryManager.bouncePathNew);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.bouncePathNew);
 
       default:
         System.out.println("test path default");
-        return new TestAutonomous(driveTrain, trajectoryManager.testPath);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.testPath);
     }
   }
 }

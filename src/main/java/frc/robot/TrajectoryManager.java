@@ -56,7 +56,7 @@ public class TrajectoryManager {
     galacticSearchARed = LoadTrajectory("galacticSearchARed");
     galacticSearchABlue = LoadTrajectory("galacticSearchABlue");
     galacticSearchBRed = LoadTrajectory("galacticSearchBRed");
-    galacticSearchBRed = LoadTrajectory("galacticSearchBRed");
+    galacticSearchBBlue = LoadTrajectory("galacticSearchBBlue");
     slalomPath = LoadTrajectory("slalomPath");
     testPath = LoadTrajectory("testPath");    
     bouncePathNew = LoadTrajectory("bouncePathNew");

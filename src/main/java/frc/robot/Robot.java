@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     autoPathChooser.addOption("slalomPath", 5);
     autoPathChooser.addOption("galacticSearchABlue", 6);
     autoPathChooser.addOption("galacticSearchBBlue", 7);
-    //autoPathChooser.addOption("newBarrelRacingPath", 8);
+    autoPathChooser.addOption("bouncePathNew", 8);
     SmartDashboard.putData("Selected Path", autoPathChooser);
   }
 
@@ -127,6 +127,9 @@ public class Robot extends TimedRobot {
     if(chosenAutoPath == 7) {
       autoTranslation2d = new Translation2d(0.7057997147435722, 1.6420957559628646);
     } 
+    if(chosenAutoPath == 8) {
+      autoTranslation2d = new Translation2d(1.2230110923987334, 2.302863659164286);
+    }
     Pose2d autoPose2d = new Pose2d(autoTranslation2d, new Rotation2d(0));
     m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
     //m_robotContainer.getDriveTrain().zeroHeading();

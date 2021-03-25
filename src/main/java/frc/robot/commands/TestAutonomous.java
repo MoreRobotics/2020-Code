@@ -20,18 +20,22 @@ import frc.robot.subsystems.Intake;
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class TestAutonomous extends SequentialCommandGroup {
   private final DriveTrain m_driveTrain;
-  private final TrajectoryManager trajectoryManager = new TrajectoryManager();
-  private final Intake intake = new Intake();
   /**
    * Creates a new TestAutonomous.
    */
-  public TestAutonomous(DriveTrain driveTrain, Trajectory path) {
+  public TestAutonomous(DriveTrain driveTrain, Intake intake, TrajectoryManager trajectoryManager, Trajectory path) {
     m_driveTrain = driveTrain;
     
-    
     if(path == trajectoryManager.bouncePathNew) {
-      addCommands(m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew), m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew2), m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew3), m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew4));
-    } else if (path == trajectoryManager.galacticSearchABlue || path == trajectoryManager.galacticSearchBBlue || path == trajectoryManager.galacticSearchARed || path == trajectoryManager.galacticSearchBRed) {
+      addCommands(m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew), 
+      m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew2), 
+      m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew3), 
+      m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew4));
+    } else if (path == trajectoryManager.galacticSearchABlue || 
+    path == trajectoryManager.galacticSearchBBlue || 
+    path == trajectoryManager.galacticSearchARed || 
+    path == trajectoryManager.galacticSearchBRed) {
+      System.out.println(path);
       Command galacticSearch = new ParallelCommandGroup(new IntakePowerCells(intake), m_driveTrain.getRamseteCommand(path));
       addCommands(galacticSearch);
     } else {

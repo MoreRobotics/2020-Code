@@ -23,9 +23,9 @@ public class AutonomousRun extends SequentialCommandGroup {
   /**
    * Creates a new AutonomousRun.
    */
-  public AutonomousRun(Intake intake, Shooter shooter, DriveTrain driveTrain, Hopper hopper, Turret turret, TrajectoryManager trajectory) {
+  public AutonomousRun(Intake intake, Shooter shooter, DriveTrain driveTrain, Hopper hopper, Turret turret, TrajectoryManager trajectory, TrajectoryManager trajectoryManager) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new TurnTurretAndShootCG(turret, shooter), new FeedBallsToShooterCG(intake, hopper), new BallPickupCG(intake, driveTrain, shooter), new GoToShootingSpot(trajectory), new SpeedUpShooterAndAlignShot(turret, shooter), new FeedBallsToShooterCG(intake, hopper));
+    super(new TurnTurretAndShootCG(turret, shooter), new FeedBallsToShooterCG(intake, hopper), new BallPickupCG(intake, driveTrain, shooter, trajectoryManager), new GoToShootingSpot(trajectory), new SpeedUpShooterAndAlignShot(turret, shooter), new FeedBallsToShooterCG(intake, hopper));
   }
 }
