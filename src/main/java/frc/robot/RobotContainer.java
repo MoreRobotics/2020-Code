@@ -168,12 +168,12 @@ public class RobotContainer {
         return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.bouncePath);
 
       case 3:
-        System.out.println("Galactic Search Challenge A Red");
-        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchARed);
+        System.out.println("Galactic Search Challenge A Blue");
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchABlue);
 
       case 4:
-        System.out.println("Galactic Search Challenge B Red");
-        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchBRed);
+        System.out.println("Galactic Search Challenge B Blue");
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchBBlue);
 
       case 5:
         System.out.println("Slalom Path");
@@ -181,11 +181,11 @@ public class RobotContainer {
 
       case 6:
         System.out.println("Galactic Search Challenge A Blue");
-        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchABlue);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchARed);
 
       case 7:
         System.out.println("Galactic Search Challenge B Blue");
-        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchBBlue);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.galacticSearchBRed);
       
       case 8:
         System.out.println("New Bounce Path");

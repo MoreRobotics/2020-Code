@@ -53,8 +53,8 @@ public class Robot extends TimedRobot {
     autoPathChooser.addOption("galacticSearchA", 3);
     autoPathChooser.addOption("galacticSearchB", 4);
     autoPathChooser.addOption("slalomPath", 5);
-    autoPathChooser.addOption("galacticSearchABlue", 6);
-    autoPathChooser.addOption("galacticSearchBBlue", 7);
+    autoPathChooser.addOption("galacticSearchARed", 6);
+    autoPathChooser.addOption("galacticSearchBRed", 7);
     autoPathChooser.addOption("bouncePathNew", 8);
     SmartDashboard.putData("Selected Path", autoPathChooser);
   }
