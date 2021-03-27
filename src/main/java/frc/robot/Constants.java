@@ -142,6 +142,6 @@ public final class Constants {
     public static final double EDGES_PER_REVOLUTION = 21448.15;
     //ticks*(1 rev/2048 ticks)*(1/10.4727272727) = 1
     //public static final double EDGES_PER_REVOLUTION = 2048;
-    public static final double WHEEL_CIRCUMFERENCE = 0.49;
+    public static final double WHEEL_CIRCUMFERENCE = 0.46;
     //public static final double WHEEL_CIRCUMFERENCE = 1;
 }  

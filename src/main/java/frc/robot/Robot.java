@@ -107,7 +107,7 @@ public class Robot extends TimedRobot {
       autoTranslation2d = new Translation2d(1.0, 3.572);
     }
     if(chosenAutoPath == 1) {
-      autoTranslation2d = new Translation2d(1.2373115583894732, 2.1314370643042038);
+      autoTranslation2d = new Translation2d(0.57, 2.1406491013335054);
     }
     if(chosenAutoPath == 2) {
       autoTranslation2d = new Translation2d(1.2230110923987334, 2.302863659164286);
@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
       autoTranslation2d = new Translation2d(0.7459829396831342, 2.9049971112062414);
     }
     if(chosenAutoPath == 5) {
-      autoTranslation2d = new Translation2d(1.2068749607464244, 0.6630461830112444);
+      autoTranslation2d = new Translation2d(0.526326354441796, 0.421178895831992);
     }
     if(chosenAutoPath == 6) {
       autoTranslation2d = new Translation2d(0.7286354701686436, 1.670864716165513);
@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
       autoTranslation2d = new Translation2d(0.7057997147435722, 1.6420957559628646);
     } 
     if(chosenAutoPath == 8) {
-      autoTranslation2d = new Translation2d(1.2230110923987334, 2.302863659164286);
+      autoTranslation2d = new Translation2d(0.22325426786059388, 2.190130258326355);
     }
     Pose2d autoPose2d = new Pose2d(autoTranslation2d, new Rotation2d(0));
     m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
