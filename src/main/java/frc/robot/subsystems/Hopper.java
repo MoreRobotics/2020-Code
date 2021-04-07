@@ -48,7 +48,7 @@ public class Hopper extends SubsystemBase {
   // Starts the hopper feeder motor
   public void startFeeder() {
     if (SmartDashboard.getNumber("Shooter RPM", 0) >= SmartDashboard.getNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM) * .75) {
-      wheelFeeder.set(ControlMode.PercentOutput, -1);
+      wheelFeeder.set(ControlMode.PercentOutput, -.5);
     }
   }
 

@@ -43,10 +43,10 @@ public final class Constants {
     public static final double LOWERED_SHOOTER_SPEED = 0.25;
 
     //Defines the default target shooter RPM
-    public static final double SHOOTER_HIGH_TARGET_RPM = 6500;//fill in
-    public static final double SHOOTER_DEFAULT_TARGET_RPM = 6000;
-    public static final double SHOOTER_MEDIUM_TARGET_RPM = 5000;//fill in
-    public static final double SHOOTER_LOW_TARGET_RPM = 1500;//fill in
+    public static final double SHOOTER_HIGH_TARGET_RPM = 5250;//fill in
+    public static final double SHOOTER_DEFAULT_TARGET_RPM = 4000;
+    public static final double SHOOTER_MEDIUM_TARGET_RPM = 7000;//fill in
+    public static final double SHOOTER_LOW_TARGET_RPM = 1600;//fill in
     public static final double RPM_TO_ENCODER_UNITS_PER_100_MS = .1 * 4096.0 / 60.0;
 
     //Shooter PID
