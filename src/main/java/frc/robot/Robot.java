@@ -93,12 +93,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     chosenAutoPath = autoPathChooser.getSelected();
     if(chosenAutoPath == 3) {
-      if(m_robotContainer.getDriveTrain().isBallPresent()) {
+      if(m_robotContainer.getDriveTrain().isBallPresent() == false) {
         chosenAutoPath = 6;
       }
     }
     if(chosenAutoPath == 4) {
-      if(m_robotContainer.getDriveTrain().isBallPresent()) {
+      if(m_robotContainer.getDriveTrain().isBallPresent() == false) {
         chosenAutoPath = 7;
       }
     }
@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
       autoTranslation2d = new Translation2d(0.7286354701686436, 1.670864716165513);
     }
     if(chosenAutoPath == 7) {
-      autoTranslation2d = new Translation2d(0.7057997147435722, 1.6420957559628646);
+      autoTranslation2d = new Translation2d(0.6995104039167684, 1.9179838948656838);
     } 
     if(chosenAutoPath == 8) {
       autoTranslation2d = new Translation2d(0.22325426786059388, 2.190130258326355);
