@@ -18,7 +18,7 @@ public class IntakePowerCells extends CommandBase {
   private final Intake intake;
   private final Intake solenoid;
   XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
-  JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
+  JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
   /**
    * Creates a new StartFlyWheel.
    */ 
@@ -33,6 +33,7 @@ public class IntakePowerCells extends CommandBase {
   public void initialize() {
       //Starts the hopper feeder motor
       intake.intakeStart();
+      intake.intakePushDown();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,16 +46,16 @@ public class IntakePowerCells extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //Stops the hopper feeder motor
-    if (operatorRBumper.get() == false) {
+    if (operatorLBumper.get() == true) {
       intake.intakeStop();
-      solenoid.intakePullUp();
+      intake.intakePullUp();
     }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (operatorRBumper.get() == false) {
+    if (operatorLBumper.get() == true) {
       return true;
     }
     

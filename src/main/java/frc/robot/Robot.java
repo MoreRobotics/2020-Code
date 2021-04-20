@@ -113,16 +113,16 @@ public class Robot extends TimedRobot {
       autoTranslation2d = new Translation2d(1.2230110923987334, 2.302863659164286);
     }
     if(chosenAutoPath == 3) {
-      autoTranslation2d = new Translation2d(0.7286354701686436, 2.3023361101631967);
+      autoTranslation2d = new Translation2d(0.7428064162855117, 2.8519407331057143);
     }
     if(chosenAutoPath == 4) {
-      autoTranslation2d = new Translation2d(0.7459829396831342, 2.9049971112062414);
+      autoTranslation2d = new Translation2d(0.7304361270372994, 2.5364983572763);
     }
     if(chosenAutoPath == 5) {
       autoTranslation2d = new Translation2d(0.526326354441796, 0.421178895831992);
     }
     if(chosenAutoPath == 6) {
-      autoTranslation2d = new Translation2d(0.7286354701686436, 1.670864716165513);
+      autoTranslation2d = new Translation2d(0.7180658377890871, 2.1282788120852936);
     }
     if(chosenAutoPath == 7) {
       autoTranslation2d = new Translation2d(0.6995104039167684, 1.9179838948656838);

@@ -83,7 +83,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
-    operatorLBumper.whenHeld(new IntakePowerCells(intake));
+    operatorLBumper.whenHeld(new IntakePowerCells(intake, intake));
     shooterHoodHandler();
     hopperHandler();
     controlPanelHandler();    
