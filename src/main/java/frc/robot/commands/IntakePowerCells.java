@@ -7,17 +7,24 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class IntakePowerCells extends CommandBase {
   private final Intake intake;
-  
+  private final Intake solenoid;
+  XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+  JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
   /**
    * Creates a new StartFlyWheel.
    */ 
-  public IntakePowerCells(Intake intake) {
+  public IntakePowerCells(Intake intake, Intake solenoid) {
     this.intake = intake;
+    this.solenoid = solenoid;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,23 +33,33 @@ public class IntakePowerCells extends CommandBase {
   public void initialize() {
       //Starts the hopper feeder motor
       intake.intakeStart();
+      intake.intakePushDown();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      //Stops the hopper feeder motor
+    //Stops the hopper feeder motor
+    if (operatorLBumper.get() == true) {
       intake.intakeStop();
+      intake.intakePullUp();
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (operatorLBumper.get() == true) {
+      return true;
+    }
+    
     return false;
+         
   }
 }

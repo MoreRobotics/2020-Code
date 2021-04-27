@@ -23,6 +23,6 @@ public class BallPickupCG extends ParallelCommandGroup {
   public BallPickupCG(Intake intake, DriveTrain driveTrain, Shooter shooter, TrajectoryManager trajectoryManager) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new IntakePushDown(intake), new LowerShooterSpeed(shooter), new IntakePowerCells(intake), new TestAutonomous(driveTrain, intake, trajectoryManager, TrajectoryManager.excessPath));
+    super(new IntakePushDown(intake), new LowerShooterSpeed(shooter), new IntakePowerCells(intake, intake), new TestAutonomous(driveTrain, intake, trajectoryManager, TrajectoryManager.excessPath));
   }
 }

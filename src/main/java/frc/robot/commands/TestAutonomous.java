@@ -36,7 +36,7 @@ public class TestAutonomous extends SequentialCommandGroup {
     path == trajectoryManager.galacticSearchARed || 
     path == trajectoryManager.galacticSearchBRed) {
       System.out.println(path);
-      Command galacticSearch = new ParallelCommandGroup(new IntakePowerCells(intake), m_driveTrain.getRamseteCommand(path));
+      Command galacticSearch = new ParallelCommandGroup(new IntakePowerCells(intake, intake), m_driveTrain.getRamseteCommand(path));
       addCommands(galacticSearch);
     } else {
       addCommands(m_driveTrain.getRamseteCommand(path));
