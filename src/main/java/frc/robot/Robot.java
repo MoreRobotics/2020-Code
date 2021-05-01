@@ -19,33 +19,36 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveTrain;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
-  //Declares the robot objects
+  // Declares the robot objects
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-//Declares the chooser objects
+  // Declares the chooser objects
   private SendableChooser<Integer> autoPathChooser;
   public static int chosenAutoPath;
+
   /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();    
-    //Puts the target shooter RPM on the shuffleboard
+    m_robotContainer = new RobotContainer();
+    // Puts the target shooter RPM on the shuffleboard
     SmartDashboard.putNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM);
     LiveWindow.disableAllTelemetry();
     m_robotContainer.trajectoryManager.LoadAllPaths();
 
-    //Instantiates the auto path chooser and adds its options
+    // Instantiates the auto path chooser and adds its options
     autoPathChooser = new SendableChooser<Integer>();
     autoPathChooser.setDefaultOption("testPath", 0);
     autoPathChooser.addOption("barrelRacingPath", 1);
@@ -60,17 +63,22 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like diagnostics that you want ran during disabled, autonomous,
+   * teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // Runs the Scheduler. This is responsible for polling buttons, adding
+    // newly-scheduled
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
@@ -87,52 +95,62 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
    */
   @Override
   public void autonomousInit() {
     chosenAutoPath = autoPathChooser.getSelected();
-    if(chosenAutoPath == 3) {
-      if(m_robotContainer.getDriveTrain().isBallPresent() == false) {
+
+    if (chosenAutoPath == 3) {
+      if (m_robotContainer.getDriveTrain().isBallPresent() == false) {
         chosenAutoPath = 6;
       }
     }
-    if(chosenAutoPath == 4) {
-      if(m_robotContainer.getDriveTrain().isBallPresent() == false) {
+    if (chosenAutoPath == 4) {
+      if (m_robotContainer.getDriveTrain().isBallPresent() == false) {
         chosenAutoPath = 7;
       }
     }
-    Translation2d autoTranslation2d = new Translation2d(-1,-1);
-    if(chosenAutoPath == 0) {
-      autoTranslation2d = new Translation2d(1.0, 3.572);
-    }
-    if(chosenAutoPath == 1) {
-      autoTranslation2d = new Translation2d(0.57, 2.1406491013335054);
-    }
-    if(chosenAutoPath == 2) {
-      autoTranslation2d = new Translation2d(1.2230110923987334, 2.302863659164286);
-    }
-    if(chosenAutoPath == 3) {
-      autoTranslation2d = new Translation2d(0.7428064162855117, 2.8519407331057143);
-    }
-    if(chosenAutoPath == 4) {
-      autoTranslation2d = new Translation2d(0.7304361270372994, 2.5364983572763);
-    }
-    if(chosenAutoPath == 5) {
-      autoTranslation2d = new Translation2d(0.526326354441796, 0.421178895831992);
-    }
-    if(chosenAutoPath == 6) {
-      autoTranslation2d = new Translation2d(0.7180658377890871, 2.1282788120852936);
-    }
-    if(chosenAutoPath == 7) {
-      autoTranslation2d = new Translation2d(0.6995104039167684, 1.9179838948656838);
-    } 
-    if(chosenAutoPath == 8) {
-      autoTranslation2d = new Translation2d(0.22325426786059388, 2.190130258326355);
-    }
+    Translation2d autoTranslation2d = new Translation2d(-1, -1);
     Pose2d autoPose2d = new Pose2d(autoTranslation2d, new Rotation2d(0));
+    if (chosenAutoPath < 9) {
+      if (chosenAutoPath == 0) {
+        autoTranslation2d = new Translation2d(1.0, 3.572);
+      }
+      if (chosenAutoPath == 1) {
+        autoTranslation2d = new Translation2d(0.57, 2.1406491013335054);
+      }
+      if (chosenAutoPath == 2) {
+        autoTranslation2d = new Translation2d(1.2230110923987334, 2.302863659164286);
+      }
+      if (chosenAutoPath == 3) {
+        autoTranslation2d = new Translation2d(0.7428064162855117, 2.8519407331057143);
+      }
+      if (chosenAutoPath == 4) {
+        autoTranslation2d = new Translation2d(0.7304361270372994, 2.5364983572763);
+      }
+      if (chosenAutoPath == 5) {
+        autoTranslation2d = new Translation2d(0.526326354441796, 0.421178895831992);
+      }
+      if (chosenAutoPath == 6) {
+        autoTranslation2d = new Translation2d(0.7180658377890871, 2.1282788120852936);
+      }
+      if (chosenAutoPath == 7) {
+        autoTranslation2d = new Translation2d(0.6995104039167684, 1.9179838948656838);
+      }
+      if (chosenAutoPath == 8) {
+        autoTranslation2d = new Translation2d(0.22325426786059388, 2.190130258326355);
+      }
+      autoPose2d = new Pose2d(autoTranslation2d, new Rotation2d(0));
+    } else {
+      if (chosenAutoPath == 9) {
+        autoTranslation2d = new Translation2d(3.006206510531386, 5.822326344234389);
+        autoPose2d = new Pose2d(autoTranslation2d, new Rotation2d(3.141592653589793));
+      }
+    }
     m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
-    //m_robotContainer.getDriveTrain().zeroHeading();
+    // m_robotContainer.getDriveTrain().zeroHeading();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -140,8 +158,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    //Gets the path selected from the auto path chooser
-    
+    // Gets the path selected from the auto path chooser
+
   }
 
   /**
@@ -149,7 +167,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    
+
   }
 
   @Override
@@ -169,7 +187,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    }
+  }
 
   @Override
   public void testInit() {
@@ -182,6 +200,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-  }  
+  }
 
 }
