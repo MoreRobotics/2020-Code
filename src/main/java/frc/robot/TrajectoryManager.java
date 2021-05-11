@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.trajectory.*;
 import frc.robot.constraints.MaxAccelerationAndVelocityConstraint;
 import frc.robot.subsystems.DriveTrain;
 
-
 /**
  * Add your docs here.
  */
@@ -36,15 +35,15 @@ public class TrajectoryManager {
   public Trajectory bouncePathNew2;
   public Trajectory bouncePathNew3;
   public Trajectory bouncePathNew4;
-  
+  public Trajectory Unnamed;
+
   public Trajectory LoadTrajectory(String trajectoryFile) {
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(4.267, 0.5);
     trajectoryConfig.addConstraint(new MaxAccelerationAndVelocityConstraint(4.267, 0.5));
     try {
       Path path = Filesystem.getDeployDirectory().toPath().resolve("output/" + trajectoryFile + ".wpilib.json");
       return TrajectoryUtil.fromPathweaverJson(path);
-    } 
-    catch (IOException ex) {
+    } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryFile, ex.getStackTrace());
       return new Trajectory(List.of(new Trajectory.State()));
     }
@@ -58,10 +57,11 @@ public class TrajectoryManager {
     galacticSearchBRed = LoadTrajectory("galacticSearchBRed");
     galacticSearchBBlue = LoadTrajectory("galacticSearchBBlue");
     slalomPath = LoadTrajectory("slalomPath");
-    testPath = LoadTrajectory("testPath");    
+    testPath = LoadTrajectory("testPath");
     bouncePathNew = LoadTrajectory("bouncePathNew");
     bouncePathNew2 = LoadTrajectory("bouncePathNew2");
     bouncePathNew3 = LoadTrajectory("bouncePathNew3");
     bouncePathNew4 = LoadTrajectory("bouncePathNew4");
+    Unnamed = LoadTrajectory("Unnamed");
   }
 }
