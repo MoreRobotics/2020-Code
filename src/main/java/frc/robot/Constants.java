@@ -34,8 +34,9 @@ public final class Constants {
     public static final int GYRO_CONTROLLER_MOTOR_ID = 53; //temporary, normally 24
 
     //Defines the channels of the solenoids on the shooter
-    public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 2;
-    public static final int SHOOTER_SOLENOID_REVERSE_CHANNEL = 3;
+    public static final int SHOOTER_SOLENOID_FORWARD_CHANNEL = 4;
+    
+    public static final int SHOOTER_SOLENOID_REVERSE_CHANNEL = 5;
 
     //Defines the speed the shooter wheels will be run ([-1.0, 1.0])
     public static final double SHOOTER_SPEED = 1;
@@ -57,8 +58,8 @@ public final class Constants {
     public static final int INTAKE_MOTOR_ID = 60;
 
     //Defines the channels of the solenoids on the intake
-    public static final int INTAKE_SOLENOID_FORWARD_CHANNEL = 0;
-    public static final int INTAKE_SOLENOID_REVERSE_CHANNEL = 1;
+    public static final int INTAKE_SOLENOID_FORWARD_CHANNEL = 2;
+    public static final int INTAKE_SOLENOID_REVERSE_CHANNEL = 3;
 
     //Defines the speed the intake wheels will be run at ([-1.0, 1.0])
     public static final double INTAKE_SPEED = 1.0;

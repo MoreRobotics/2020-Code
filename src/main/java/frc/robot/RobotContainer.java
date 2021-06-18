@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 //import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
@@ -84,7 +85,8 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
+
+    operatorAButton.whenHeld(new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter), new FeedPowerCells(hopper), new StagePowerCells(hopper)));
     operatorLBumper.whenHeld(new IntakePowerCells(intake, intake));
     shooterHoodHandler();
     hopperHandler();

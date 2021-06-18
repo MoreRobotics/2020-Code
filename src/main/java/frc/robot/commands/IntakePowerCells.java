@@ -46,7 +46,7 @@ public class IntakePowerCells extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //Stops the hopper feeder motor
-    if (operatorLBumper.get() == true) {
+    if (operatorLBumper.get() == false) {
       intake.intakeStop();
       intake.intakePullUp();
     }
@@ -56,10 +56,12 @@ public class IntakePowerCells extends CommandBase {
   @Override
   public boolean isFinished() {
     if (operatorLBumper.get() == true) {
+      return false;
+    } else {
       return true;
     }
     
-    return false;
+    
          
   }
 }
