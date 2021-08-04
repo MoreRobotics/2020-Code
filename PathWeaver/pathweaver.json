@@ -1,9 +1,9 @@
 {
   "lengthUnit": "Meter",
   "exportUnit": "Always Meters",
-  "maxVelocity": 2.4,
-  "maxAcceleration": 0.6,
+  "maxVelocity": 3.4,
+  "maxAcceleration": 1.0,
   "wheelBase": 0.6408786261443097,
-  "gameName": "Infinite Recharge",
+  "gameName": "Bounce Path",
   "outputDir": "../src/main/deploy"
 }
