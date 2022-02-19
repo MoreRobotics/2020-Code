@@ -102,12 +102,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     chosenAutoPath = autoPathChooser.getSelected();
     if (chosenAutoPath == 3) {
-      if (m_robotContainer.getDriveTrain().isBallPresent() == false) {
+      if (m_robotContainer.driveTrain.isBallPresent() == false) {
         chosenAutoPath = 6;
       }
     }
     if (chosenAutoPath == 4) {
-      if (m_robotContainer.getDriveTrain().isBallPresent() == false) {
+      if (m_robotContainer.driveTrain.isBallPresent() == false) {
         chosenAutoPath = 7;
       }
     }
@@ -150,9 +150,9 @@ public class Robot extends TimedRobot {
       }
     }
 
-    m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
+    m_robotContainer.driveTrain.resetOdometry(autoPose2d);
     // m_robotContainer.getDriveTrain().zeroHeading();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

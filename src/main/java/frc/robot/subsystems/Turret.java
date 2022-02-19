@@ -66,7 +66,7 @@ public class Turret extends SubsystemBase {
     // turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx,
     // Constants.kTimeoutMs);
 
-    this.setDefaultCommand(new TurnTurret(this, driveTrain));
+    //this.setDefaultCommand(new TurnTurret(this, driveTrain));
 
     int absolutePosition = turretMotor.getSensorCollection().getPulseWidthPosition() - 8000;
     absolutePosition &= 0xFFF;

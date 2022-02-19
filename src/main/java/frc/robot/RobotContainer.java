@@ -75,7 +75,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    configureButtonBindings();
+    // configureButtonBindings();
   }
 
   /**
@@ -85,7 +85,6 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
     operatorAButton.whenHeld(new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter), new FeedPowerCells(hopper), new StagePowerCells(hopper)));
     operatorLBumper.whenHeld(new IntakePowerCells(intake, intake));
     shooterHoodHandler();
@@ -115,16 +114,13 @@ public class RobotContainer {
     operatorDPadUp.whenHeld(new IntakePullUp(intake));
   }
 
-  public DriveTrain getDriveTrain() {
-    return driveTrain;
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  /*public Command getAutonomousCommand() {
     var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.ksVolts,
         Constants.kvVoltSecondsPerMeter, Constants.kaVoltSecondsSquaredPerMeter), Constants.kDriveKinematics, 10);
 
@@ -194,4 +190,5 @@ public class RobotContainer {
         return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.testPath);
     }
   }
+  */
 }
