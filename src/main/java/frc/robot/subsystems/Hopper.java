@@ -54,8 +54,13 @@ public class Hopper extends SubsystemBase {
   }
 
   //Starts the hopper feeder motor in the reverse direction
+<<<<<<< Updated upstream
   public void reverseFeeder() {
     wheelFeeder.set(ControlMode.PercentOutput, 1);
+=======
+  public void reverseTransporter() {
+    wheelFrontMaster.set(ControlMode.PercentOutput, -Constants.HOPPER_SPEED);
+>>>>>>> Stashed changes
   }
 
   @Override

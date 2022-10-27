@@ -10,9 +10,15 @@ package frc.robot.commands;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+
 public class IntakePowerCells extends CommandBase {
   private final Intake intake;
+<<<<<<< Updated upstream
   
+=======
+  XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
+  JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
+>>>>>>> Stashed changes
   /**
    * Creates a new StartFlyWheel.
    */ 
@@ -26,6 +32,10 @@ public class IntakePowerCells extends CommandBase {
   public void initialize() {
       //Starts the hopper feeder motor
       intake.intakeStart();
+<<<<<<< Updated upstream
+=======
+      //intake.intakePushDown();
+>>>>>>> Stashed changes
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,13 +46,25 @@ public class IntakePowerCells extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+<<<<<<< Updated upstream
       //Stops the hopper feeder motor
       intake.intakeStop();
+=======
+    //Stops the hopper feeder motor
+    if (!operatorLBumper.get()) {
+      intake.intakeStop();
+      //intake.intakePullUp();
+    }
+>>>>>>> Stashed changes
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+<<<<<<< Updated upstream
     return false;
+=======
+    return !operatorLBumper.get();
+>>>>>>> Stashed changes
   }
 }

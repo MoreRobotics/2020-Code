@@ -13,6 +13,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+<<<<<<< Updated upstream
+=======
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.StartFlyWheelVelocityPID;
+import frc.robot.commands.FeedPowerCells;
+import frc.robot.commands.StagePowerCells;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
+>>>>>>> Stashed changes
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -28,6 +40,11 @@ public class Robot extends TimedRobot {
 //Declares the chooser objects
   private SendableChooser<Integer> autoPathChooser;
   public static int chosenAutoPath;
+<<<<<<< Updated upstream
+=======
+  private Command m_autonomousShooterCommand;
+
+>>>>>>> Stashed changes
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -42,12 +59,26 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter Target RPM", Constants.SHOOTER_DEFAULT_TARGET_RPM);
     LiveWindow.disableAllTelemetry();
     m_robotContainer.trajectoryManager.LoadAllPaths();
+    
 
     //Instantiates the auto path chooser and adds its options
     autoPathChooser = new SendableChooser<Integer>();
+<<<<<<< Updated upstream
     autoPathChooser.setDefaultOption("Test Path", 0);
     autoPathChooser.addOption("Line to Trench", 1);
     autoPathChooser.addOption("Line to Three Center Balls", 2);
+=======
+    autoPathChooser.setDefaultOption("AutoPath-test", 0);
+    autoPathChooser.addOption("barrelRacingPath", 1);
+    autoPathChooser.addOption("bouncePath", 2);
+    autoPathChooser.addOption("galacticSearchA", 3);
+    autoPathChooser.addOption("galacticSearchB", 4);
+    autoPathChooser.addOption("slalomPath", 5);
+    autoPathChooser.addOption("galacticSearchARed", 6);
+    autoPathChooser.addOption("galacticSearchBRed", 7);
+    autoPathChooser.addOption("bouncePathNew", 8);
+    SmartDashboard.putData("Selected Path", autoPathChooser);
+>>>>>>> Stashed changes
   }
 
   /**
@@ -82,17 +113,83 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    chosenAutoPath = autoPathChooser.getSelected();
-    
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousShooterCommand = new ParallelCommandGroup(new StartFlyWheelVelocityPID(m_robotContainer.shooter), new FeedPowerCells(m_robotContainer.hopper), new StagePowerCells(m_robotContainer.hopper));
 
+    chosenAutoPath = autoPathChooser.getSelected();
+<<<<<<< Updated upstream
+    
+=======
+    if (chosenAutoPath == 3) {
+      if (m_robotContainer.getDriveTrain().isBallPresent() == false) {
+        chosenAutoPath = 6;
+      }
+    }
+    if (chosenAutoPath == 4) {
+      if (m_robotContainer.getDriveTrain().isBallPresent() == false) {
+        chosenAutoPath = 7;
+      }
+    }
+    Translation2d autoTranslation2d = new Translation2d(-1, -1);
+    Pose2d autoPose2d = new Pose2d(autoTranslation2d, new Rotation2d(0));
+    // Gets the path selected from the auto path chooser
+    // Numbers come from each path's json files starting position
+    switch (chosenAutoPath) {
+      case 0: 
+        autoPose2d = new Pose2d(new Translation2d(1.0, 3.572), new Rotation2d(0)); 
+        break;
+      case 1: 
+        autoPose2d = new Pose2d(new Translation2d(0.57, 2.1406491013335054), new Rotation2d(0));
+        break;
+      case 2: 
+        autoPose2d = new Pose2d(new Translation2d(0.57, 2.1406491013335054), new Rotation2d(0));
+        break;
+      case 3: 
+        autoPose2d = new Pose2d(new Translation2d(0.7428064162855117, 2.8519407331057143), new Rotation2d(0));
+        break;
+      case 4: 
+        autoPose2d = new Pose2d(new Translation2d(0.7304361270372994, 2.5364983572763), new Rotation2d(0));
+        break;
+      case 5: 
+        autoPose2d = new Pose2d(new Translation2d(0.526326354441796, 0.421178895831992), new Rotation2d(0));
+        break;
+      case 6: 
+        autoPose2d = new Pose2d(new Translation2d(0.7180658377890871, 2.1282788120852936), new Rotation2d(0));
+        break;
+      case 7:  
+        autoPose2d = new Pose2d(new Translation2d(0.6995104039167684, 1.9179838948656838), new Rotation2d(0));
+        break;
+      case 8: 
+        autoPose2d = new Pose2d(new Translation2d(0.22325426786059388, 2.190130258326355), new Rotation2d(0));
+        break;
+      case 9: 
+        autoPose2d = new Pose2d(new Translation2d(3.126133599984564, 5.890856109636205), new Rotation2d(0.41450687458478436));
+        break;
+      default: 
+        autoPose2d = new Pose2d(new Translation2d(1.0, 3.572), new Rotation2d(0));
+        break;
+    }
+
+    m_robotContainer.getDriveTrain().resetOdometry(autoPose2d);
+    // m_robotContainer.getDriveTrain().zeroHeading();
+>>>>>>> Stashed changes
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Command m_autoSequentialGroup = new SequentialCommandGroup(m_autonomousCommand, new ParallelDeadlineGroup(new WaitCommand(1.0), new StartFlyWheelVelocityPID(m_robotContainer.shooter)), m_autonomousShooterCommand); 
+    
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
+<<<<<<< Updated upstream
       m_autonomousCommand.schedule();
     }
 
     //Gets the path selected from the auto path chooser
     
+=======
+      // m_autonomousCommand.schedule();
+      m_autoSequentialGroup.schedule();
+
+      
+    }
+>>>>>>> Stashed changes
   }
 
   /**
@@ -111,6 +208,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+      m_autonomousShooterCommand.cancel();
     }
   }
 

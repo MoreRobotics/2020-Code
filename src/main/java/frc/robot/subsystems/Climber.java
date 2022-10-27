@@ -8,37 +8,48 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.ClimberManual;
 
 public class Climber extends SubsystemBase {
   //Declares the motor controllers for the climber motors
-  TalonSRX climberMotorLeft, climberMotorRight; 
+  TalonSRX climberMotorRight; 
+  VictorSPX climberMotorLeft;
   XboxController operatorController;
   /**
    * Creates a new Climber.
    */
   public Climber() {
-    climberMotorLeft = new TalonSRX(Constants.CLIMBER_LEFT_MOTOR_ID);
+    climberMotorLeft = new VictorSPX(Constants.CLIMBER_LEFT_MOTOR_ID);
     climberMotorRight = new TalonSRX(Constants.CLIMBER_RIGHT_MOTOR_ID);
     operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
-
+    climberMotorLeft.setNeutralMode(NeutralMode.Brake);
+    climberMotorRight.setNeutralMode(NeutralMode.Brake);
     climberMotorRight.follow(climberMotorLeft);
+    climberMotorLeft.setInverted(true);
+    climberMotorRight.setInverted(false);
+    //this.setDefaultCommand(new ClimberManual(this));
   }
 
   //Manually raises the climber to height
   public void climberManual() {
-    double climbSpeed = operatorController.getY(Hand.kRight);
+    double climbSpeed = operatorController.getY(Hand.kLeft);
+    if (Math.abs(climbSpeed) < 0.1) {
+      climbSpeed = 0;
+    }
     climberMotorLeft.set(ControlMode.PercentOutput, climbSpeed);
   }
 
-  //Retracts climber 
+  //Retracts climber *Not Necessary* 
   public void climberRetract() {
-
+    //climberMotorLeft.set(ControlMode.Position, 0);
   }
 
   @Override

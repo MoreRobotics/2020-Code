@@ -22,7 +22,26 @@ public class TestAutonomous extends SequentialCommandGroup {
   public TestAutonomous(DriveTrain driveTrain, Trajectory testPath) {
     m_driveTrain = driveTrain;
     
+<<<<<<< Updated upstream
     addCommands(m_driveTrain.getRamseteCommand(testPath));
+=======
+    if(path == trajectoryManager.bouncePathNew) {
+      addCommands(m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew), 
+      m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew2), 
+      m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew3), 
+      m_driveTrain.getRamseteCommand(trajectoryManager.bouncePathNew4));
+    } else if (path == trajectoryManager.galacticSearchABlue || 
+    path == trajectoryManager.galacticSearchBBlue || 
+    path == trajectoryManager.galacticSearchARed || 
+    path == trajectoryManager.galacticSearchBRed) {
+      System.out.println(path);
+      Command galacticSearch = new ParallelCommandGroup(new IntakePowerCells(intake), m_driveTrain.getRamseteCommand(path));
+      addCommands(galacticSearch);
+    } else {
+      addCommands(m_driveTrain.getRamseteCommand(path));
+    }
+    
+>>>>>>> Stashed changes
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     

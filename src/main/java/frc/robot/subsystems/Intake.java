@@ -36,6 +36,10 @@ public class Intake extends SubsystemBase {
     intakeWheel.set(ControlMode.PercentOutput, Constants.INTAKE_SPEED);
   }
 
+  public void intakeReverse() {
+    intakeWheel.set(ControlMode.PercentOutput, -Constants.INTAKE_SPEED*.5);
+  }
+
   //Stops intake motors
   public void intakeStop() {
     intakeWheel.set(ControlMode.PercentOutput, 0);

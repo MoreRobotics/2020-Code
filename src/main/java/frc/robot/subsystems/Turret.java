@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.TurnTurret;
 
@@ -59,8 +59,14 @@ public class Turret extends SubsystemBase {
 		turretMotor.config_kI(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kI, Constants.kTimeoutMs);
     turretMotor.config_kD(Constants.kPIDLoopIdx, Constants.k_Gains_Turret_Position.kD, Constants.kTimeoutMs);
 
+<<<<<<< Updated upstream
     turretMotor.configMotionCruiseVelocity(800 / 3, Constants.kTimeoutMs);
     turretMotor.configMotionAcceleration(800 / 3, Constants.kTimeoutMs);
+=======
+    turretMotor.configMotionCruiseVelocity(10 / (60 / Constants.TURRET_ENCODER_EDGES), Constants.kTimeoutMs);
+    turretMotor.configMotionAcceleration(10 / (60 / Constants.TURRET_ENCODER_EDGES), Constants.kTimeoutMs);
+    
+>>>>>>> Stashed changes
 
     //turretMotor.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
@@ -96,6 +102,13 @@ public class Turret extends SubsystemBase {
     turretMotor.set(ControlMode.MotionMagic, targetPosition);
     System.out.println("Target Position " + targetPosition);
   }
+  
+  public void zeroTurret() {
+    //Sometimes buggy with -90 as value so using -89 instead
+    turretMotor.setSelectedSensorPosition(-89 * Constants.ENCODER_UNITS_TO_DEGREES);
+    rotateToTarget(0);
+    
+  }
 
   public void turnTurretAuto() {
     NetworkTableInstance table = NetworkTableInstance.getDefault();
@@ -107,6 +120,7 @@ public class Turret extends SubsystemBase {
 
   //Turns the turret
   public void turnTurret(DriveTrain driveTrain) {
+<<<<<<< Updated upstream
     double x = operatorController.getY(Hand.kRight);
      //Deadband Check
      if(Math.abs(x) <= 0.05) {
@@ -118,6 +132,19 @@ public class Turret extends SubsystemBase {
        y = 0;
      }
     Rotation2d turretRotationAngle = new Rotation2d(-operatorController.getY(Hand.kRight), operatorController.getX(Hand.kRight));
+=======
+    double x = operatorController.getX(Hand.kRight);
+    // Deadband Check
+    if (Math.abs(x) <= 0.2) {
+      x = 0;
+    }
+    double y = operatorController.getY(Hand.kRight);
+    // Deadband Check
+    if (Math.abs(y) <= 0.2) {
+      y = 0;
+    }
+    Rotation2d turretRotationAngle = new Rotation2d(-y, x);
+>>>>>>> Stashed changes
     rotateToTurretAngle(turretRotationAngle);
     System.out.println("rotation angle" + turretRotationAngle);
     //Get gyro yaw
@@ -145,5 +172,6 @@ public class Turret extends SubsystemBase {
     double distanceFromTarget = targetHeightFromCamera / Math.tan(pitch.getDouble(0.0) + Constants.CAMERA_ANGLE);
     SmartDashboard.putNumber("Distance to Target", distanceFromTarget);
     SmartDashboard.putNumber("Target Position", targetPosition);
+    SmartDashboard.putNumber("Turret encoder", turretMotor.getSelectedSensorPosition());
   }
 }

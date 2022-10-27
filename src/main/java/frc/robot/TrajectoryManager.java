@@ -24,7 +24,17 @@ public class TrajectoryManager {
   public Trajectory linetoThreeCenterBalls;
   public Trajectory shootingSpot;
   public static Trajectory excessPath;
+<<<<<<< Updated upstream
   
+=======
+  public Trajectory bouncePathNew;
+  public Trajectory bouncePathNew2;
+  public Trajectory bouncePathNew3;
+  public Trajectory bouncePathNew4;
+  public Trajectory Unnamed;
+  public Trajectory AutoPath;
+
+>>>>>>> Stashed changes
   public Trajectory LoadTrajectory(String trajectoryFile) {
     
     try {
@@ -39,11 +49,20 @@ public class TrajectoryManager {
 
   public void LoadAllPaths() {
     testPath = LoadTrajectory("testPath");
+<<<<<<< Updated upstream
     lineToTrench = LoadTrajectory("lineToTrench");
     linetoThreeCenterBalls = LoadTrajectory("lineToThreeCenterBalls");
     //still needs to be added to Pathweaver
     shootingSpot = LoadTrajectory("shootingSpot");
     
+=======
+    bouncePathNew = LoadTrajectory("bouncePathNew");
+    bouncePathNew2 = LoadTrajectory("bouncePathNew2");
+    bouncePathNew3 = LoadTrajectory("bouncePathNew3");
+    bouncePathNew4 = LoadTrajectory("bouncePathNew4");
+    Unnamed = LoadTrajectory("Unnamed");
+    AutoPath = LoadTrajectory("AutoPath-test");
+>>>>>>> Stashed changes
   }
 
 }

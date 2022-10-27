@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -39,6 +40,7 @@ public class DriveTrain extends SubsystemBase {
   SpeedControllerGroup rightDrive, leftDrive;
   DifferentialDrive drive;
   XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER_PORT);
+  XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER_PORT);
   PigeonIMU gyro;
   DifferentialDriveOdometry odometry;
   SimpleMotorFeedforward simpleMotorFeedforward;
@@ -146,8 +148,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void tankDriveVolts(final double leftVolts, final double rightVolts) {
-    System.out.println("LeftVolt " + leftVolts);
-    System.out.println("RightVolt " + rightVolts);
+    //System.out.println("LeftVolt " + leftVolts);
+    //System.out.println("RightVolt " + rightVolts);
     leftDrive.setVoltage(leftVolts);
     rightDrive.setVoltage(-rightVolts);
     drive.feed();
@@ -165,7 +167,12 @@ public class DriveTrain extends SubsystemBase {
 
   //Drives the robot depending on the thumbstick inputs
   public void drive() {
+<<<<<<< Updated upstream
     drive.curvatureDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight), false);
   }
   
+=======
+    drive.curvatureDrive(driverController.getY(Hand.kLeft)*0.5, driverController.getX(Hand.kRight)*0.5, false);
+  } 
+>>>>>>> Stashed changes
 }

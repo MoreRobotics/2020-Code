@@ -1,9 +1,15 @@
 {
   "lengthUnit": "Meter",
   "exportUnit": "Always Meters",
+<<<<<<< Updated upstream
   "maxVelocity": 4.267,
   "maxAcceleration": 4.572,
   "wheelBase": 0.72,
+=======
+  "maxVelocity": 3.4,
+  "maxAcceleration": 1.0,
+  "wheelBase": 0.6408786261443097,
+>>>>>>> Stashed changes
   "gameName": "Infinite Recharge",
   "outputDir": "../src/main/deploy"
 }

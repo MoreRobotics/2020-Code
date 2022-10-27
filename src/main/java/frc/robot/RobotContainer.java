@@ -9,6 +9,7 @@ package frc.robot;
 
 import java.util.List;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -17,6 +18,13 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 //import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+<<<<<<< Updated upstream
+=======
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
@@ -48,6 +56,7 @@ public class RobotContainer {
   ControlPanel controlPanel = new ControlPanel();
   Climber climber = new Climber();
   TrajectoryManager trajectoryManager = new TrajectoryManager();
+  Compressor compressor = new Compressor();
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -64,8 +73,11 @@ public class RobotContainer {
   JoystickButton operatorLBumper = new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value);
   JoystickButton operatorRBumper = new JoystickButton(operatorController, XboxController.Button.kBumperRight.value);
   JoystickButton operatorBackButton = new JoystickButton(operatorController, XboxController.Button.kBack.value);
+  JoystickButton operatorStartButton = new JoystickButton(operatorController, XboxController.Button.kStart.value);
   POVButton operatorDPadDown = new POVButton(operatorController, 180);
   POVButton operatorDPadUp = new POVButton(operatorController, 0);
+  POVButton operatorDPadLeft = new POVButton(operatorController, 270);
+  POVButton operatorDPadRight = new POVButton(operatorController, 90);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -82,11 +94,24 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+<<<<<<< Updated upstream
     operatorAButton.whenHeld(new StartFlyWheelVelocityPID(shooter));
     operatorLBumper.whenHeld(new IntakePowerCells(intake));
     shooterHoodHandler();
     hopperHandler();
     controlPanelHandler();    
+=======
+    operatorAButton.whenHeld(new SequentialCommandGroup(new ParallelDeadlineGroup(new WaitCommand(1.5), new StartFlyWheelVelocityPID(shooter)),new ParallelCommandGroup(new StartFlyWheelVelocityPID(shooter), new FeedPowerCells(hopper), new StagePowerCells(hopper))));
+    operatorLBumper.whenHeld(new IntakePowerCells(intake));
+    shooterHoodHandler();
+    hopperHandler();
+    controlPanelHandler();
+    intakeHandler();
+    operatorStartButton.whenHeld(new IntakeReverse(intake, intake));
+    operatorDPadLeft.whenPressed(new StopCompressor());
+    operatorDPadRight.whenPressed(new StartCompressor());
+
+>>>>>>> Stashed changes
   }
 
   //Encapsulates the shooter hood commands
@@ -152,8 +177,15 @@ public class RobotContainer {
 
     switch(Robot.chosenAutoPath) {
       case 0:
+<<<<<<< Updated upstream
         return new TestAutonomous(driveTrain, exampleTrajectory);
       
+=======
+        System.out.println("test path");
+        System.out.println(trajectoryManager.testPath);
+        return new TestAutonomous(driveTrain, intake, trajectoryManager, trajectoryManager.AutoPath);
+
+>>>>>>> Stashed changes
       case 1:
         return new TestAutonomous(driveTrain, trajectoryManager.lineToTrench);
       
